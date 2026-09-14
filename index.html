@@ -1,2343 +1,440 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-BO">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELITE IRON CLUB | Armwrestling Santa Cruz - Bolivia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Lucha de Brazos Bolivia | Asociación Oficial - Santa Cruz</title>
+<meta name="description" content="Asociación de Lucha de Brazos Bolivia. Organización de eventos, campeonatos y competencias de armwrestling en Santa Cruz de la Sierra, Bolivia.">
 
-<meta name="description" content="Elite Iron Club: El epicentro de la Lucha de Brazos (Armwrestling) en Santa Cruz, Bolivia. Forjando campeones, promoviendo técnica y fuerza.">
-<meta name="keywords" content="Armwrestling, Lucha de Brazos, Pulseta, Santa Cruz, Bolivia, Elite Iron Club, Deporte, Fuerza, Entrenamiento">
-
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Ibarra+Real+Nova:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Ibarra+Real+Nova:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-/* ==========================================================================
-   VARIABLES GLOBALES & TEMA PRINCIPAL
-   ========================================================================== */
-:root {
-    --bg-dark: #050608;
-    --bg-card: rgba(14, 16, 22, 0.75);
-    --bg-card-hover: rgba(20, 24, 32, 0.95);
-    --opera-red: #e6003a;
-    --opera-red-glow: rgba(230, 0, 58, 0.4);
-    --premium-gold: #cfa860;
-    --premium-gold-glow: rgba(207, 168, 96, 0.4);
-    --text-pure: #ffffff;
-    --text-muted: #9fa4b0;
-    --border-glass: rgba(255, 255, 255, 0.05);
-    --border-glass-strong: rgba(255, 255, 255, 0.15);
-    
-    /* Colores de Acento Bolivia (Sutiles) */
-    --scz-green: #007a33;
-    --scz-green-glow: rgba(0, 122, 51, 0.3);
-    --bol-yellow: #f4d03f;
-    --bol-red: #c8102e;
-}
-
-/* ==========================================================================
-   RESETEO Y CONFIGURACIÓN BASE
-   ========================================================================== */
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-}
-
-body { 
-    background-color: var(--bg-dark); 
-    color: var(--text-pure); 
-    min-height: 100vh; 
-    overflow-x: hidden; 
-    font-family: 'Ibarra Real Nova', serif; 
-    line-height: 1.6;
-}
-
-/* Tipografía de encabezados */
-h1, h2, h3, h4, th, .menu-btn, .countdown-unit, .stat-number, .badge, .title-modern { 
-    font-family: 'Cinzel', serif; 
-    font-weight: 700; 
-    letter-spacing: 1px; 
-}
-
-/* Tipografía para datos duros y UI moderna */
-.data-text, .nav-trigger, .cyber-input, .table-cell {
-    font-family: 'Montserrat', sans-serif;
-}
-
-/* Scrollbar personalizado */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--bg-dark); }
-::-webkit-scrollbar-thumb { background: var(--border-glass-strong); border-radius: 5px; }
-::-webkit-scrollbar-thumb:hover { background: var(--premium-gold); }
-
-/* ==========================================================================
-   EFECTOS DE FONDO Y PARTÍCULAS
-   ========================================================================== */
-#particleCanvas { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh; 
-    z-index: 1; 
-    pointer-events: none; 
-}
-
-.gx-scanlines { 
-    position: fixed; 
-    inset: 0; 
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%); 
-    background-size: 100% 4px; 
-    z-index: 2; 
-    pointer-events: none; 
-    opacity: 0.4; 
-}
-
-.ambient-light {
-    position: fixed;
-    top: -20%;
-    left: -10%;
-    width: 50vw;
-    height: 50vw;
-    background: radial-gradient(circle, rgba(230,0,58,0.05) 0%, transparent 70%);
-    z-index: 1;
-    pointer-events: none;
-}
-.ambient-light.right {
-    top: auto;
-    bottom: -20%;
-    left: auto;
-    right: -10%;
-    background: radial-gradient(circle, rgba(207,168,96,0.05) 0%, transparent 70%);
-}
-
-/* ==========================================================================
-   HEADER Y NAVEGACIÓN GLOBAL
-   ========================================================================== */
-.main-header { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 90px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 0 50px; 
-    background: linear-gradient(180deg, rgba(5,6,8,0.95) 0%, rgba(5,6,8,0.85) 70%, rgba(5,6,8,0) 100%); 
-    backdrop-filter: blur(12px); 
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 1000; 
-}
-
-.brand-container { 
-    display: flex; 
-    align-items: center; 
-    gap: 20px; 
-    cursor: pointer; 
-    background: none; 
-    border: none; 
-    outline: none; 
-    text-align: left; 
-}
-
-.logo { 
-    width: 65px; 
-    height: 65px; 
-    border-radius: 50%; 
-    border: 2px solid transparent; 
-    background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box, linear-gradient(90deg, var(--opera-red), var(--premium-gold)) border-box; 
-    box-shadow: 0 0 25px var(--opera-red-glow); 
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; 
-}
-.brand-container:hover .logo { 
-    transform: scale(1.1) rotate(15deg); 
-    box-shadow: 0 0 35px var(--premium-gold-glow);
-}
-
-.brand-title { 
-    font-size: 26px; 
-    font-weight: 900;
-    background: linear-gradient(135deg, #fff 30%, var(--premium-gold) 100%); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    text-transform: uppercase; 
-    letter-spacing: 2px;
-}
-.brand-sub { 
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px; 
-    color: var(--opera-red); 
-    letter-spacing: 6px; 
-    text-transform: uppercase; 
-    text-shadow: 0 0 10px var(--opera-red-glow); 
-    font-weight: 700;
-}
-
-.header-laser-line { 
-    position: absolute; 
-    bottom: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 2px; 
-    background: linear-gradient(90deg, rgba(230,0,58,0) 0%, var(--opera-red) 25%, var(--premium-gold) 75%, rgba(207,168,96,0) 100%); 
-    box-shadow: 0 0 15px var(--opera-red); 
-    animation: laserScan 3s infinite linear;
-}
-@keyframes laserScan {
-    0% { background-position: -100% 0; }
-    100% { background-position: 200% 0; }
-}
-
-/* ==========================================================================
-   ESTRUCTURA PRINCIPAL Y SIDEBAR (AMPLIADO)
-   ========================================================================== */
-.app-container { 
-    display: grid; 
-    grid-template-columns: 280px 1fr; 
-    gap: 40px; 
-    padding: 130px 50px 50px 50px; 
-    max-width: 1920px; 
-    margin: 0 auto; 
-    position: relative; 
-    z-index: 5; 
-}
-
-.sidebar { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 8px; 
-    position: sticky;
-    top: 130px;
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
-    padding-right: 15px;
-    direction: rtl; /* Para poner el scroll a la izquierda visualmente o solo ocultarlo */
-}
-.sidebar > * {
-    direction: ltr;
-}
-.sidebar::-webkit-scrollbar { width: 4px; }
-.sidebar::-webkit-scrollbar-thumb { background: var(--border-glass-strong); border-radius: 4px; }
-
-.menu-category {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    color: var(--premium-gold);
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    padding-left: 10px;
-    border-left: 2px solid var(--premium-gold);
-    opacity: 0.8;
-}
-
-.menu-btn { 
-    position: relative; 
-    width: 100%; 
-    height: 50px; 
-    background: rgba(20, 23, 31, 0.8); 
-    color: var(--text-pure); 
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px; 
-    font-weight: 700;
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    cursor: pointer; 
-    border: 1px solid transparent; 
-    outline: none; 
-    clip-path: polygon(0% 0%, 95% 0%, 100% 30%, 100% 100%, 5% 100%, 0% 70%); 
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
-    display: flex; 
-    align-items: center; 
-    padding-left: 25px; 
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 5px 15px rgba(0,0,0,0.4); 
-}
-.menu-btn::before { 
-    content: ''; 
-    position: absolute; 
-    inset: 0; 
-    background: linear-gradient(90deg, var(--opera-red), var(--premium-gold)); 
-    clip-path: polygon(0% 0%, 95% 0%, 100% 30%, 100% 100%, 5% 100%, 0% 70%); 
-    z-index: -1; 
-    opacity: 0.1; 
-    transition: opacity 0.3s ease; 
-}
-.menu-btn::after { 
-    content: ''; 
-    position: absolute; 
-    left: 0; 
-    top: 0; 
-    width: 3px; 
-    height: 100%; 
-    background: var(--opera-red); 
-    box-shadow: 0 0 10px var(--opera-red); 
-    transition: all 0.3s ease; 
-}
-.menu-btn:hover, .menu-btn.active { 
-    color: #050608; 
-    background: linear-gradient(90deg, var(--premium-gold) 0%, #ffffff 100%); 
-    transform: translateX(10px) scale(1.02); 
-    box-shadow: -10px 0 25px var(--premium-gold-glow); 
-    border-color: var(--premium-gold);
-}
-.menu-btn:hover::before, .menu-btn.active::before { opacity: 1; }
-.menu-btn:hover::after, .menu-btn.active::after { 
-    background: var(--bg-dark); 
-    height: 60%; 
-    top: 20%; 
-    box-shadow: none; 
-}
-.menu-btn i {
-    margin-right: 12px;
-    font-size: 14px;
-    opacity: 0.8;
-}
-.menu-btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; filter: grayscale(100%); }
-
-/* ==========================================================================
-   TRANSICIONES DE PÁGINAS Y CONTENEDOR PRINCIPAL
-   ========================================================================== */
-.main-stage { position: relative; width: 100%; }
-.page-section { 
-    display: none; 
-    animation: stageTransition 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
-    padding-bottom: 80px;
-}
-.page-section.active { display: block; }
-
-@keyframes stageTransition { 
-    0% { opacity: 0; transform: translateY(30px) scale(0.98); filter: blur(10px); } 
-    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } 
-}
-
-/* ==========================================================================
-   SECCIÓN 1: PORTADA (HERO) - TOTALMENTE CENTRADA Y AMPLIADA
-   ========================================================================== */
-.hero-portal { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    text-align: center;
-    gap: 50px; 
-    width: 100%;
-}
-
-.hero-info-panel { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-    gap: 30px; 
-    width: 100%;
-    max-width: 900px;
-    position: relative;
-    z-index: 10;
-}
-
-.badge-live { 
-    background: rgba(230, 0, 58, 0.15); 
-    border: 1px solid var(--opera-red); 
-    color: var(--text-pure); 
-    padding: 8px 24px; 
-    font-size: 12px; 
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    text-transform: uppercase; 
-    letter-spacing: 4px; 
-    border-radius: 30px; 
-    box-shadow: 0 0 20px var(--opera-red-glow), inset 0 0 10px rgba(230,0,58,0.2); 
-    animation: pulseBadge 2s infinite;
-}
-@keyframes pulseBadge {
-    0% { box-shadow: 0 0 20px var(--opera-red-glow); }
-    50% { box-shadow: 0 0 40px rgba(230,0,58,0.8); }
-    100% { box-shadow: 0 0 20px var(--opera-red-glow); }
-}
-
-.hero-headline { 
-    font-size: 72px; 
-    line-height: 1.1; 
-    text-transform: uppercase; 
-    font-weight: 900; 
-    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
-}
-.hero-headline span { 
-    color: transparent; 
-    -webkit-text-stroke: 1.5px var(--premium-gold); 
-    background: linear-gradient(180deg, #fff 0%, var(--premium-gold) 100%);
-    -webkit-background-clip: text;
-    filter: drop-shadow(0 0 15px var(--premium-gold-glow));
-}
-.hero-subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    color: var(--text-muted);
-    max-width: 600px;
-    margin-top: -10px;
-}
-
-/* Contenedor de Imagen Principal (Hecho más grande como se solicitó) */
-.video-frame-wrapper.hero-main-img {
-    width: 100%;
-    max-width: 1200px; /* Ampliado drásticamente */
-    aspect-ratio: 21 / 9; /* Formato ultra panorámico y cinematográfico */
-    margin: 0 auto;
-    border-radius: 12px;
-}
-
-.social-links { 
-    display: flex; 
-    gap: 25px; 
-    justify-content: center;
-    margin-top: 10px;
-}
-.social-btn { 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border-glass-strong);
-    font-size: 22px; 
-    color: var(--text-pure); 
-    text-decoration: none; 
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-}
-.social-btn:hover { 
-    background: var(--opera-red);
-    border-color: var(--opera-red);
-    color: var(--text-pure); 
-    transform: scale(1.15) translateY(-5px); 
-    box-shadow: 0 10px 20px var(--opera-red-glow); 
-}
-
-/* ==========================================================================
-   COMPONENTES REUTILIZABLES: TARJETAS, PANELES Y VIDEOS
-   ========================================================================== */
-.video-frame-wrapper { 
-    position: relative; 
-    border-radius: 8px; 
-    overflow: hidden; 
-    background: var(--bg-dark); 
-    border: 1px solid var(--border-glass-strong); 
-    box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(230,0,58,0.1); 
-    width: 100%;
-}
-.video-frame-wrapper::before { 
-    content: ''; 
-    position: absolute; 
-    inset: 0; 
-    border: 2px solid transparent; 
-    background: linear-gradient(135deg, var(--opera-red), transparent, var(--premium-gold)) border-box; 
-    pointer-events: none; 
-    z-index: 3; 
-    opacity: 0.8; 
-    border-radius: 8px;
-}
-.mock-video-bg { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    filter: brightness(0.65) contrast(1.15) saturate(1.1); 
-    transition: transform 3s ease;
-}
-.video-frame-wrapper:hover .mock-video-bg {
-    transform: scale(1.05);
-}
-.video-ui-overlay { 
-    position: absolute; 
-    inset: 0; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: flex-end; 
-    padding: 40px; 
-    background: linear-gradient(0deg, rgba(5,6,8,1) 0%, rgba(5,6,8,0.5) 50%, transparent 100%); 
-    z-index: 2; 
-}
-
-/* Contenedor de Paneles (Fondos de las secciones) */
-.section-panel { 
-    background: var(--bg-card); 
-    border: 1px solid var(--border-glass); 
-    border-top: 3px solid var(--opera-red); 
-    padding: 50px; 
-    border-radius: 12px; 
-    backdrop-filter: blur(15px); 
-    -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    position: relative;
-    overflow: hidden;
-}
-.section-panel::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(207,168,96,0.05) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.panel-title { 
-    font-size: 42px; 
-    color: var(--text-pure); 
-    text-transform: uppercase; 
-    margin-bottom: 15px; 
-    background: linear-gradient(90deg, #fff, var(--premium-gold)); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    display: inline-block;
-    position: relative;
-}
-.panel-title::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    width: 60px;
-    height: 4px;
-    background: var(--opera-red);
-    box-shadow: 0 0 10px var(--opera-red);
-}
-
-.panel-subtitle {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--text-muted);
-    font-size: 16px;
-    margin-bottom: 40px;
-    margin-top: 15px;
-    max-width: 800px;
-}
-
-/* Grid General de Tarjetas */
-.cards-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-    gap: 30px; 
-    margin-top: 30px; 
-}
-
-.cyber-card { 
-    background: rgba(10, 12, 16, 0.8); 
-    border: 1px solid var(--border-glass); 
-    border-left: 4px solid var(--opera-red); 
-    border-radius: 8px; 
-    padding: 30px; 
-    position: relative; 
-    overflow: hidden; 
-    backdrop-filter: blur(10px); 
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5); 
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
-    display: flex;
-    flex-direction: column;
-}
-.cyber-card::before { 
-    content: ''; 
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    width: 80px; 
-    height: 80px; 
-    background: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.03) 50%); 
-    transition: all 0.3s ease;
-}
-.cyber-card:hover { 
-    transform: translateY(-10px); 
-    border-left-color: var(--premium-gold); 
-    background: var(--bg-card-hover);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 20px rgba(207,168,96,0.15); 
-}
-.cyber-card:hover::before {
-    background: linear-gradient(45deg, transparent 50%, rgba(207,168,96,0.1) 50%); 
-}
-
-.card-img-top { 
-    width: 100%; 
-    height: 200px; 
-    object-fit: cover; 
-    border-radius: 6px; 
-    margin-bottom: 20px; 
-    border: 1px solid var(--border-glass-strong); 
-    transition: filter 0.3s ease;
-}
-.cyber-card:hover .card-img-top {
-    filter: brightness(1.1) contrast(1.1);
-}
-
-.card-header-title { 
-    font-size: 26px; 
-    color: var(--text-pure); 
-    margin-bottom: 8px; 
-    text-transform: uppercase; 
-}
-.card-subtext { 
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px; 
-    color: var(--premium-gold); 
-    font-weight: 700;
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    margin-bottom: 15px; 
-}
-
-/* ==========================================================================
-   SECCIÓN 2: CAMPEONES Y SALÓN DE LA FAMA (REDISEÑO)
-   ========================================================================== */
-.hall-of-fame-showcase {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    text-align: center;
-}
-
-.future-video-placeholder {
-    width: 100%;
-    max-width: 1000px;
-    aspect-ratio: 16/9;
-    background: repeating-linear-gradient(
-        45deg,
-        rgba(20,23,31,0.9),
-        rgba(20,23,31,0.9) 10px,
-        rgba(10,12,16,0.9) 10px,
-        rgba(10,12,16,0.9) 20px
-    );
-    border: 2px dashed var(--premium-gold);
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-}
-.future-video-placeholder i {
-    font-size: 60px;
-    color: var(--border-glass-strong);
-    margin-bottom: 20px;
-}
-.future-video-text {
-    font-family: 'Cinzel', serif;
-    font-size: 24px;
-    color: var(--premium-gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-.future-video-subtext {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-top: 10px;
-    letter-spacing: 1px;
-}
-
-/* ==========================================================================
-   SECCIÓN 3: ESTADÍSTICAS Y CONTADORES
-   ========================================================================== */
-.stats-banner { 
-    grid-column: 1 / -1; 
-    margin-top: 40px; 
-    display: grid; 
-    grid-template-columns: repeat(6, 1fr); 
-    gap: 20px; 
-    background: linear-gradient(90deg, rgba(20,23,31,0) 0%, rgba(20,23,31,0.9) 50%, rgba(20,23,31,0) 100%); 
-    padding: 40px 0; 
-    border-y: 1px solid var(--border-glass); 
-}
-.stat-item { 
-    text-align: center; 
-    border-right: 1px solid rgba(255,255,255,0.05); 
-    transition: transform 0.3s ease;
-}
-.stat-item:hover { transform: translateY(-5px); }
-.stat-item:last-child { border: none; }
-.stat-number { 
-    font-size: 48px; 
-    color: var(--premium-gold); 
-    display: block; 
-    text-shadow: 0 0 20px var(--premium-gold-glow); 
-    line-height: 1;
-    margin-bottom: 10px;
-}
-.stat-desc { 
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px; 
-    color: var(--text-muted); 
-    text-transform: uppercase; 
-    letter-spacing: 3px; 
-    font-weight: 700;
-}
-
-/* ==========================================================================
-   SECCIÓN 4: RANKINGS Y TABLAS DE CLASIFICACIÓN
-   ========================================================================== */
-.ranking-container {
-    width: 100%;
-    overflow-x: auto;
-    margin-top: 30px;
-    border-radius: 8px;
-    border: 1px solid var(--border-glass);
-}
-.elite-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    min-width: 700px;
-}
-.elite-table thead {
-    background: rgba(230, 0, 58, 0.1);
-    border-bottom: 2px solid var(--opera-red);
-}
-.elite-table th {
-    padding: 18px 20px;
-    font-size: 14px;
-    color: var(--premium-gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-.elite-table td {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border-glass);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: var(--text-pure);
-    vertical-align: middle;
-}
-.elite-table tbody tr {
-    background: rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-}
-.elite-table tbody tr:hover {
-    background: rgba(255,255,255,0.05);
-    transform: scale(1.01);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    position: relative;
-    z-index: 10;
-}
-.rank-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    background: var(--bg-dark);
-    border: 1px solid var(--border-glass-strong);
-    border-radius: 50%;
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    font-size: 16px;
-}
-.rank-1 .rank-badge { border-color: #FFD700; color: #FFD700; box-shadow: 0 0 15px rgba(255,215,0,0.4); }
-.rank-2 .rank-badge { border-color: #C0C0C0; color: #C0C0C0; }
-.rank-3 .rank-badge { border-color: #CD7F32; color: #CD7F32; }
-
-/* ==========================================================================
-   SECCIÓN 5: HISTORIA Y LÍNEA DE TIEMPO (TIMELINE)
-   ========================================================================== */
-.timeline-container {
-    position: relative;
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 20px 0;
-}
-.timeline-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background: linear-gradient(180deg, var(--opera-red), var(--premium-gold));
-    transform: translateX(-50%);
-}
-.timeline-item {
-    position: relative;
-    width: 50%;
-    padding: 20px 40px;
-    box-sizing: border-box;
-}
-.timeline-item:nth-child(odd) { left: 0; text-align: right; }
-.timeline-item:nth-child(even) { left: 50%; text-align: left; }
-
-.timeline-dot {
-    position: absolute;
-    top: 25px;
-    width: 20px;
-    height: 20px;
-    background: var(--bg-dark);
-    border: 3px solid var(--premium-gold);
-    border-radius: 50%;
-    z-index: 2;
-    box-shadow: 0 0 15px var(--premium-gold-glow);
-}
-.timeline-item:nth-child(odd) .timeline-dot { right: -10px; }
-.timeline-item:nth-child(even) .timeline-dot { left: -10px; }
-
-.timeline-content {
-    background: rgba(14, 16, 22, 0.9);
-    padding: 25px;
-    border: 1px solid var(--border-glass);
-    border-radius: 8px;
-    position: relative;
-    transition: transform 0.3s ease;
-}
-.timeline-content:hover {
-    transform: translateY(-5px);
-    border-color: var(--opera-red);
-}
-.timeline-date {
-    display: inline-block;
-    padding: 5px 15px;
-    background: rgba(230,0,58,0.2);
-    color: var(--opera-red);
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    font-size: 18px;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-
-/* ==========================================================================
-   SECCIÓN 6: TÉCNICAS Y ENTRENAMIENTO (ACORDEONES Y TABS)
-   ========================================================================== */
-.technique-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-.technique-card {
-    background: transparent;
-    border: none;
-    perspective: 1000px;
-    height: 350px;
-}
-.technique-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-}
-.technique-card:hover .technique-inner {
-    transform: rotateY(180deg);
-}
-.technique-front, .technique-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border-glass-strong);
-}
-.technique-front {
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
-}
-.technique-front-overlay {
-    background: linear-gradient(0deg, rgba(0,0,0,0.9), transparent);
-    width: 100%;
-    padding: 30px 20px;
-    text-align: center;
-}
-.technique-back {
-    background: var(--bg-card);
-    transform: rotateY(180deg);
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border-color: var(--premium-gold);
-}
-.technique-back h4 {
-    color: var(--premium-gold);
-    margin-bottom: 15px;
-    font-size: 22px;
-}
-.technique-back p {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: var(--text-muted);
-}
-
-/* ==========================================================================
-   SECCIÓN 7: PREGUNTAS FRECUENTES (FAQ - ACORDEÓN)
-   ========================================================================== */
-.faq-container {
-    max-width: 800px;
-    margin: 40px auto 0;
-}
-.faq-item {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid var(--border-glass);
-    margin-bottom: 15px;
-    border-radius: 6px;
-    overflow: hidden;
-}
-.faq-question {
-    width: 100%;
-    text-align: left;
-    padding: 20px 25px;
-    background: transparent;
-    border: none;
-    color: var(--text-pure);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.3s ease;
-}
-.faq-question:hover { background: rgba(255,255,255,0.05); }
-.faq-question i { color: var(--premium-gold); transition: transform 0.3s; }
-.faq-item.active .faq-question i { transform: rotate(180deg); color: var(--opera-red); }
-.faq-answer {
-    padding: 0 25px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
-    background: rgba(0,0,0,0.3);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: var(--text-muted);
-    border-top: 1px solid transparent;
-}
-.faq-item.active .faq-answer {
-    padding: 20px 25px;
-    max-height: 500px;
-    border-top-color: var(--border-glass);
-}
-
-/* ==========================================================================
-   SECCIÓN 8: PATROCINADORES Y TESTIMONIOS
-   ========================================================================== */
-.sponsors-track {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 40px 0;
-    border-top: 1px solid var(--border-glass);
-    border-bottom: 1px solid var(--border-glass);
-    margin-top: 50px;
-    background: rgba(0,0,0,0.2);
-}
-.sponsor-logo {
-    height: 60px;
-    filter: grayscale(100%) opacity(0.5);
-    transition: all 0.4s ease;
-    cursor: pointer;
-}
-.sponsor-logo:hover {
-    filter: grayscale(0%) opacity(1);
-    transform: scale(1.1);
-}
-
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-.testimonial-card {
-    background: linear-gradient(145deg, rgba(20,24,32,0.9), rgba(10,12,16,0.9));
-    padding: 40px 30px;
-    border-radius: 12px;
-    border: 1px solid var(--border-glass);
-    position: relative;
-}
-.testimonial-card i.fa-quote-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 40px;
-    color: rgba(207,168,96,0.15);
-}
-.testimonial-text {
-    font-family: 'Montserrat', sans-serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--text-pure);
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 2;
-    line-height: 1.8;
-}
-.testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.author-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid var(--opera-red);
-    object-fit: cover;
-}
-.author-info h5 {
-    font-family: 'Cinzel', serif;
-    font-size: 16px;
-    color: var(--premium-gold);
-}
-.author-info span {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-/* ==========================================================================
-   SECCIÓN 9: GALERÍAS Y MODAL LIGHTBOX
-   ========================================================================== */
-.gallery-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-    gap: 20px; 
-    margin-top: 30px;
-}
-.gallery-item { 
-    position: relative; 
-    border-radius: 8px; 
-    overflow: hidden; 
-    aspect-ratio: 1; 
-    cursor: pointer; 
-    border: 1px solid var(--border-glass-strong); 
-}
-.gallery-item img, .gallery-item video { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); 
-}
-.gallery-overlay { 
-    position: absolute; 
-    inset: 0; 
-    background: linear-gradient(0deg, rgba(230,0,58,0.9) 0%, rgba(5,6,8,0.3) 100%); 
-    opacity: 0; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    padding: 20px; 
-    text-align: center; 
-    transition: opacity 0.4s ease; 
-}
-.gallery-item:hover img { transform: scale(1.1); }
-.gallery-item:hover .gallery-overlay { opacity: 1; }
-.play-icon { font-size: 40px; color: var(--text-pure); text-shadow: 0 0 20px rgba(0,0,0,0.8); }
-
-.lightbox-modal { 
-    position: fixed; 
-    inset: 0; 
-    background: rgba(5,6,8,0.95); 
-    z-index: 9999; 
-    display: none; 
-    align-items: center; 
-    justify-content: center; 
-    padding: 40px; 
-    backdrop-filter: blur(15px); 
-    -webkit-backdrop-filter: blur(15px);
-}
-.lightbox-content { 
-    max-width: 90%; 
-    max-height: 85vh; 
-    border: 2px solid var(--premium-gold); 
-    box-shadow: 0 0 50px rgba(0,0,0,0.9); 
-    border-radius: 4px;
-    animation: zoomIn 0.3s ease forwards;
-}
-@keyframes zoomIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-.lightbox-close {
-    position: absolute;
-    top: 30px;
-    right: 40px;
-    color: var(--text-pure);
-    font-size: 40px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-.lightbox-close:hover { color: var(--opera-red); }
-
-/* ==========================================================================
-   SECCIÓN 10: FORMULARIOS (CONTACTO E INSCRIPCIÓN)
-   ========================================================================== */
-.form-wrapper {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid var(--border-glass);
-    border-left: 4px solid var(--premium-gold);
-    border-radius: 8px;
-    padding: 40px;
-    margin-top: 40px;
-}
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-}
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-.form-group.full-width { grid-column: 1 / -1; }
-
-.form-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.cyber-input { 
-    width: 100%; 
-    padding: 15px; 
-    background: rgba(255,255,255,0.03); 
-    border: 1px solid var(--border-glass-strong); 
-    color: var(--text-pure); 
-    border-radius: 4px;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
-textarea.cyber-input { resize: vertical; min-height: 120px; }
-.cyber-input:focus { 
-    outline: none; 
-    border-color: var(--premium-gold); 
-    box-shadow: 0 0 15px var(--premium-gold-glow); 
-    background: rgba(255,255,255,0.08);
-}
-select.cyber-input { appearance: none; cursor: pointer; }
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-.checkbox-group input {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: var(--opera-red);
-}
-
-.submit-btn-wrapper {
-    margin-top: 30px;
-    text-align: center;
-}
-.btn-primary {
-    background: linear-gradient(90deg, var(--opera-red), #b3002d);
-    color: #fff;
-    border: none;
-    padding: 16px 40px;
-    font-family: 'Cinzel', serif;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(230,0,58,0.3);
-}
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(230,0,58,0.5);
-    background: linear-gradient(90deg, #ff1a53, var(--opera-red));
-}
-.btn-primary:disabled {
-    background: #333;
-    color: #777;
-    box-shadow: none;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* ==========================================================================
-   SECCIÓN 11: REGLAMENTO Y TEXTOS LEGALES
-   ========================================================================== */
-.rules-list {
-    list-style: none;
-    counter-reset: rule-counter;
-}
-.rules-list li {
-    position: relative;
-    padding-left: 60px;
-    margin-bottom: 30px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 15px;
-    color: var(--text-pure);
-    line-height: 1.8;
-}
-.rules-list li::before {
-    counter-increment: rule-counter;
-    content: counter(rule-counter, decimal-leading-zero);
-    position: absolute;
-    left: 0;
-    top: -5px;
-    font-family: 'Cinzel', serif;
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--opera-red);
-    opacity: 0.5;
-}
-.rules-list li h4 {
-    color: var(--premium-gold);
-    margin-bottom: 8px;
-    font-size: 18px;
-}
-
-/* ==========================================================================
-   MEDIA QUERIES - RESPONSIVIDAD TOTAL
-   ========================================================================== */
-@media (max-width: 1400px) { 
-    .app-container { gap: 30px; padding-left: 30px; padding-right: 30px; }
-    .stats-banner { grid-template-columns: repeat(3, 1fr); gap: 30px; row-gap: 40px; }
-    .timeline-item { width: 100%; padding-left: 60px; padding-right: 0; text-align: left !important; }
-    .timeline-item:nth-child(even) { left: 0; }
-    .timeline-container::before { left: 20px; }
-    .timeline-dot { left: 10px !important; }
-}
-
-@media (max-width: 1024px) { 
-    .app-container { grid-template-columns: 1fr; padding-top: 140px; } 
-    .sidebar { 
-        position: fixed;
-        top: 90px;
-        left: -320px;
-        width: 300px;
-        height: calc(100vh - 90px);
-        background: rgba(5,6,8,0.98);
-        z-index: 900;
-        padding: 30px 20px;
-        border-right: 1px solid var(--border-glass);
-        transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        box-shadow: 20px 0 50px rgba(0,0,0,0.8);
-    } 
-    .sidebar.mobile-active { left: 0; }
-    
-    /* Botón Hamburguesa para Móvil */
-    .mobile-menu-toggle {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        width: 35px;
-        height: 25px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        z-index: 1001;
-    }
-    .mobile-menu-toggle span {
-        width: 100%;
-        height: 3px;
-        background: var(--text-pure);
-        transition: all 0.3s;
-        border-radius: 2px;
-    }
-
-    .hero-headline { font-size: 52px; }
-    .form-grid { grid-template-columns: 1fr; }
-}
-
-@media (min-width: 1025px) {
-    .mobile-menu-toggle { display: none; }
-}
-
-@media (max-width: 768px) { 
-    .main-header { padding: 0 20px; height: 80px; } 
-    .brand-title { font-size: 18px; } 
-    .brand-sub { font-size: 9px; letter-spacing: 4px; }
-    .logo { width: 45px; height: 45px; }
-    
-    .hero-headline { font-size: 38px; } 
-    .hero-subtitle { font-size: 15px; }
-    .badge-live { font-size: 10px; padding: 6px 16px; }
-    
-    .stats-banner { grid-template-columns: 1fr 1fr; } 
-    .stat-item { border-right: none; } 
-    
-    .section-panel { padding: 30px 20px; }
-    .panel-title { font-size: 32px; }
-    
-    .cards-grid, .technique-grid, .testimonials-grid { grid-template-columns: 1fr; }
-    
-    .video-frame-wrapper.hero-main-img { aspect-ratio: 16/9; }
-}
-
-@media (max-width: 480px) {
-    .stats-banner { grid-template-columns: 1fr; }
-    .hero-headline { font-size: 32px; }
-    .social-links { gap: 15px; }
-    .social-btn { width: 40px; height: 40px; font-size: 18px; }
-}
-
-/* ==========================================================================
-   UTILIDADES
-   ========================================================================== */
-.text-gold { color: var(--premium-gold); }
-.text-red { color: var(--opera-red); }
-.text-center { text-align: center; }
-.mt-20 { margin-top: 20px; }
-.mt-40 { margin-top: 40px; }
-.mb-20 { margin-bottom: 20px; }
-.mb-40 { margin-bottom: 40px; }
-
-</style>
-</head>
-<body>
-
-<!-- Fondos dinámicos y luces ambientales -->
-<canvas id="particleCanvas"></canvas>
-<div class="gx-scanlines"></div>
-<div class="ambient-light"></div>
-<div class="ambient-light right"></div>
-
-<!-- HEADER PRINCIPAL -->
-<header class="main-header">
-    <button class="brand-container nav-trigger" data-target="inicio">
-        <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Q2e6i85vtbGewCspuViqpB7VBVtsx9zaA7bgMTzjZg&s" alt="ELITE IRON CLUB - Santa Cruz">
-        <div>
-            <div class="brand-title">ELITE IRON CLUB</div>
-            <div class="brand-sub">Bolivian Armwrestling</div>
-        </div>
-    </button>
-    
-    <button class="mobile-menu-toggle" id="mobileMenuBtn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    
-    <div class="header-laser-line"></div>
-</header>
-
-<div class="app-container">
-
-    <!-- SIDEBAR / MENÚ DE NAVEGACIÓN -->
-    <nav class="sidebar" id="sidebar">
-        <div class="menu-category">Principal</div>
-        <button class="menu-btn nav-trigger active" data-target="inicio"><i class="fas fa-home"></i> Inicio</button>
-        <button class="menu-btn nav-trigger" data-target="historia"><i class="fas fa-book-open"></i> Nuestra Historia</button>
-        <button class="menu-btn nav-trigger" data-target="estadisticas"><i class="fas fa-chart-bar"></i> Estadísticas y Récords</button>
-        <button class="menu-btn nav-trigger" data-target="noticias"><i class="fas fa-newspaper"></i> Noticias del Club</button>
-        
-        <div class="menu-category">El Deporte</div>
-        <button class="menu-btn nav-trigger" data-target="tecnicas"><i class="fas fa-hand-rock"></i> Técnicas y Base</button>
-        <button class="menu-btn nav-trigger" data-target="categorias"><i class="fas fa-weight-hanging"></i> Categorías Oficiales</button>
-        <button class="menu-btn nav-trigger" data-target="reglamento"><i class="fas fa-gavel"></i> Reglamento</button>
-        <button class="menu-btn nav-trigger" data-target="entrenamiento"><i class="fas fa-dumbbell"></i> Entrenamiento</button>
-        <button class="menu-btn nav-trigger" data-target="nutricion"><i class="fas fa-apple-alt"></i> Nutrición Deportiva</button>
-        
-        <div class="menu-category">Competencia</div>
-        <button class="menu-btn nav-trigger" data-target="campeones"><i class="fas fa-crown"></i> Salón de la Fama</button>
-        <button class="menu-btn nav-trigger" data-target="ranking"><i class="fas fa-trophy"></i> Rankings</button>
-        <button class="menu-btn nav-trigger" data-target="calendario"><i class="fas fa-calendar-alt"></i> Calendario</button>
-        <button class="menu-btn nav-trigger" data-target="torneos"><i class="fas fa-medal"></i> Torneos</button>
-        
-        <div class="menu-category">Comunidad</div>
-        <button class="menu-btn nav-trigger" data-target="galeria"><i class="fas fa-images"></i> Galería Multimedia</button>
-        <button class="menu-btn nav-trigger" data-target="testimonios"><i class="fas fa-comments"></i> Testimonios</button>
-        <button class="menu-btn nav-trigger" data-target="faq"><i class="fas fa-question-circle"></i> FAQ</button>
-        
-        <div class="menu-category">Sede y Contacto</div>
-        <button class="menu-btn nav-trigger" data-target="ubicacion"><i class="fas fa-map-marker-alt"></i> Ubicación SCZ</button>
-        <button class="menu-btn nav-trigger" data-target="contacto"><i class="fas fa-envelope"></i> Contacto e Inscripción</button>
-    </nav>
-
-    <!-- ÁREA PRINCIPAL DE CONTENIDO -->
-    <main class="main-stage" id="stage">
-        
-        <!-- SECCIÓN: INICIO (PORTADA) -->
-        <section id="inicio" class="page-section active">
-            <div class="hero-portal">
-                <div class="hero-info-panel">
-                    <div class="badge-live">Fuerza • Honor • Gloria • Sangre Camba</div>
-                    
-                    <h1 class="hero-headline">ELITE IRON CLUB<br><span>SANTA CRUZ</span></h1>
-                    <p class="hero-subtitle">El epicentro de la Lucha de Brazos en Bolivia. Forjando el acero humano desde el corazón de Sudamérica. Únete a la élite del Armwrestling.</p>
-                    
-                    <div class="social-links">
-                        <a href="#" target="_blank" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" target="_blank" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank" class="social-btn" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" target="_blank" class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" target="_blank" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-
-                <!-- Imagen Principal Centrada y Ampliada -->
-                <div class="video-frame-wrapper hero-main-img">
-                    <img class="mock-video-bg" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1600&q=80" alt="Mesa de Campeonato Elite Iron Club">
-                    <div class="video-ui-overlay" style="align-items: center; text-align: center;">
-                        <div class="card-subtext" style="color: var(--opera-red); letter-spacing: 4px;">// EL HOGAR DE LOS CAMPEONES BOLIVIANOS</div>
-                        <h3 class="title-modern" style="font-size: 28px; font-style: italic;">Santa Cruz de la Sierra, Bolivia</h3>
-                    </div>
-                </div>
-                
-                <!-- Countdown Centrado -->
-                <div class="countdown-container" style="max-width: 600px; width: 100%; background: var(--bg-card); border: 1px solid var(--border-glass); border-top: 2px solid var(--opera-red); padding: 30px; border-radius: 8px; backdrop-filter: blur(10px);">
-                    <div class="countdown-title" style="font-size: 14px; color: var(--opera-red); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; text-align: center; font-family: 'Cinzel', serif;">TORNEO NACIONAL 'TIERRA CAMBA' // PRÓXIMO EVENTO</div>
-                    <div class="countdown-grid" id="clock" style="display: flex; justify-content: center; gap: 30px;">
-                        <div class="countdown-box" style="text-align: center;"><span class="countdown-unit" id="days" style="font-size: 42px; font-weight: 900;">00</span><span class="countdown-label" style="display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Días</span></div>
-                        <div class="countdown-box" style="text-align: center;"><span class="countdown-unit" id="hours" style="font-size: 42px; font-weight: 900;">00</span><span class="countdown-label" style="display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Hrs</span></div>
-                        <div class="countdown-box" style="text-align: center;"><span class="countdown-unit" id="minutes" style="font-size: 42px; font-weight: 900;">00</span><span class="countdown-label" style="display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Min</span></div>
-                        <div class="countdown-box" style="text-align: center;"><span class="countdown-unit" id="seconds" style="font-size: 42px; font-weight: 900;">00</span><span class="countdown-label" style="display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Seg</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: HISTORIA -->
-        <section id="historia" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">El Origen del Acero</h2>
-                <p class="panel-subtitle">Conoce cómo nació Elite Iron Club y el desarrollo del Armwrestling en Bolivia.</p>
-                
-                <div class="timeline-container">
-                    <!-- Timeline Item 1 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">2015</div>
-                            <h4 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--premium-gold); margin-bottom: 10px;">Los Inicios de la Pulseta Boliviana</h4>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">La lucha de brazos, tradicionalmente conocida como "pulseta" en Bolivia, comenzó a tomar tintes competitivos. Pequeños grupos en Santa Cruz empezaron a estudiar las reglas internacionales (WAF) y a construir las primeras mesas oficiales en garajes y patios.</p>
-                        </div>
-                    </div>
-                    <!-- Timeline Item 2 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">2018</div>
-                            <h4 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--premium-gold); margin-bottom: 10px;">Fundación de Elite Iron Club</h4>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">Nace oficialmente Elite Iron Club en Santa Cruz de la Sierra. Lo que comenzó como un pasatiempo se estructuró con entrenamientos biomecánicos, importación de equipamiento específico (fat grips, poleas) y la primera liga interna de la ciudad.</p>
-                        </div>
-                    </div>
-                    <!-- Timeline Item 3 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">2021</div>
-                            <h4 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--premium-gold); margin-bottom: 10px;">Expansión Nacional</h4>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">El club lideró el movimiento para conectar con atletas de Cochabamba, La Paz y Tarija. Se organizó el primer "Invitacional Nacional Cruceño", marcando un antes y un después en la unificación del deporte en Bolivia.</p>
-                        </div>
-                    </div>
-                    <!-- Timeline Item 4 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">2024 - Presente</div>
-                            <h4 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--premium-gold); margin-bottom: 10px;">Dominio y Proyección Internacional</h4>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">Elite Iron Club se consolida como la sede más grande de armwrestling en Bolivia. Con atletas compitiendo en sudamericanos, el club busca su primera medalla de oro panamericana, llevando el orgullo cruceño al mundo.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: ESTADÍSTICAS Y RÉCORDS -->
-        <section id="estadisticas" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">En Números</h2>
-                <p class="panel-subtitle">Estadísticas oficiales y récords históricos de Elite Iron Club.</p>
-                
-                <div class="stats-banner" style="margin-top: 0; background: transparent; border: none; padding-top: 20px;">
-                    <div class="stat-item"><span class="stat-number" data-val="124">0</span><span class="stat-desc">Miembros Activos</span></div>
-                    <div class="stat-item"><span class="stat-number" data-val="35">0</span><span class="stat-desc">Torneos Locales</span></div>
-                    <div class="stat-item"><span class="stat-number" data-val="12">0</span><span class="stat-desc">Campeones Nacionales</span></div>
-                    <div class="stat-item"><span class="stat-number" data-val="8">0</span><span class="stat-desc">Mesas Oficiales</span></div>
-                    <div class="stat-item"><span class="stat-number" data-val="1500">0</span><span class="stat-desc">Horas de Entrenamiento</span></div>
-                    <div class="stat-item"><span class="stat-number" data-val="5">0</span><span class="stat-desc">Participaciones Int.</span></div>
-                </div>
-
-                <h3 class="panel-title" style="font-size: 28px; margin-top: 60px;">Récords del Club (SuperMatch)</h3>
-                <div class="ranking-container">
-                    <table class="elite-table">
-                        <thead>
-                            <tr>
-                                <th>Categoría</th>
-                                <th>Atleta</th>
-                                <th>Récord / Logro</th>
-                                <th>Año</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Fuerza Absoluta (+105kg)</td>
-                                <td><strong>"El Tractor" Suárez</strong></td>
-                                <td>Mayor racha invicta: 18 SuperMatches al hilo.</td>
-                                <td>2023 - 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Libra por Libra (-75kg)</td>
-                                <td><strong>Luis "Rayo" Camacho</strong></td>
-                                <td>Victoria más rápida (Flash Pin): 0.3 segundos.</td>
-                                <td>2022</td>
-                            </tr>
-                            <tr>
-                                <td>Resistencia (Hook)</td>
-                                <td><strong>Marcos "Piedra" Roca</strong></td>
-                                <td>Match más largo de la historia del club: 4 min 12 seg.</td>
-                                <td>2021</td>
-                            </tr>
-                            <tr>
-                                <td>Femenino Libre</td>
-                                <td><strong>Carla "Valkiria" Justiniano</strong></td>
-                                <td>Primera medalla internacional (Plata, Sudamericano).</td>
-                                <td>2024</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: NOTICIAS -->
-        <section id="noticias" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Noticias del Club</h2>
-                <p class="panel-subtitle">Últimas novedades, seminarios y actualizaciones desde Santa Cruz.</p>
-                
-                <div class="cards-grid">
-                    <div class="cyber-card">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80" alt="Noticia 1">
-                        <div class="card-subtext">12 de Julio, 2026</div>
-                        <h3 class="card-header-title" style="font-size: 20px;">Nuevo Equipamiento Especializado</h3>
-                        <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">El club acaba de importar nuevas poleas excéntricas y mangos de pronación directos desde Europa, elevando el nivel de nuestros entrenamientos al estándar mundial.</p>
-                        <button class="menu-btn form-trigger" style="height: 35px; font-size: 10px;">Leer Más</button>
-                    </div>
-                    <div class="cyber-card">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&q=80" alt="Noticia 2">
-                        <div class="card-subtext">05 de Julio, 2026</div>
-                        <h3 class="card-header-title" style="font-size: 20px;">Seminario: Biomecánica del Top Roll</h3>
-                        <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Tuvimos casa llena en el seminario impartido por nuestro Head Coach. Más de 40 atletas cruceños perfeccionaron su técnica de palanca superior.</p>
-                        <button class="menu-btn form-trigger" style="height: 35px; font-size: 10px;">Leer Más</button>
-                    </div>
-                    <div class="cyber-card">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1583465805461-a083d0382b68?auto=format&fit=crop&q=80" alt="Noticia 3">
-                        <div class="card-subtext">28 de Junio, 2026</div>
-                        <h3 class="card-header-title" style="font-size: 20px;">Delegación viaja al Nacional</h3>
-                        <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Confirmada la lista de los 15 guerreros de Elite Iron Club que representarán a Santa Cruz en el próximo torneo nacional de clubes en Cochabamba.</p>
-                        <button class="menu-btn form-trigger" style="height: 35px; font-size: 10px;">Leer Más</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: TÉCNICAS -->
-        <section id="tecnicas" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Técnicas de Armwrestling</h2>
-                <p class="panel-subtitle">El armwrestling no es solo fuerza, es física, palancas y estrategia. Conoce los tres pilares del deporte.</p>
-                
-                <div class="technique-grid">
-                    <!-- Técnica 1 -->
-                    <div class="technique-card">
-                        <div class="technique-inner">
-                            <div class="technique-front" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80');">
-                                <div class="technique-front-overlay">
-                                    <h3 style="font-family: 'Cinzel', serif; font-size: 26px; color: #fff; margin-bottom: 5px;">TOP ROLL</h3>
-                                    <p style="color: var(--premium-gold); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px;">Palanca por Fuera</p>
-                                </div>
-                            </div>
-                            <div class="technique-back">
-                                <h4>La Técnica del Top Roll</h4>
-                                <p>El objetivo del Top Roll es atacar los dedos y la muñeca del oponente. Utilizando la pronación (girar la mano hacia afuera) y jalando hacia atrás (Back pressure), se busca abrir la mano del rival, neutralizando su bíceps y obligándolo a ceder.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Técnica 2 -->
-                    <div class="technique-card">
-                        <div class="technique-inner">
-                            <div class="technique-front" style="background-image: url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80');">
-                                <div class="technique-front-overlay">
-                                    <h3 style="font-family: 'Cinzel', serif; font-size: 26px; color: #fff; margin-bottom: 5px;">HOOK</h3>
-                                    <p style="color: var(--premium-gold); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px;">Lucha Interna</p>
-                                </div>
-                            </div>
-                            <div class="technique-back">
-                                <h4>El Poder del Hook</h4>
-                                <p>El Hook (gancho) es una técnica de fuerza brutal y contacto cercano. Consiste en flexionar (supinar) la muñeca hacia adentro, involucrando profundamente el bíceps, hombro y pecho. Es una guerra de resistencia y pura potencia estructural.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Técnica 3 -->
-                    <div class="technique-card">
-                        <div class="technique-inner">
-                            <div class="technique-front" style="background-image: url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80');">
-                                <div class="technique-front-overlay">
-                                    <h3 style="font-family: 'Cinzel', serif; font-size: 26px; color: #fff; margin-bottom: 5px;">PRESS</h3>
-                                    <p style="color: var(--premium-gold); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px;">El Ataque Letal</p>
-                                </div>
-                            </div>
-                            <div class="technique-back">
-                                <h4>El Press de Tríceps</h4>
-                                <p>Una técnica agresiva que depende de colocar el hombro detrás de la mano y usar el tríceps y el peso corporal para aplastar la mano del oponente hacia la almohadilla. Requiere mucha precaución y una posición ósea perfecta para evitar lesiones.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-wrapper" style="margin-top: 50px; text-align: center; border-left: none; border-top: 4px solid var(--scz-green);">
-                    <h3 class="panel-title" style="font-size: 24px;">¿Información para Principiantes?</h3>
-                    <p style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-pure); margin-bottom: 20px;">Si nunca has competido y quieres probar la mesa sin riesgo a lesionarte, tenemos clases de iniciación donde te enseñamos cómo colocar el codo, cómo agarrar y cómo evitar posiciones peligrosas ("Break arm position").</p>
-                    <button class="menu-btn nav-trigger" data-target="contacto" style="width: auto; margin: 0 auto; padding: 0 30px;">Solicitar Clase de Prueba</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: CATEGORÍAS -->
-        <section id="categorias" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Categorías Oficiales</h2>
-                <p class="panel-subtitle">Nuestras divisiones están alineadas con las normativas internacionales para garantizar competencias justas y seguras.</p>
-                
-                <div class="cards-grid">
-                    <div class="cyber-card">
-                        <i class="fas fa-seedling text-gold" style="font-size: 40px; margin-bottom: 20px;"></i>
-                        <h3 class="card-header-title">Novatos</h3>
-                        <p class="card-subtext">Iniciantes del Deporte</p>
-                        <p style="color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 14px; margin-bottom: 20px;">Para atletas con menos de 1 año de experiencia o que nunca han subido al podio en un torneo. Categorías unificadas: -80kg y +80kg.</p>
-                    </div>
-                    <div class="cyber-card">
-                        <i class="fas fa-bolt text-red" style="font-size: 40px; margin-bottom: 20px;"></i>
-                        <h3 class="card-header-title">Profesionales</h3>
-                        <p class="card-subtext">Clase A y B</p>
-                        <div style="color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 14px; margin-bottom: 20px;">
-                            Separación por peso estricta:
-                            <ul style="margin-left: 20px; margin-top: 10px; color: var(--text-pure); line-height: 1.8;">
-                                <li>Peso Ligero: <strong>-70 kg</strong></li>
-                                <li>Peso Welter: <strong>-80 kg</strong></li>
-                                <li>Peso Medio: <strong>-90 kg</strong></li>
-                                <li>Peso Pesado: <strong>-105 kg</strong></li>
-                                <li>Super Pesado: <strong>+105 kg</strong></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="cyber-card">
-                        <i class="fas fa-venus text-gold" style="font-size: 40px; margin-bottom: 20px;"></i>
-                        <h3 class="card-header-title">Femenino</h3>
-                        <p class="card-subtext">Guerreras de Acero</p>
-                        <p style="color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 14px; margin-bottom: 20px;">Categoría en pleno crecimiento en Santa Cruz. Actualmente dividida en -65kg y Libre. Evaluación técnica estricta para prevención de lesiones.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: REGLAMENTO -->
-        <section id="reglamento" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Reglamento Básico</h2>
-                <p class="panel-subtitle">El Armwrestling es un deporte regulado y estricto. Las faltas y las reglas de seguridad son inquebrantables en Elite Iron Club.</p>
-                
-                <div class="form-wrapper" style="border-left: none; border-top: 4px solid var(--opera-red);">
-                    <ul class="rules-list">
-                        <li>
-                            <h4>Posición de Inicio (Setup)</h4>
-                            <p>Los hombros deben estar paralelos a la mesa. Las manos deben estar en el centro, con las falanges del pulgar visibles. La mano libre debe sujetar la clavija de agarre en todo momento.</p>
-                        </li>
-                        <li>
-                            <h4>Reglas de Codo y Faltas (Fouls)</h4>
-                            <p>El codo no puede salir del pad (almohadilla) ni perder contacto con él (Elbow foul). Levantar el codo intencionalmente en posición perdedora es falta. Dos faltas equivalen a una derrota en el round.</p>
-                        </li>
-                        <li>
-                            <h4>Seguridad: La Regla del Hombro y el Brazo Roto</h4>
-                            <p>ESTRICTO: El hombro del brazo que compite nunca debe cruzar el centro de la mesa ni situarse por debajo de la línea de la muñeca (posición de fractura del húmero). Los árbitros detendrán la pelea inmediatamente (Dangerous Position).</p>
-                        </li>
-                        <li>
-                            <h4>El Deslizamiento (Slip) y la Correa (Strap)</h4>
-                            <p>Si las manos se sueltan involuntariamente y no hay falta, se considera "Slip". El árbitro atará las manos de los competidores con una correa oficial (Strap) y el combate reiniciará.</p>
-                        </li>
-                        <li>
-                            <h4>El Pin (Victoria)</h4>
-                            <p>La victoria se declara cuando cualquier parte de la mano, muñeca o antebrazo del oponente toca o cruza el plano del pad de toque (Touch Pad).</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: ENTRENAMIENTO -->
-        <section id="entrenamiento" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Planes de Entrenamiento</h2>
-                <p class="panel-subtitle">En Elite Iron Club no entrenamos como fisicoculturistas, entrenamos fuerzas vectoriales. Nuestros programas están enfocados en la especificidad del deporte.</p>
-                
-                <div class="cards-grid">
-                    <div class="cyber-card">
-                        <h3 class="card-header-title">Fuerza de Mesa (Table Time)</h3>
-                        <p class="card-subtext">Sábados - 15:00 hrs</p>
-                        <p style="color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 14px;">El entrenamiento más importante. Práctica real en la mesa de campeonato contra compañeros del club para condicionar los tendones y practicar salidas explosivas, transiciones y resistencia.</p>
-                    </div>
-                    <div class="cyber-card">
-                        <h3 class="card-header-title">Poleas y Vectores</h3>
-                        <p class="card-subtext">Martes y Jueves</p>
-                        <p style="color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 14px;">Uso de mangos especializados (cono, cilindro hueco, cinta de judo) en máquinas de cable. Entrenamos pronación, supinación, back pressure (jalón dorsal) y rising (levantamiento radial).</p>
-                    </div>
-                    <div class="cyber-card">
-                        <h3 class="card-header-title">Isometría y Agarre</h3>
-                        <p class="card-subtext">Rutina Individual</p>
-                        <p style="color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 14px;">Ejercicios de sostenimiento pesado para los dedos (Cupping) y pinzas. Un agarre de acero es el 50% de la pelea. Utilizamos hand grippers, cuelgues estáticos y levantamiento de peso con toalla.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: NUTRICIÓN -->
-        <section id="nutricion" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Nutrición del Competidor</h2>
-                <p class="panel-subtitle">Para sanar tendones y mantener el peso de categoría, la nutrición debe ser clínica.</p>
-                
-                <div class="form-wrapper" style="background: rgba(20,24,32,0.8);">
-                    <div class="form-grid">
-                        <div>
-                            <h3 style="font-family: 'Cinzel', serif; color: var(--premium-gold); margin-bottom: 15px;">Recuperación de Tendones</h3>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-pure); margin-bottom: 20px;">El Armwrestling causa microdesgarros extremos en los tejidos conectivos (no solo en el músculo).<br><br><strong>Recomendaciones del Club:</strong><br>- Alto consumo de Colágeno Hidrolizado y Vitamina C.<br>- Suplementación con Omega 3 para reducir la inflamación articular.<br>- Carga alta de proteínas (1.8g a 2.2g por kg de peso).</p>
-                        </div>
-                        <div>
-                            <h3 style="font-family: 'Cinzel', serif; color: var(--premium-gold); margin-bottom: 15px;">Cortes de Peso (Water Cut)</h3>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-pure); margin-bottom: 20px;">Para encajar en la categoría oficial el día del pesaje.<br><br>Asesoramos a nuestros atletas para realizar cortes de peso de agua seguros (Water Loading), manipulación de sodio y carbohidratos, asegurando rehidratación total antes de pisar la mesa para evitar desgarros del bíceps por deshidratación.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: CAMPEONES / SALÓN DE LA FAMA (REDISEÑO CON VIDEO PLACEHOLDER) -->
-        <section id="campeones" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Salón de la Fama</h2>
-                <p class="panel-subtitle">La élite de Elite Iron Club. Aquellos que han defendido nuestra bandera en las batallas más duras y han traído gloria a Santa Cruz.</p>
-                
-                <div class="hall-of-fame-showcase">
-                    <!-- Única Imagen Solicitada -->
-                    <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1200&q=80" alt="Salón de la Fama - Elite Iron Club" style="width: 100%; max-width: 1000px; border-radius: 8px; border: 2px solid var(--premium-gold); box-shadow: 0 20px 50px rgba(207,168,96,0.2);">
-                    
-                    <!-- Espacio Elegante para Video en el Futuro -->
-                    <div class="future-video-placeholder">
-                        <i class="fas fa-play-circle"></i>
-                        <div class="future-video-text">ESPACIO PARA DOCUMENTAL OFICIAL</div>
-                        <div class="future-video-subtext">Tráiler "Sangre, Sudor y Tiza: La Historia de Elite Iron Club" - Próximamente</div>
-                    </div>
-                </div>
-                
-                <div style="text-align: center; margin-top: 60px;">
-                    <h3 style="font-family: 'Cinzel', serif; font-size: 32px; color: var(--text-pure);">Futuros Campeones</h3>
-                    <p style="font-family: 'Montserrat', sans-serif; color: var(--text-muted); max-width: 600px; margin: 15px auto;">La mesa siempre está lista. El próximo nombre grabado en esta página puede ser el tuyo. Disciplina, dolor y gloria te esperan.</p>
-                    <button class="menu-btn nav-trigger" data-target="contacto" style="width: auto; margin: 30px auto 0; padding: 0 40px; justify-content: center; background: var(--opera-red); border-color: var(--opera-red);">Comienza tu Legado Hoy</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: RANKINGS -->
-        <section id="ranking" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Rankings Oficiales</h2>
-                <p class="panel-subtitle">Clasificación interna de Elite Iron Club, actualizada tras el último "King of the Table - SCZ".</p>
-                
-                <h3 style="font-family: 'Cinzel', serif; color: var(--premium-gold); margin-top: 30px; font-size: 22px;">Brazo Derecho - Categoría Absoluta (Top 5)</h3>
-                <div class="ranking-container">
-                    <table class="elite-table">
-                        <thead>
-                            <tr>
-                                <th>Posición</th>
-                                <th>Atleta</th>
-                                <th>Peso Corporal</th>
-                                <th>Técnica Principal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="rank-1">
-                                <td><div class="rank-badge">1</div></td>
-                                <td><strong>"Tractor" Suárez</strong></td>
-                                <td>112 kg</td>
-                                <td>Hook / Press</td>
-                            </tr>
-                            <tr class="rank-2">
-                                <td><div class="rank-badge">2</div></td>
-                                <td><strong>Rodrigo "Oso" Méndez</strong></td>
-                                <td>98 kg</td>
-                                <td>Top Roll Defensivo</td>
-                            </tr>
-                            <tr class="rank-3">
-                                <td><div class="rank-badge">3</div></td>
-                                <td><strong>Alejandro Vargas</strong></td>
-                                <td>92 kg</td>
-                                <td>Posting Top Roll</td>
-                            </tr>
-                            <tr>
-                                <td><div class="rank-badge" style="border-color: #555; color: #888;">4</div></td>
-                                <td><strong>Cristian "Lobo" Parada</strong></td>
-                                <td>88 kg</td>
-                                <td>High Hook</td>
-                            </tr>
-                            <tr>
-                                <td><div class="rank-badge" style="border-color: #555; color: #888;">5</div></td>
-                                <td><strong>Miguel "Roca" Silva</strong></td>
-                                <td>105 kg</td>
-                                <td>King's Move / Desperation</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="form-wrapper" style="margin-top: 40px; background: rgba(207,168,96,0.05); border-left-color: var(--opera-red);">
-                    <h3 style="font-family: 'Cinzel', serif; color: var(--text-pure); margin-bottom: 10px;">Ranking Nacional WAF Bolivia</h3>
-                    <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">Elite Iron Club tiene a 4 atletas posicionados en el Top 10 Nacional absoluto. Nuestro objetivo es dominar la tabla general para el cierre del año 2026.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: CALENDARIO -->
-        <section id="calendario" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Calendario de Eventos</h2>
-                <p class="panel-subtitle">Agenda oficial 2026. Fechas sujetas a confirmación por la Federación.</p>
-                
-                <div class="timeline-container" style="max-width: 800px;">
-                    <!-- Evento 1 -->
-                    <div class="timeline-item" style="width: 100%; text-align: left; padding: 0 0 20px 40px; margin-bottom: 20px;">
-                        <div class="timeline-dot" style="left: -10px;"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">15 Agosto 2026</div>
-                            <h4 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--premium-gold); margin-bottom: 10px;">Torneo Interno "Sangre y Tiza"</h4>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">Sede: Elite Iron Club, Santa Cruz.<br>Evaluación de ranking interno. Obligatorio para todos los miembros.</p>
-                        </div>
-                    </div>
-                    <!-- Evento 2 -->
-                    <div class="timeline-item" style="width: 100%; text-align: left; padding: 0 0 20px 40px; margin-bottom: 20px;">
-                        <div class="timeline-dot" style="left: -10px; border-color: var(--opera-red);"></div>
-                        <div class="timeline-content" style="border-color: rgba(230,0,58,0.3);">
-                            <div class="timeline-date" style="background: var(--opera-red); color: white;">12 Octubre 2026</div>
-                            <h4 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--text-pure); margin-bottom: 10px;">Campeonato Nacional de Clubes</h4>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">Sede: Cochabamba, Bolivia.<br>Evento principal del año. Clasificatorio directo para el Sudamericano.</p>
-                        </div>
-                    </div>
-                    <!-- Evento 3 -->
-                    <div class="timeline-item" style="width: 100%; text-align: left; padding: 0 0 20px 40px;">
-                        <div class="timeline-dot" style="left: -10px;"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">05 Diciembre 2026</div>
-                            <h4 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--premium-gold); margin-bottom: 10px;">Copa Andina Internacional</h4>
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted);">Sede: La Paz, Bolivia.<br>Invitados especiales de Perú, Chile y Argentina. Supermatches a 6 rondas.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: TORNEOS (Existente pero mejorada) -->
-        <section id="torneos" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Torneos Elite</h2>
-                <p class="panel-subtitle">Eventos insignia donde Elite Iron Club participa o actúa como promotor.</p>
-                <div class="cards-grid">
-                    <div class="cyber-card">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&q=80" alt="Torneo Nacional">
-                        <h3 class="card-header-title">Nacional Iron 2026</h3>
-                        <p class="card-subtext" style="color: var(--scz-green);">Santa Cruz, Bolivia</p>
-                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">El evento central organizado en nuestra casa. Equipos de los 9 departamentos buscando el oro.</p>
-                        <button class="menu-btn nav-trigger" style="height: 40px; font-size: 11px; justify-content: center;" data-target="contacto">Preinscripción</button>
-                    </div>
-                    <div class="cyber-card">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80" alt="Copa Andina">
-                        <h3 class="card-header-title">Copa Andina</h3>
-                        <p class="card-subtext" style="color: var(--bol-yellow);">Internacional</p>
-                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">La batalla de la altura. Evento de preparación extremo para probar la resistencia cardiovascular de nuestros atletas pesados.</p>
-                        <button class="menu-btn nav-trigger" style="height: 40px; font-size: 11px; justify-content: center;" data-target="contacto">Solicitar Info</button>
-                    </div>
-                    <div class="cyber-card">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80" alt="King of the Table">
-                        <h3 class="card-header-title">King of the Table</h3>
-                        <p class="card-subtext" style="color: var(--opera-red);">Desafíos Super Match</p>
-                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">Formato profesional. 6 rondas. El ganador se lleva el pozo acumulado. Solo para el Top 10 del ranking.</p>
-                        <button class="menu-btn nav-trigger" style="height: 40px; font-size: 11px; justify-content: center;" data-target="contacto">Comprar Entradas</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: GALERÍA MULTIMEDIA -->
-        <section id="galeria" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Archivo Multimedia</h2>
-                <p class="panel-subtitle">La intensidad de la mesa capturada en fotos y videos. Haz clic en las imágenes para ampliarlas.</p>
-                
-                <h3 style="font-family: 'Cinzel', serif; color: var(--premium-gold); margin-top: 20px; margin-bottom: 15px;">Fotografías Destacadas</h3>
-                <div class="gallery-grid">
-                    <div class="gallery-item lightbox-trigger" data-src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80">
-                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80" alt="Momentos Históricos">
-                        <div class="gallery-overlay"><span class="badge-live">Tensión Máxima</span></div>
-                    </div>
-                    <div class="gallery-item lightbox-trigger" data-src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80">
-                        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&q=80" alt="Mesa Clásica">
-                        <div class="gallery-overlay"><span class="badge-live">Preparación</span></div>
-                    </div>
-                    <div class="gallery-item lightbox-trigger" data-src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&q=80">
-                        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&q=80" alt="Competencia">
-                        <div class="gallery-overlay"><span class="badge-live">El Pin</span></div>
-                    </div>
-                    <div class="gallery-item lightbox-trigger" data-src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80">
-                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80" alt="Victoria">
-                        <div class="gallery-overlay"><span class="badge-live">Victoria Camba</span></div>
-                    </div>
-                    <div class="gallery-item lightbox-trigger" data-src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80">
-                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80" alt="Gimnasio">
-                        <div class="gallery-overlay"><span class="badge-live">Table Time</span></div>
-                    </div>
-                    <div class="gallery-item lightbox-trigger" data-src="https://images.unsplash.com/photo-1583465805461-a083d0382b68?auto=format&fit=crop&q=80">
-                        <img src="https://images.unsplash.com/photo-1583465805461-a083d0382b68?auto=format&fit=crop&q=80" alt="Magnesia">
-                        <div class="gallery-overlay"><span class="badge-live">Magnesia y Sangre</span></div>
-                    </div>
-                </div>
-
-                <h3 style="font-family: 'Cinzel', serif; color: var(--premium-gold); margin-top: 50px; margin-bottom: 15px;">Clips de Combate (Simulación)</h3>
-                <div class="gallery-grid" style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));">
-                    <div class="gallery-item" style="aspect-ratio: 16/9; background: #000;">
-                        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&q=80" style="opacity: 0.6;">
-                        <div class="gallery-overlay" style="opacity: 1; background: rgba(0,0,0,0.5);">
-                            <i class="fas fa-play-circle play-icon"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-item" style="aspect-ratio: 16/9; background: #000;">
-                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80" style="opacity: 0.6;">
-                        <div class="gallery-overlay" style="opacity: 1; background: rgba(0,0,0,0.5);">
-                            <i class="fas fa-play-circle play-icon"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: TESTIMONIOS Y PATROCINADORES -->
-        <section id="testimonios" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Nuestra Comunidad</h2>
-                <p class="panel-subtitle">Lo que dicen nuestros atletas y quienes apoyan el deporte en Bolivia.</p>
-                
-                <div class="testimonials-grid">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"Llegué creyendo que ser fuerte en el gimnasio era suficiente. En mi primer día, un tipo de 70kg me ganó sin esfuerzo. Ahí entendí que el armwrestling es un ajedrez biomecánico. Elite Iron Club me formó desde cero."</p>
-                        <div class="testimonial-author">
-                            <img class="author-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Avatar">
-                            <div class="author-info">
-                                <h5>Carlos Moreno</h5>
-                                <span>Categoría -90kg</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"Como mujer, fue intimidante al principio entrar a un deporte de pura fuerza, pero el ambiente en Santa Cruz es de puro respeto y compañerismo. Nos cuidamos, nos enseñamos y crecemos juntos."</p>
-                        <div class="testimonial-author">
-                            <img class="author-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar">
-                            <div class="author-info">
-                                <h5>Daniela Paz</h5>
-                                <span>Categoría Femenina Libre</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 style="font-family: 'Cinzel', serif; color: var(--text-pure); margin-top: 60px; text-align: center;">Marcas que Forjan el Acero</h3>
-                <div class="sponsors-track">
-                    <!-- Logos simulados con iconos de fontawesome para evitar enlaces rotos o marcas reales no autorizadas -->
-                    <i class="fas fa-dumbbell sponsor-logo" style="font-size: 50px; color: #fff;" title="Gym Partner"></i>
-                    <i class="fas fa-bolt sponsor-logo" style="font-size: 50px; color: #fff;" title="Energy Drink"></i>
-                    <i class="fas fa-capsules sponsor-logo" style="font-size: 50px; color: #fff;" title="Supplements"></i>
-                    <i class="fas fa-tshirt sponsor-logo" style="font-size: 50px; color: #fff;" title="Sports Apparel"></i>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: PREGUNTAS FRECUENTES (FAQ) -->
-        <section id="faq" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Preguntas Frecuentes</h2>
-                <p class="panel-subtitle">Resolvemos tus dudas antes de que pises la mesa por primera vez.</p>
-                
-                <div class="faq-container">
-                    <div class="faq-item">
-                        <button class="faq-question">¿Me puedo romper el brazo? <i class="fas fa-chevron-down"></i></button>
-                        <div class="faq-answer">Sí, el riesgo de fractura de húmero existe si no sabes lo que haces (posición "Break Arm"). Por eso, es <strong>obligatorio</strong> tomar nuestra clase de inducción. Te enseñaremos cómo mirar siempre a tu mano y mover el hombro junto con tu brazo para que el riesgo sea prácticamente nulo.</div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">¿Necesito ser musculoso o ir al gimnasio para empezar? <i class="fas fa-chevron-down"></i></button>
-                        <div class="faq-answer">No. El armwrestling utiliza músculos y tendones (especialmente mano, muñeca, pronadores y tendones del codo) que el gimnasio tradicional no entrena. Muchas personas delgadas con tendones fuertes o trabajos manuales (mecánicos, carpinteros) tienen una fuerza base increíble en la mesa.</div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">¿Cuánto cuesta la mensualidad en Elite Iron Club? <i class="fas fa-chevron-down"></i></button>
-                        <div class="faq-answer">Nuestras cuotas son accesibles y están pensadas para fomentar el deporte en Santa Cruz. Contamos con planes que incluyen solo acceso a "Table Time" (Sábados) o planes completos con rutinas y uso de poleas especializadas. Contáctanos mediante el formulario para precios actualizados.</div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">¿Hay categorías por edad? <i class="fas fa-chevron-down"></i></button>
-                        <div class="faq-answer">Sí. Contamos con categorías Junior (Menores de 18), Senior (18 a 40) y Master (+40 años). Todo regulado para que compitas con personas de tu misma complexión y experiencia.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: UBICACIÓN Y HORARIOS -->
-        <section id="ubicacion" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Sede y Horarios</h2>
-                <p class="panel-subtitle">El templo del hierro y el magnesio en Santa Cruz de la Sierra.</p>
-                
-                <div class="form-grid" style="margin-top: 30px;">
-                    <div>
-                        <h3 class="card-header-title" style="margin-bottom: 15px; color: var(--premium-gold);">Ubicación Oficial</h3>
-                        <p style="color: var(--text-pure); font-family: 'Montserrat', sans-serif; font-size: 15px; margin-bottom: 10px;"><i class="fas fa-map-marker-alt text-red"></i> 3er Anillo Interno, Equipetrol, Santa Cruz, Bolivia.</p>
-                        <p style="color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 14px; margin-bottom: 25px;">Haz clic en el mapa interactivo para abrir la navegación directa en Google Maps.</p>
-                        
-                        <a href="https://www.google.com/maps/place/Santa+Cruz+de+la+Sierra,+Bolivia/" target="_blank" style="display: block; position: relative; border: 2px solid var(--border-glass); border-radius: 8px; overflow: hidden; transition: all 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                            <img src="https://images.unsplash.com/photo-1588661621217-1906a5bb00d0?auto=format&fit=crop&w=800&q=80" alt="Mapa Santa Cruz" style="width: 100%; height: 250px; object-fit: cover; filter: grayscale(40%) contrast(1.2);">
-                            <div class="video-ui-overlay" style="align-items: center; justify-content: center; opacity: 0.9; background: rgba(5,6,8,0.7);">
-                                <div class="badge-live" style="font-size: 14px; padding: 10px 20px; text-align: center;">ABRIR EN GOOGLE MAPS</div>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 8px; border: 1px solid var(--border-glass);">
-                        <h3 class="card-header-title" style="margin-bottom: 20px;">Horarios de Atención</h3>
-                        
-                        <ul style="list-style: none; font-family: 'Montserrat', sans-serif; color: var(--text-pure); font-size: 15px;">
-                            <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--border-glass-strong);">
-                                <strong>Lunes, Miércoles y Viernes:</strong> <span>16:00 - 21:00</span>
-                            </li>
-                            <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--border-glass-strong);">
-                                <strong>Martes y Jueves:</strong> <span>(Poleas y Agarre) 17:00 - 22:00</span>
-                            </li>
-                            <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--border-glass-strong); color: var(--premium-gold);">
-                                <strong>Sábados (Table Time):</strong> <span>15:00 - 19:00</span>
-                            </li>
-                            <li style="display: flex; justify-content: space-between; padding: 12px 0; color: var(--opera-red);">
-                                <strong>Domingos:</strong> <span>Cerrado (Recuperación)</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN: CONTACTO E INSCRIPCIÓN -->
-        <section id="contacto" class="page-section">
-            <div class="section-panel">
-                <h2 class="panel-title">Únete a la Élite</h2>
-                <p class="panel-subtitle">Ya sea para inscribirte como miembro, invitar a tu club a un torneo, o si eres una marca buscando patrocinar eventos en Santa Cruz. Completa el formulario.</p>
-                
-                <div class="form-wrapper">
-                    <form id="formulario-registro">
-                        <div class="form-grid">
-                            <!-- Tipo de solicitud -->
-                            <div class="form-group full-width">
-                                <label class="form-label">¿Cuál es el motivo de tu mensaje?</label>
-                                <select class="cyber-input" id="tipo_solicitud" required>
-                                    <option value="" disabled selected>Selecciona una opción...</option>
-                                    <option value="inscripcion">Inscripción / Quiero Entrenar</option>
-                                    <option value="torneo">Participar en Torneo Nacional</option>
-                                    <option value="patrocinio">Patrocinio Comercial</option>
-                                    <option value="consulta">Consulta General</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Datos Personales -->
-                            <div class="form-group">
-                                <label class="form-label">Nombre Completo</label>
-                                <input type="text" class="cyber-input" placeholder="Tu nombre" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Teléfono (WhatsApp)</label>
-                                <input type="tel" class="cyber-input" placeholder="+591 7XXXXXXX" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Ciudad / Departamento</label>
-                                <input type="text" class="cyber-input" placeholder="Ej. Santa Cruz de la Sierra" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Edad</label>
-                                <input type="number" class="cyber-input" placeholder="Años" min="12" max="99" required>
-                            </div>
-                            
-                            <!-- Datos Específicos Armwrestling -->
-                            <div class="form-group">
-                                <label class="form-label">Peso Corporal Actual (kg)</label>
-                                <input type="number" class="cyber-input" placeholder="Ej. 85" min="40" max="250">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Tiempo de Experiencia</label>
-                                <select class="cyber-input">
-                                    <option value="ninguna">Ninguna / Primera vez</option>
-                                    <option value="meses">Menos de 6 meses</option>
-                                    <option value="1_3_anios">1 a 3 años</option>
-                                    <option value="pro">Profesional (+3 años)</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Mensaje libre -->
-                            <div class="form-group full-width">
-                                <label class="form-label">Mensaje Adicional</label>
-                                <textarea class="cyber-input" placeholder="Cuéntanos tus expectativas, lesiones previas, o detalles de tu consulta..."></textarea>
-                            </div>
-                            
-                            <!-- Checkbox -->
-                            <div class="form-group full-width checkbox-group">
-                                <input type="checkbox" id="acepto_reglas" required>
-                                <label for="acepto_reglas" style="font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--text-muted);">
-                                    He leído y comprendo que el Armwrestling es un deporte de contacto con riesgos inherentes, y me comprometo a acatar las reglas de seguridad de Elite Iron Club.
-                                </label>
-                            </div>
-                            
-                            <!-- Botón de Envío -->
-                            <div class="form-group full-width submit-btn-wrapper">
-                                <button type="submit" id="btn-enviar-solicitud" class="btn-primary" disabled>Enviar Solicitud <i class="fas fa-paper-plane" style="margin-left: 10px;"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-        
-    </main>
-</div>
-
-<!-- LIGHTBOX MODAL (Para galería) -->
-<div class="lightbox-modal" id="lightbox">
-    <i class="fas fa-times lightbox-close" id="lightboxClose"></i>
-    <img class="lightbox-content" id="lightboxImg" src="" alt="Zoom Modal">
-</div>
-<!-- SCRIPT PRINCIPAL -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        
-        // 1. NAVEGACIÓN Y SIDEBAR
-        const triggers = document.querySelectorAll('.nav-trigger');
-        const sections = document.querySelectorAll('.page-section');
-        const sidebar = document.getElementById('sidebar');
-        const mobileBtn = document.getElementById('mobileMenuBtn');
-        
-        function switchSection(targetId) {
-            // Quitar active de todas las secciones y botones
-            sections.forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-trigger').forEach(btn => btn.classList.remove('active'));
-            
-            // Activar la nueva sección y su botón correspondiente
-            const targetSection = document.getElementById(targetId);
-            if(targetSection) targetSection.classList.add('active');
-            
-            document.querySelectorAll(`.nav-trigger[data-target="${targetId}"]`).forEach(btn => {
-                btn.classList.add('active');
-            });
-            
-            // Scroll top suave y cerrar menú móvil si está abierto
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            sidebar.classList.remove('active');
-            mobileBtn.classList.remove('active');
-        }
-
-        triggers.forEach(trigger => {
-            trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = trigger.getAttribute('data-target');
-                if(target) switchSection(target);
-            });
-        });
-
-        // Toggle menú móvil
-        mobileBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            mobileBtn.classList.toggle('active');
-        });
-
-        // 2. CUENTA REGRESIVA (Torneo Octubre 2026)
-        const eventDate = new Date("Oct 12, 2026 09:00:00").getTime();
-        
-        const countdownTimer = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = eventDate - now;
-            
-            if (distance < 0) {
-                clearInterval(countdownTimer);
-                document.getElementById("clock").innerHTML = "<div style='color: var(--opera-red); font-size: 24px; font-weight: bold;'>¡EL TORNEO HA COMENZADO!</div>";
-                return;
-            }
-            
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            document.getElementById("days").innerText = days < 10 ? '0' + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
-        }, 1000);
-
-        // 3. ANIMACIÓN DE ESTADÍSTICAS (Contador incremental)
-        const statNumbers = document.querySelectorAll('.stat-number');
-        let statsAnimated = false;
-
-        const animateStats = () => {
-            statNumbers.forEach(stat => {
-                const target = +stat.getAttribute('data-val');
-                const duration = 2000; // ms
-                const increment = target / (duration / 16); // asumiendo 60fps
-                let current = 0;
-
-                const updateCounter = () => {
-                    current += increment;
-                    if (current < target) {
-                        stat.innerText = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        stat.innerText = target + (target > 500 ? '+' : '');
-                    }
-                };
-                updateCounter();
-            });
-        };
-
-        // Observer para disparar animación cuando sea visible
-        const statsSection = document.getElementById('estadisticas');
-        if(statsSection) {
-            const observer = new IntersectionObserver((entries) => {
-                if(entries[0].isIntersecting && !statsAnimated) {
-                    animateStats();
-                    statsAnimated = true;
-                }
-            }, { threshold: 0.5 });
-            observer.observe(statsSection);
-        }
-
-        // 4. LIGHTBOX DE GALERÍA
-        const lightboxTriggers = document.querySelectorAll('.lightbox-trigger');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const lightboxClose = document.getElementById('lightboxClose');
-
-        lightboxTriggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                const src = trigger.getAttribute('data-src');
-                if(src) {
-                    lightboxImg.src = src;
-                    lightbox.classList.add('active');
-                }
-            });
-        });
-
-        const closeLightbox = () => lightbox.classList.remove('active');
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if(e.target === lightbox) closeLightbox();
-        });
-
-        // 5. VALIDACIÓN Y MANEJO DE FORMULARIO
-        const form = document.getElementById('formulario-registro');
-        const checkbox = document.getElementById('acepto_reglas');
-        const submitBtn = document.getElementById('btn-enviar-solicitud');
-
-        if(form && checkbox && submitBtn) {
-            checkbox.addEventListener('change', () => {
-                submitBtn.disabled = !checkbox.checked;
-            });
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                // Simulación de envío
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin"></i>';
-                submitBtn.disabled = true;
-                
-                setTimeout(() => {
-                    alert('¡Solicitud enviada con éxito! Nos pondremos en contacto contigo pronto. Bienvenido a Elite Iron Club.');
-                    form.reset();
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = true; // Vuelve a deshabilitar por el reset
-                }, 1500);
-            });
-        }
-
-        // 6. SISTEMA DE PARTÍCULAS (Fondo dinámico)
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height, particles;
-        
-        function initCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            particles = [];
-            
-            const numParticles = Math.min(Math.floor(window.innerWidth / 15), 100);
-            
-            for(let i = 0; i < numParticles; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 2 + 1
-                });
-            }
-        }
-        
-        function animateParticles() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(207, 168, 96, 0.3)'; // Color oro premium para partículas
-            
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                
-                if(p.x < 0 || p.x > width) p.vx *= -1;
-                if(p.y < 0 || p.y > height) p.vy *= -1;
-                
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            
-            // Conectar partículas cercanas (Cyber effect)
-            ctx.strokeStyle = 'rgba(230, 0, 58, 0.05)'; // Rojo sutil para conexiones
-            for(let i = 0; i < particles.length; i++) {
-                for(let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if(dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            
-            requestAnimationFrame(animateParticles);
-        }
-        
-        initCanvas();
-        animateParticles();
-        
-        window.addEventListener('resize', initCanvas);
-    });
-</script>
 
-</body>
-</html>
+:root{
+  --c-black:#050608;
+  --c-black-2:#0a0c10;
+  --c-black-3:#0e1016;
+  --c-card:rgba(14,16,22,0.75);
+  --c-card-hover:rgba(20,24,32,0.95);
+  --c-red:#e6003a;
+  --c-red-glow: rgba(230,0,58,0.4);
+  --c-gold:#cfa860;
+  --c-gold-glow: rgba(207,168,96,0.4);
+  --c-white:#ffffff;
+  --c-gray:#9fa4b0;
+  --c-gray-dark:#3a3f49;
+  --c-bo-green:#007a33;
+  --c-bo-yellow:#f4d03f;
+  --border-glass: rgba(255,255,255,0.06);
+  --border-glass-strong: rgba(255,255,255,0.16);
+  --sidebar-w: 290px;
+  --header-h: 84px;
+  --font-display:'Cinzel', serif;
+  --font-heading:'Cinzel', serif;
+  --font-body:'Ibarra Real Nova', serif;
+  --font-ui:'Montserrat', sans-serif;
+  --ease: cubic-bezier(.25,.8,.25,1);
+  --ease-bounce: cubic-bezier(.175,.885,.32,1.275);
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--c-black);
+  color:var(--c-white);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  min-height:100vh;
+  position:relative;
+}
+
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; }
+img{ max-width:100%; display:block; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+input,textarea,select{ font-family:var(--font-ui); }
+
+::selection{ background:var(--c-red); color:var(--c-white); }
+
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-track{ background:var(--c-black); }
+::-webkit-scrollbar-thumb{ background:var(--border-glass-strong); border-radius:5px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--c-gold); }
+
+h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1px; }
+
+.section-eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  color:var(--c-red); font-family:var(--font-ui);
+  text-transform:uppercase; letter-spacing:4px; font-size:.72rem; font-weight:700;
+  margin-bottom:12px; text-shadow:0 0 10px var(--c-red-glow);
+}
+.section-eyebrow::before{
+  content:''; width:30px; height:2px; background:var(--c-gold);
+  box-shadow:0 0 8px var(--c-gold-glow);
+}
+.section-title{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(2.2rem,4vw,3rem);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:16px;
+  line-height:1.1;
+  background:linear-gradient(90deg,#fff,var(--c-gold));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  display:inline-block;
+  position:relative;
+  padding-bottom:14px;
+}
+.section-title::after{
+  content:''; position:absolute; left:0; bottom:0; width:64px; height:4px;
+  background:var(--c-red); box-shadow:0 0 12px var(--c-red);
+}
+.section-title span{
+  color:transparent; -webkit-text-stroke:1px var(--c-red);
+  background:linear-gradient(90deg,#fff,var(--c-red));
+  -webkit-background-clip:text; background-clip:text;
+}
+.section-sub{
+  color:var(--c-gray);
+  font-family:var(--font-ui);
+  max-width:680px;
+  font-size:1rem;
+  margin-bottom:44px;
+}
+.section-head{ margin-bottom:40px; }
+
+.demo-tag{
+  display:inline-block; background:rgba(207,168,96,0.12); border:1px solid var(--c-gold);
+  color:var(--c-gold); font-size:.62rem; letter-spacing:2px; text-transform:uppercase;
+  padding:5px 12px; border-radius:20px; font-family:var(--font-ui); font-weight:700; margin-left:12px;
+  vertical-align:middle;
+}
+
+#bg-canvas{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+.bg-glow{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 900px 600px at 10% -8%, rgba(230,0,58,0.12), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 108% 15%, rgba(207,168,96,0.1), transparent 55%),
+    radial-gradient(ellipse 700px 700px at 50% 112%, rgba(230,0,58,0.1), transparent 60%);
+  opacity:.8;
+}
+.bg-scanline{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.4) 50%);
+  background-size:100% 4px;
+  mix-blend-mode:overlay; opacity:.35;
+}
+.bg-vignette{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  box-shadow: inset 0 0 240px rgba(0,0,0,0.9);
+}
+.ambient-light{
+  position:fixed; top:-20%; left:-10%; width:50vw; height:50vw;
+  background:radial-gradient(circle, rgba(230,0,58,0.06) 0%, transparent 70%);
+  z-index:1; pointer-events:none;
+}
+.ambient-light.right{
+  top:auto; bottom:-20%; left:auto; right:-10%;
+  background:radial-gradient(circle, rgba(207,168,96,0.06) 0%, transparent 70%);
+}
+
+.app-shell{ position:relative; z-index:2; display:flex; min-height:100vh; }
+
+.topbar{
+  position:fixed; top:0; left:0; right:0; height:var(--header-h);
+  z-index:200; display:flex; align-items:center; justify-content:space-between;
+  padding:0 32px;
+  background:linear-gradient(180deg, rgba(5,6,8,0.96) 0%, rgba(5,6,8,0.86) 70%, rgba(5,6,8,0) 100%);
+  backdrop-filter:blur(14px);
+}
+.topbar::after{
+  content:''; position:absolute; bottom:0; left:0; width:100%; height:2px;
+  background:linear-gradient(90deg, rgba(230,0,58,0) 0%, var(--c-red) 25%, var(--c-gold) 75%, rgba(207,168,96,0) 100%);
+  background-size:200% 100%;
+  box-shadow:0 0 15px var(--c-red);
+  animation:laserScan 3.5s infinite linear;
+}
+@keyframes laserScan{ 0%{ background-position:-100% 0; } 100%{ background-position:200% 0; } }
+
+.topbar-left{ display:flex; align-items:center; gap:18px; }
+.hamburger{
+  display:none; flex-direction:column; gap:5px; width:36px; height:36px;
+  align-items:center; justify-content:center; border:1px solid var(--border-glass-strong);
+  border-radius:4px; background:var(--c-black-3);
+}
+.hamburger span{ width:18px; height:2px; background:var(--c-white); transition:.3s var(--ease); }
+.hamburger.active span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+.logo-link{ display:flex; align-items:center; gap:16px; transition:.4s var(--ease-bounce); }
+.logo-link:hover .logo-img{ transform:scale(1.1) rotate(10deg); box-shadow:0 0 32px var(--c-gold-glow); }
+.logo-img{
+  width:58px; height:58px; border-radius:50%;
+  object-fit:cover; padding:2px;
+  background:linear-gradient(var(--c-black),var(--c-black)) padding-box,
+             linear-gradient(90deg,var(--c-red),var(--c-gold)) border-box;
+  border:2px solid transparent;
+  box-shadow:0 0 22px var(--c-red-glow);
+  transition:.4s var(--ease-bounce);
+}
+.logo-text{ display:flex; flex-direction:column; line-height:1.15; }
+.logo-text b{
+  font-family:var(--font-display); font-weight:900; font-size:1.32rem; letter-spacing:1.5px;
+  text-transform:uppercase;
+  background:linear-gradient(135deg,#fff 30%,var(--c-gold) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.logo-text small{
+  font-family:var(--font-ui); font-size:.62rem; letter-spacing:4px; color:var(--c-red);
+  text-transform:uppercase; font-weight:700; text-shadow:0 0 10px var(--c-red-glow);
+}
+
+.topbar-right{ display:flex; align-items:center; gap:16px; }
+.topbar-social{ display:flex; gap:10px; }
+.topbar-social a{
+  width:38px; height:38px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.05); border:1px solid var(--border-glass-strong);
+  color:var(--c-white); transition:.4s var(--ease-bounce);
+}
+.topbar-social a:hover{
+  background:var(--c-red); border-color:var(--c-red);
+  transform:scale(1.15) translateY(-4px); box-shadow:0 10px 20px var(--c-red-glow);
+}
+
+.btn{
+  font-family:var(--font-ui); text-transform:uppercase; letter-spacing:2px;
+  font-size:.76rem; font-weight:700; padding:13px 26px;
+  color:var(--c-white); background:rgba(20,23,31,0.85);
+  border:1px solid transparent;
+  clip-path:polygon(0% 0%, 92% 0%, 100% 35%, 100% 100%, 8% 100%, 0% 65%);
+  position:relative; overflow:hidden; transition:.4s var(--ease);
+  display:inline-flex; align-items:center; gap:10px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.03), 0 5px 15px rgba(0,0,0,0.4);
+}
+.btn::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,var(--c-red),var(--c-gold));
+  clip-path:polygon(0% 0%, 92% 0%, 100% 35%, 100% 100%, 8% 100%, 0% 65%);
+  z-index:-1; opacity:.12; transition:opacity .3s var(--ease);
+}
+.btn:hover{ color:#050608; transform:translateX(4px) scale(1.02); box-shadow:-8px 0 22px var(--c-gold-glow); border-color:var(--c-gold); }
+.btn:hover::before{ opacity:1; background:linear-gradient(90deg,var(--c-gold) 0%, #fff 100%); }
+.btn-primary{ border-color:rgba(230,0,58,0.5); }
+.btn-primary::before{ background:linear-gradient(90deg,var(--c-red),var(--c-gold)); opacity:.22; }
+.btn-primary:hover{ color:var(--c-white); box-shadow:-8px 0 22px var(--c-red-glow); }
+.btn-primary:hover::before{ background:linear-gradient(90deg,var(--c-red),var(--c-red)); opacity:1; }
+.btn-outline{ background:transparent; border-color:var(--border-glass-strong); color:var(--c-gray); }
+.btn-outline:hover{ color:#050608; }
+.btn-block{ width:100%; justify-content:center; }
+.btn-sm{ padding:10px 18px; font-size:.68rem; }
+
+.sidebar{
+  position:fixed; top:var(--header-h); left:0; bottom:0; width:var(--sidebar-w);
+  background:linear-gradient(180deg, var(--c-black-2), var(--c-black));
+  border-right:1px solid var(--border-glass);
+  overflow-y:auto; z-index:150; padding:26px 16px 90px 0;
+  transition:transform .35s var(--ease);
+}
+.sidebar::-webkit-scrollbar{ width:4px; }
+
+.side-group{ margin-bottom:24px; padding:0 0 0 18px; }
+.side-group-title{
+  font-family:var(--font-display); font-size:.68rem; letter-spacing:4px;
+  text-transform:uppercase; color:var(--c-gold); padding-left:10px; font-weight:700;
+  border-left:2px solid var(--c-gold); opacity:.85; margin-bottom:12px;
+}
+.side-link{
+  display:flex; align-items:center; gap:13px; width:100%; height:48px;
+  padding:0 18px; margin:6px 0;
+  background:rgba(20,23,31,0.75);
+  color:var(--c-white); font-family:var(--font-ui); font-size:.72rem; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase; position:relative;
+  clip-path:polygon(0% 0%, 94% 0%, 100% 32%, 100% 100%, 6% 100%, 0% 68%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.02), 0 4px 12px rgba(0,0,0,0.4);
+  transition:.4s var(--ease);
+}
+.side-link::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,var(--c-red),var(--c-gold));
+  clip-path:polygon(0% 0%, 94% 0%, 100% 32%, 100% 100%, 6% 100%, 0% 68%);
+  z-index:-1; opacity:.08; transition:opacity .3s var(--ease);
+}
+.side-link::after{
+  content:''; position:absolute; left:0; top:0; width:3px; height:100%;
+  background:var(--c-red); box-shadow:0 0 10px var(--c-red); transition:.3s var(--ease);
+}
+.side-link i{ width:16px; text-align:center; font-size:.85rem; opacity:.75; }
+.side-link:hover, .side-link.active{
+  color:#050608; background:linear-gradient(90deg,var(--c-gold) 0%, #fff 100%);
+  transform:translateX(8px) scale(1.01); box-shadow:-8px 0 20px var(--c-gold-glow);
+}
+.side-link:hover::before, .side-link.active::before{ opacity:1; }
+.side-link:hover::after, .side-link.active::after{ background:var(--c-black); height:55%; top:22%; box-shadow:none; }
+.side-link .badge{
+  margin-left:auto; background:var(--c-red); color:#fff; font-size:.58rem;
+  padding:3px 8px; border-radius:10px; font-family:var(--font-ui);
+}
+
+.sidebar-footer{ padding:18px 0 18px 18px; border-top:1px solid var(--border-glass); margin-top:10px; }
+.sidebar-footer p{ font-family:var(--font-ui); font-size:.7rem; color:var(--c-gray-dark); line-height:1.6; }
+
+.sidebar-overlay{
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65);
+  z-index:140; backdrop-filter:blur(2px);
+}
+
+.main-content{
+  margin-left:var(--sidebar-w); margin-top:var(--header-h);
+  width:calc(100% - var(--sidebar-w)); position:relative; z-index:2;
+  min-height:calc(100vh - var(--header-h));
+}
+.page-section{ display:none; padding:60px 50px 90px; animation:stageIn .6s var(--ease) forwards; }
+.page-section.active{ display:block; }
+@keyframes stageIn{
+  0%{ opacity:0; transform:translateY(30px) scale(.98); filter:blur(8px); }
+  100%{ opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+}
+.container{ max-width:1280px; margin:0 auto; }
+
+.glass-card{
+  background:var(--c-card);
+  border:1px solid var(--border-glass);
+  border-left:4px solid var(--c-red);
+  border-radius:8px;
+  position:relative; overflow:hidden;
+  backdrop-filter:blur(10px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.5);
+  transition:.4s var(--ease);
+}
+.glass-card::before{
+  content:''; position:absolute; top:0; right:0; width:80px; height:80px;
+  background:linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.03) 50%);
+  transition:.3s var(--ease);
+}
+.glass-card:hover{
+  transform:translateY(-8px);
+  border-left-color:var(--c-gold);
+  background:var(--c-card-hover);
+  box-shadow:0 25px 50px rgba(0,0,0,0.6), 0 0 20px rgba(207,168,96,0.15);
+}
+.glass-card:hover::before{ background:linear-gradient(45deg, transparent 50%, rgba(207,168,96,0.1) 50%); }
+
+.hero{
+  position:relative; min-height:88vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; gap:38px;
+  padding:70px 46px; overflow:hidden; border-bottom:1px solid var(--border-glass);
+}
+.hero-bg-img{
+  position:absolute; inset:0;
+  background:url('https://drive.google.com/thumbnail?id=1QVwallkKtbrFILwOsWlv8zeuneFJ9DEl&sz=w1920') center/cover no-repeat;
+  opacity:.16; filter:grayscale(.2) contrast(1.15);
+}
+.hero::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(5,6,8,0.3), var(--c-black) 94%);
+}
+.hero-content{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:30px; max-width:920px; }
+.hero-badge{
+  display:inline-flex; align-items:center; gap:10px;
+  background:rgba(230,0,58,0.15); border:1px solid var(--c-red); color:var(--c-white);
+  padding:9px 26px; font-size:.7rem; font-family:var(--font-ui); font-weight:700;
+  text-transform:uppercase; letter-spacing:4px; border-radius:30px;
+  box-shadow:0 0 20px var(--c-red-glow), inset 0 0 10px rgba(230,0,58,0.2);
+  animation:pulseBadge 2.2s infinite;
+}
+@keyframes pulseBadge{
+  0%{ box-shadow:0 0 20px var(--c-red-glow); } 50%{ box-shadow:0 0 40px rgba(230,0,58,.8); } 100%{ box-shadow:0 0 20px var(--c-red-glow); }
+}
+.hero-title{
+  font-family:var(--font-display); font-weight:900; font-size:clamp(2.6rem,6.5vw,5.4rem);
+  line-height:1.08; letter-spacing:1px; text-transform:uppercase;
+  text-shadow:0 10px 30px rgba(0,0,0,0.8);
+}
+.hero-title span{
+  color:transparent; -webkit-text-stroke:1.5px var(--c-gold);
+  background:linear-gradient(180deg,#fff 0%, var(--c-gold) 100%);
+  -webkit-background-clip:text; background-clip:text;
+  filter:drop-shadow(0 0 15px var(--c-gold-glow));
+}
+.hero-text{ color:var(--c-gray); font-family:var(--font-ui); max-width:620px; font-size:1.02rem; }
+.hero-text em{ color:var(--c-gold); font-style:normal; }
+.hero-actions{ display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
+
+.next-event-panel{
+  margin-top:-60px; position:relative; z-index:5;
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:26px;
+  padding:36px; margin-bottom:64px; border-left:4px solid var(--c-gold);
+  border-top:3px solid var(--c-red);
+}
+.nep-info h3{ font-size:1.4rem; margin-bottom:8px; font-family:var(--font-display); }
+.nep-info p{ color:var(--c-gray); font-family:var(--font-ui); font-size:.88rem; }
+.countdown{ display:flex; gap:14px; }
+.cd-box{
+  background:var(--c-black-3); border:1px solid var(--border-glass-strong);
+  border-radius:6px; padding:16px 18px; text-align:center; min-width:70px;
+}
+.cd-box span{ display:block; font-family:var(--font-display); font-weight:900; font-size:2rem; color:var(--c-gold); text-shadow:0 0 15px var(--c-gold-glow); }
+.cd-box small{ font-family:var(--font-ui); font-size:.6rem; color:var(--c-gray); text-transform:uppercase; letter-spacing:2px; }
+
+.stats-row{
+  margin:40px 0 10px; display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  background:linear-gradient(90deg, rgba(20,23,31,0) 0%, rgba(20,23,31,0.9) 50%, rgba(20,23,31,0) 100%);
+  padding:40px 0; border-top:1px solid var(--border-glass); border-bottom:1px solid var(--border-glass);
+}
+.stat-item{
+  text-align:center; padding:0 20px; border-right:1px solid rgba(255,255,255,0.06);
+  background:none; border-left:none; box-shadow:none; backdrop-filter:none; transition:transform .3s var(--ease);
+}
+.stat-item:last-child{ border-right:none; }
+.stat-item:hover{ transform:translateY(-6px); background:none; box-shadow:none; }
+.stat-item:hover::before{ background:none; }
+.stat-item i{ font-size:1.6rem; color:var(--c-red); margin-bottom:10px; }
+.stat-num{
+  display:block; font-family:var(--font-display); font-weight:900; font-size:2.6rem; color:var(--c-gold);
+  text-shadow:0 0 20px var(--c-gold-glow); line-height:1; margin-bottom:10px;
+}
+.stat-item small{ font-family:var(--font-ui); color:var(--c-gray); font-size:.68rem; text-transform:uppercase; letter-spacing:2.5px; font-weight:700; }
+
+.grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+.pillar-card{ padding:34px 28px; }
+.pillar-card i{ font-size:1.9rem; color:var(--c-gold); margin-bottom:16px; }
+.pillar-card h4{ font-family:var(--font-display); font-size:1.2rem; margin-bottom:10px; text-transform:uppercase; }
+.pillar-card p{ font-family:var(--font-ui); color:var(--c-gray); font-size:.9rem; }
+
+.about-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:26px; }
+.about-text, .about-values{ padding:36px; }
+.about-text h3, .about-values h3{ font-family:var(--font-display); font-size:1.25rem; margin-bottom:12px; color:var(--c-gold); }
+.about-text p{ color:var(--c-gray); }
+.value-list li{ padding:10px 0; color:var(--c-gray); font-family:var(--font-ui); font-size:.9rem; border-bottom:1px dashed var(--border-glass); }
+.value-list li i{ color:var(--c-red); margin-right:10px; }
+.value-list li:last-child{ border-bottom:none; }
+
+.news-card{ overflow:hidden; display:flex; flex-direction:column; padding:0; }
+.news-img{ height:180px; overflow:hidden; }
+.news-img img{ width:100%; height:100%; object-fit:cover; transition:.5s var(--ease); filter:brightness(.75) contrast(1.1); }
+.news-card:hover .news-img img{ transform:scale(1.08); filter:brightness(1) contrast(1.1); }
+.news-body{ padding:22px; flex:1; display:flex; flex-direction:column; }
+.news-date{ font-family:var(--font-ui); color:var(--c-gold); font-size:.68rem; text-transform:uppercase; letter-spacing:2px; font-weight:700; margin-bottom:10px; }
+.news-body h4{ font-family:var(--font-display); font-size:1.1rem; margin-bottom:12px; line-height:1.3; text-transform:uppercase; }
+.news-body p{ font-family:var(--font-ui); color:var(--c-gray); font-size:.85rem; flex:1; margin-bottom:16px; }
+
+.event-card{ padding:0; overflow:hidden; }
+.event-top{ padding:22px; display:flex; justify-content:space-between; align-items:flex-start; gap:10px; background:rgba(255,255,255,0.02); }
+.event-top h4{ font-family:var(--font-display); }
+.event-status{
+  font-family:var(--font-ui); font-size:.6rem; text-transform:uppercase; letter-spa
