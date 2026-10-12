@@ -372,7 +372,8 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 }
 .nep-info h3{ font-size:1.4rem; margin-bottom:8px; font-family:var(--font-display); }
 .nep-info p{ color:var(--c-gray); font-family:var(--font-ui); font-size:.88rem; }
-.countdown{ display:flex; gap:14px; }
+.countdown{ display:flex; flex-wrap:wrap; gap:14px; }
+.countdown-status{ width:100%; margin:0; color:var(--c-gold); font-family:var(--font-ui); font-size:.82rem; text-align:center; }
 .cd-box{
   background:var(--c-black-3); border:1px solid var(--border-glass-strong);
   border-radius:6px; padding:16px 18px; text-align:center; min-width:70px;
@@ -419,6 +420,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 .news-card:hover .news-img img{ transform:scale(1.08); filter:brightness(1) contrast(1.1); }
 .news-body{ padding:22px; flex:1; display:flex; flex-direction:column; }
 .news-date{ font-family:var(--font-ui); color:var(--c-gold); font-size:.68rem; text-transform:uppercase; letter-spacing:2px; font-weight:700; margin-bottom:10px; }
+.news-image-note{ display:block; margin:-4px 0 9px; color:var(--c-gray-dark); font-family:var(--font-ui); font-size:.68rem; }
 .news-body h4{ font-family:var(--font-display); font-size:1.1rem; margin-bottom:12px; line-height:1.3; text-transform:uppercase; }
 .news-body p{ font-family:var(--font-ui); color:var(--c-gray); font-size:.85rem; flex:1; margin-bottom:16px; }
 
@@ -468,6 +470,10 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 .cat-card p, .tech-card p{ font-family:var(--font-ui); color:var(--c-gray); font-size:.88rem; }
 .cat-img{ margin:-30px -30px 20px; height:170px; overflow:hidden; border-radius:8px 8px 0 0; }
 .cat-img img{ width:100%; height:100%; object-fit:cover; filter:brightness(.78) contrast(1.1); transition:.5s var(--ease); }
+.tech-img{ margin:-30px -30px 20px; overflow:hidden; border-radius:8px 8px 0 0; background:var(--c-black-3); }
+.tech-img img{ display:block; width:100%; height:170px; object-fit:cover; filter:brightness(.85) contrast(1.05); }
+.tech-img small{ display:block; padding:7px 12px; color:var(--c-gray); font-family:var(--font-ui); font-size:.7rem; }
+.tech-img a{ color:var(--c-gold); }
 .cat-card:hover .cat-img img{ transform:scale(1.08); filter:brightness(1) contrast(1.1); }
 
 .rules-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
@@ -720,15 +726,23 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 
 /* ===== Burbujas flotantes de redes sociales ===== */
 .social-bubbles{
-  position:fixed; left:calc(var(--sidebar-w) + 5px); bottom:max(22px, env(safe-area-inset-bottom));
+  position:fixed; right:24px; left:auto; top:50%; bottom:auto; transform:translateY(-50%);
   z-index:120; display:flex; flex-direction:column; gap:12px;
 }
 .social-bubbles .bubble{
-  position:relative; width:40px; height:40px; border-radius:50%;
+  position:relative; width:48px; height:48px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
   color:#fff; font-size:1.05rem; line-height:1;
   border:1px solid rgba(255,255,255,0.25);
   transition:transform .35s var(--ease-bounce), box-shadow .35s var(--ease), filter .35s var(--ease);
+}
+.social-bubbles .bubble-ig{
+  background:linear-gradient(145deg,#feda75,#d62976 55%,#4f5bd5);
+  box-shadow:0 8px 20px rgba(0,0,0,0.45), 0 0 14px rgba(214,41,118,0.28);
+}
+.social-bubbles .bubble-tt{
+  background:linear-gradient(145deg,#161823,#000);
+  box-shadow:0 8px 20px rgba(0,0,0,0.45), 0 0 14px rgba(37,244,238,0.2);
 }
 .social-bubbles .bubble-fb{
   background:linear-gradient(145deg,#2f8fff,#1259c3);
@@ -746,15 +760,15 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 .social-bubbles .bubble:hover{ transform:translateY(-4px) scale(1.1); filter:brightness(1.1); }
 .social-bubbles .bubble:focus-visible{ outline:2px solid var(--c-gold); outline-offset:3px; }
 .social-bubbles .bubble::after{
-  content:attr(data-label); position:absolute; left:calc(100% + 12px); top:50%;
-  transform:translate(-6px,-50%); padding:6px 12px; border-radius:20px;
+  content:attr(data-label); position:absolute; right:calc(100% + 12px); top:50%;
+  transform:translate(6px,-50%); padding:6px 12px; border-radius:20px;
   background:rgba(5,6,8,0.92); border:1px solid var(--border-glass-strong);
   font-family:var(--font-ui); font-size:.64rem; font-weight:700; letter-spacing:1.5px;
   text-transform:uppercase; white-space:nowrap; opacity:0; pointer-events:none;
   transition:.25s var(--ease);
 }
 .social-bubbles{ transition:opacity .25s var(--ease), visibility .25s; }
-body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:none; }
+body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:none; }
 @media (hover:hover){
   .social-bubbles .bubble:hover::after{ opacity:1; transform:translate(0,-50%); }
 }
@@ -807,8 +821,8 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
 .evt-note{ margin-top:18px; font-family:var(--font-ui); font-size:.76rem; color:var(--c-gray); }
 
 @media (max-width:900px){
-  .social-bubbles{ left:12px; bottom:max(16px, env(safe-area-inset-bottom)); gap:10px; }
-  .social-bubbles .bubble{ width:40px; height:40px; font-size:1.05rem; }
+  .social-bubbles{ right:12px; left:auto; top:50%; bottom:auto; transform:translateY(-50%); gap:10px; }
+  .social-bubbles .bubble{ width:44px; height:44px; font-size:1.1rem; }
   .evt-feature{ grid-template-columns:1fr; }
   .evt-poster{ max-width:420px; width:100%; margin:0 auto; }
 }
@@ -847,11 +861,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
         </span>
       </a>
     </div>
-    <div class="topbar-right">
-      <a class="btn btn-primary" href="https://www.facebook.com/luchadebrazosbolivia/?locale=es_LA" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-facebook-f"></i> Facebook Oficial
-      </a>
-    </div>
   </header>
 
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -869,7 +878,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
     <div class="side-group">
       <div class="side-group-title">Eventos</div>
       <a class="side-link" data-target="proximos-eventos"><i class="fa-solid fa-calendar-star"></i> Próximos Eventos <span class="badge">NUEVO</span></a>
-      <a class="side-link" data-target="calendario"><i class="fa-solid fa-calendar-days"></i> Calendario</a>
     </div>
 
     <div class="side-group">
@@ -883,13 +891,7 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
     <div class="side-group">
       <div class="side-group-title">Comunidad</div>
       <a class="side-link" data-target="galeria"><i class="fa-solid fa-images"></i> Galería</a>
-      <a class="side-link" data-target="campeones"><i class="fa-solid fa-medal"></i> Campeones</a>
       <a class="side-link" data-target="faq"><i class="fa-solid fa-circle-question"></i> Preguntas Frecuentes</a>
-    </div>
-
-    <div class="side-group">
-      <div class="side-group-title">Contacto</div>
-      <a class="side-link" data-target="ubicacion"><i class="fa-solid fa-location-dot"></i> Ubicación</a>
     </div>
 
     <div class="sidebar-footer">
@@ -920,9 +922,8 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
         <!-- Próximo evento destacado + countdown -->
         <div class="next-event-panel glass-card">
           <div class="nep-info">
-            <span class="demo-tag" style="margin-left:0;margin-bottom:10px;display:inline-block;">Ejemplo demostrativo</span>
-            <h3>Próximo Evento: <span style="color:var(--c-red)">Copa Lucha de Brazos Santa Cruz</span></h3>
-            <p><i class="fa-solid fa-location-dot"></i> Santa Cruz de la Sierra, Bolivia &nbsp;·&nbsp; <i class="fa-solid fa-calendar"></i> Fecha por confirmar</p>
+            <h3>Próximo Evento: <span style="color:var(--c-red)">Torneo Amateur C.S. — Primera Edición</span></h3>
+            <p><i class="fa-solid fa-location-dot"></i> Lugar por confirmar &nbsp;·&nbsp; <i class="fa-solid fa-calendar"></i> 31 de octubre de 2026</p>
             <a class="btn btn-sm btn-primary" data-target="proximos-eventos" style="margin-top:14px;">Ver información <i class="fa-solid fa-arrow-right"></i></a>
           </div>
           <div class="countdown" id="countdown">
@@ -930,33 +931,9 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
             <div class="cd-box"><span id="cd-hours">00</span><small>Horas</small></div>
             <div class="cd-box"><span id="cd-min">00</span><small>Min</small></div>
             <div class="cd-box"><span id="cd-sec">00</span><small>Seg</small></div>
+            <p class="countdown-status" id="countdown-status" role="status" aria-live="polite"></p>
           </div>
         </div>
-
-        <!-- Stats -->
-        <div class="stats-row">
-          <div class="stat-item glass-card">
-            <i class="fa-solid fa-trophy"></i>
-            <span class="stat-num" data-count="12">0</span>
-            <small>Eventos organizados</small>
-          </div>
-          <div class="stat-item glass-card">
-            <i class="fa-solid fa-hand-fist"></i>
-            <span class="stat-num" data-count="350">0</span>
-            <small>Atletas participantes</small>
-          </div>
-          <div class="stat-item glass-card">
-            <i class="fa-solid fa-map-location-dot"></i>
-            <span class="stat-num" data-count="6">0</span>
-            <small>Departamentos alcanzados</small>
-          </div>
-          <div class="stat-item glass-card">
-            <i class="fa-solid fa-users"></i>
-            <span class="stat-num" data-count="1500">0</span>
-            <small>Comunidad en redes</small>
-          </div>
-        </div>
-        <p style="text-align:center;color:var(--c-gray-dark);font-size:.75rem;margin-top:8px;">*Cifras de ejemplo con fines demostrativos de diseño.</p>
 
         <!-- Pilares -->
         <div class="section-head" style="margin-top:60px;">
@@ -1020,8 +997,8 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
       <div class="container">
         <div class="section-head">
           <div class="section-eyebrow">Actualidad</div>
-          <h2 class="section-title">Últimas <span>Noticias</span> <span class="demo-tag">Contenido de ejemplo</span></h2>
-          <p class="section-sub">Novedades de la asociación, eventos pasados y anuncios para la comunidad de lucha de brazos.</p>
+          <h2 class="section-title">Actualidad de la <span>Lucha de Brazos</span></h2>
+          <p class="section-sub">Resultados y trayectorias de atletas latinoamericanos, con enlaces a las notas de prensa.</p>
         </div>
         <div class="grid-3" id="newsGrid"></div>
       </div>
@@ -1054,7 +1031,7 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
             </div>
 
             <div class="evt-info">
-              <div class="evt-info-item"><i class="fa-solid fa-calendar-days"></i><div><small>Fecha</small><b>31 de octubre</b></div></div>
+              <div class="evt-info-item"><i class="fa-solid fa-calendar-days"></i><div><small>Fecha</small><b>31 de octubre de 2026</b></div></div>
               <div class="evt-info-item"><i class="fa-solid fa-pen-to-square"></i><div><small>Inscripción</small><b>70 Bolivianos</b></div></div>
               <div class="evt-info-item"><i class="fa-solid fa-location-dot"></i><div><small>Lugar</small><b>Por confirmar</b></div></div>
               <div class="evt-info-item"><i class="fa-solid fa-clock"></i><div><small>Hora</small><b>Por confirmar</b></div></div>
@@ -1080,18 +1057,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
             <p class="evt-note">Lugar y hora por confirmar, según el afiche oficial del evento.</p>
           </div>
         </article>
-      </div>
-    </section>
-
-    <!-- ===================== CALENDARIO ===================== -->
-    <section class="page-section" id="calendario">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-eyebrow">Planificación</div>
-          <h2 class="section-title">Calendario de <span>Actividades</span></h2>
-          <p class="section-sub">Fechas y estados de las actividades organizadas por la asociación.</p>
-        </div>
-        <div class="calendar-list" id="calendarList"></div>
       </div>
     </section>
 
@@ -1176,18 +1141,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
       </div>
     </section>
 
-    <!-- ===================== CAMPEONES ===================== -->
-    <section class="page-section" id="campeones">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-eyebrow">Reconocimiento</div>
-          <h2 class="section-title">Nuestros <span>Campeones</span> <span class="demo-tag">Ejemplo</span></h2>
-          <p class="section-sub">Espacio destinado a reconocer a los atletas destacados en los eventos organizados por la asociación.</p>
-        </div>
-        <div class="grid-3" id="championsGrid"></div>
-      </div>
-    </section>
-
     <!-- ===================== FAQ ===================== -->
     <section class="page-section" id="faq">
       <div class="container">
@@ -1203,32 +1156,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
       </div>
     </section>
 
-    <!-- ===================== UBICACIÓN ===================== -->
-    <section class="page-section" id="ubicacion">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-eyebrow">Dónde estamos</div>
-          <h2 class="section-title">Ubicación <span class="demo-tag">Referencial</span></h2>
-          <p class="section-sub">Nuestra actividad se centra en Santa Cruz de la Sierra, Bolivia. Los eventos pueden realizarse en distintos recintos según la edición.</p>
-        </div>
-        <div class="location-grid">
-          <div class="glass-card location-info">
-            <h4><i class="fa-solid fa-location-dot"></i> Santa Cruz de la Sierra</h4>
-            <p>Departamento de Santa Cruz, Bolivia</p>
-            <br>
-            <h4><i class="fa-solid fa-clock"></i> Actividad</h4>
-            <p>Los recintos específicos de cada evento se anuncian previamente por nuestras redes oficiales.</p>
-            <br>
-            <a class="btn btn-primary btn-sm" href="https://www.facebook.com/luchadebrazosbolivia/?locale=es_LA" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i> Ver anuncios en Facebook</a>
-          </div>
-          <div class="glass-card location-map">
-            <i class="fa-solid fa-map-location-dot"></i>
-            <p>Santa Cruz de la Sierra, Bolivia</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 </div>
 
@@ -1240,10 +1167,9 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
 
 <!-- ===================== REDES SOCIALES (BURBUJAS FLOTANTES) ===================== -->
 <div class="social-bubbles" aria-label="Redes sociales y contacto">
+  <a class="bubble bubble-ig" href="https://www.instagram.com/santacruz_luchadebrazos?igsh=N2NyN20xNHBzY2g1" target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+  <a class="bubble bubble-tt" href="https://www.tiktok.com/@luchadebrazos_santacruz?_r=1&amp;_t=ZS-9AU5yMNuBlK" target="_blank" rel="noopener noreferrer" aria-label="TikTok" data-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
   <a class="bubble bubble-fb" href="https://www.facebook.com/luchadebrazosbolivia/?locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-  <!-- Instagram / TikTok / YouTube: se activarán cuando existan los enlaces oficiales
-  <a class="bubble bubble-ig" href="URL" target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-  -->
   <a class="bubble bubble-wa" href="https://wa.me/59177347348?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Lucha%20de%20Brazos%20Bolivia." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" data-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 </div>
 
@@ -1293,15 +1219,9 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
   };
 
   const NEWS = [
-    { date:'Ejemplo · 2026', title:'Asociación anuncia nuevo calendario de eventos', text:'La asociación presenta su agenda de actividades para promover la lucha de brazos en distintas ciudades del país.', img: IMG.arm1 },
-    { date:'Ejemplo · 2026', title:'Balance del último campeonato en Santa Cruz', text:'Un repaso a la participación de atletas y el ambiente competitivo del más reciente evento organizado.', img: IMG.arm2 },
-    { date:'Ejemplo · 2026', title:'Invitación abierta a nuevos atletas', text:'La asociación invita a interesados de todas las categorías a sumarse a las próximas actividades.', img: IMG.arm3 }
-  ];
-
-  const CALENDAR = [
-    { d:'--', m:'Por definir', title:'Copa Lucha de Brazos Santa Cruz', place:'Santa Cruz de la Sierra · Estado: Próximamente' },
-    { d:'--', m:'Por definir', title:'Torneo Regional de Armwrestling', place:'Santa Cruz · Estado: Próximamente' },
-    { d:'--', m:'Por definir', title:'Encuentro Amistoso', place:'Santa Cruz · Estado: Próximamente' }
+    { date:'25 septiembre 2026', title:'Dofran Trujillo gana el Mundial Junior', text:'El mexicano Dofran Daniel Trujillo Angulo obtuvo el primer lugar Junior U-18, brazo izquierdo hasta 70 kg, en el Campeonato Mundial IFA disputado en Japón.', source:'Presencia.MX', url:'https://www.presencia.mx/nota.aspx?id=218912&s=8', img: IMG.arm1 },
+    { date:'2 julio 2026', title:'Ezequiel Barboza, campeón sudamericano', text:'Con 19 años, el uruguayo ganó el título sudamericano 2026 de brazo derecho en la categoría Sub-23 hasta 60 kg.', source:'El Pueblo Digital', url:'https://elpueblodigital.uy/ezequiel-barboza-del-descubrimiento-casual-en-la-rambla-al-titulo-de-campeon-sudamericano-de-lucha-de-brazos-en-tiempo-record/', img: IMG.arm2 },
+    { date:'1 junio 2026', title:'Manuel “Manu Pompa” Maldonado logra el oro nacional', text:'El mexicano de 17 años ganó brazo izquierdo Junior hasta 85 kg y obtuvo plata en brazo derecho en el torneo Los Ángeles Puebla 2026.', source:'Super Channel 12', url:'https://superchannel12.com/697719/joven-de-piedras-negras-manuel-manu-pompa-maldonado-se-corona-campeon-nacional-de-vencidas-en-puebla', img: IMG.arm3 }
   ];
 
   const CATEGORIES = [
@@ -1321,25 +1241,19 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
   ];
 
   const TECHNIQUES = [
-    { icon:'fa-hand-fist', title:'Top Roll', text:'Técnica orientada a ganar altura sobre la muñeca del oponente desde el inicio del agarre.' },
+    { icon:'fa-hand-fist', title:'Top Roll', text:'Técnica orientada a ganar altura sobre la muñeca del oponente desde el inicio del agarre.', img:'https://armwrestlingpros.com/wp-content/uploads/2023/06/How-To-Defensive-Top-Roll-Arm-Wrestling-1024x576.jpeg', imageSource:'https://armwrestlingpros.com/top-roll/' },
     { icon:'fa-arrows-left-right', title:'Hook', text:'Técnica que utiliza la flexión de muñeca hacia el propio cuerpo para generar ventaja lateral.' },
     { icon:'fa-shield', title:'Press', text:'Técnica basada en la fuerza directa hacia abajo, comúnmente usada por atletas con gran potencia de empuje.' }
   ];
 
   const GALLERY = [IMG.arm1, IMG.arm2, IMG.arm3, IMG.arm4, IMG.crowd, IMG.gym1, IMG.arm5, IMG.arm6];
 
-  const CHAMPIONS = [
-    { name:'Atleta Ejemplo A.', cat:'Libre Masculino', note:'Reconocimiento de ejemplo para ilustrar el diseño.' },
-    { name:'Atleta Ejemplo B.', cat:'Libre Femenino', note:'Reconocimiento de ejemplo para ilustrar el diseño.' },
-    { name:'Atleta Ejemplo C.', cat:'Sub-18', note:'Reconocimiento de ejemplo para ilustrar el diseño.' }
-  ];
-
   const FAQ = [
     { q:'¿Cómo puedo participar en un evento?', a:'Debes revisar la sección de Próximos Eventos y contactarnos por WhatsApp o a través de nuestras redes oficiales para completar tu inscripción.' },
     { q:'¿Quién puede competir?', a:'Los eventos suelen estar abiertos a distintas categorías de edad y experiencia. Los requisitos específicos se detallan en cada convocatoria.' },
     { q:'¿Cómo funcionan las categorías?', a:'Las categorías definitivas (por peso, edad o género) se confirman el día del pesaje oficial, según el reglamento del evento correspondiente.' },
-    { q:'¿Dónde se realizan los eventos?', a:'La mayoría de nuestras actividades se concentran en Santa Cruz de la Sierra, aunque podemos coorganizar actividades en otros departamentos.' },
-    { q:'¿Cómo puedo conocer las próximas fechas?', a:'Las fechas se publican en la sección de Próximos Eventos y Calendario de esta página, así como en nuestra página oficial de Facebook.' },
+    { q:'¿Dónde se realizan los eventos?', a:'El lugar de cada torneo se informa en su convocatoria. Para el Torneo Amateur C.S. - Primera Edición, el lugar figura por confirmar.' },
+    { q:'¿Cómo puedo conocer las próximas fechas?', a:'Las fechas se publican en la sección de Próximos Eventos y en los canales oficiales de la asociación.' },
     { q:'¿Cómo puedo contactar a la asociación?', a:'Puedes escribirnos por WhatsApp o a través de nuestra página oficial de Facebook.' }
   ];
 
@@ -1347,12 +1261,13 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
   if(newsGrid){
     newsGrid.innerHTML = NEWS.map(n => `
       <article class="glass-card news-card">
-        <div class="news-img"><img src="${n.img}" alt="${n.title}" loading="lazy"></div>
+        <div class="news-img"><img src="${n.img}" alt="Imagen referencial; no necesariamente muestra a los atletas de la nota." loading="lazy"></div>
         <div class="news-body">
           <span class="news-date">${n.date}</span>
+          <small class="news-image-note">Foto referencial; no identifica a los protagonistas.</small>
           <h4>${n.title}</h4>
           <p>${n.text}</p>
-          <a class="btn btn-sm btn-outline" data-target="noticias">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+          <a class="btn btn-sm btn-outline" href="${n.url}" target="_blank" rel="noopener noreferrer">Leer en ${n.source} <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </article>`).join('');
   }
@@ -1372,16 +1287,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
       document.getElementById('lightboxImg').src = evtPosterImg.currentSrc || evtPosterImg.src;
       document.getElementById('lightbox').classList.add('active');
     });
-  }
-
-  const calendarList = document.getElementById('calendarList');
-  if(calendarList){
-    calendarList.innerHTML = CALENDAR.map(c => `
-      <div class="glass-card cal-item">
-        <div class="cal-date"><span class="d">${c.d}</span><span class="m">${c.m}</span></div>
-        <div class="cal-info"><h4>${c.title}</h4><p>${c.place}</p></div>
-        <a class="btn btn-sm btn-outline" data-target="proximos-eventos">Detalles</a>
-      </div>`).join('');
   }
 
   const categoriesGrid = document.getElementById('categoriesGrid');
@@ -1408,6 +1313,7 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
   if(techniquesGrid){
     techniquesGrid.innerHTML = TECHNIQUES.map(t => `
       <div class="glass-card tech-card">
+        ${t.img ? `<div class="tech-img"><img src="${t.img}" alt="Atleta ejecutando un Top Roll defensivo con pronación" loading="lazy"><small><a href="${t.imageSource}" target="_blank" rel="noopener noreferrer">Referencia visual: Armwrestling Pros</a></small></div>` : ''}
         <i class="fa-solid ${t.icon}"></i>
         <h4>${t.title}</h4>
         <p>${t.text}</p>
@@ -1428,17 +1334,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
     document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('active'));
     lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) lightbox.classList.remove('active'); });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') lightbox.classList.remove('active'); });
-  }
-
-  const championsGrid = document.getElementById('championsGrid');
-  if(championsGrid){
-    championsGrid.innerHTML = CHAMPIONS.map(c => `
-      <div class="glass-card champion-card">
-        <div class="champion-avatar"><i class="fa-solid fa-medal"></i></div>
-        <h4>${c.name}</h4>
-        <span>${c.cat}</span>
-        <p>${c.note}</p>
-      </div>`).join('');
   }
 
   const faqList = document.getElementById('faqList');
@@ -1505,14 +1400,17 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
     if(hash && document.getElementById(hash)) goToSection(hash);
   });
 
-  // Fecha de ejemplo: se puede modificar fácilmente aquí cuando exista una fecha oficial confirmada.
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + 45); // Placeholder demostrativo (+45 días)
+  const targetDate = new Date('2026-10-31T00:00:00-04:00');
+  const eventEndDate = new Date('2026-11-01T00:00:00-04:00');
+  const countdownStatus = document.getElementById('countdown-status');
 
   function updateCountdown(){
     const now = new Date();
     let diff = targetDate - now;
     if(diff < 0) diff = 0;
+    if(countdownStatus){
+      countdownStatus.textContent = now >= eventEndDate ? 'Inscripciones cerradas' : now >= targetDate ? '¡Evento en curso!' : '';
+    }
     const days = Math.floor(diff / (1000*60*60*24));
     const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
     const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
@@ -1528,30 +1426,6 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
   }
   updateCountdown();
   setInterval(updateCountdown, 1000);
-
-  const statNums = document.querySelectorAll('.stat-num');
-  let statsAnimated = false;
-  function animateStats(){
-    if(statsAnimated) return;
-    statsAnimated = true;
-    statNums.forEach(el=>{
-      const target = parseInt(el.getAttribute('data-count'), 10) || 0;
-      let current = 0;
-      const step = Math.max(1, Math.ceil(target / 60));
-      const timer = setInterval(()=>{
-        current += step;
-        if(current >= target){ current = target; clearInterval(timer); }
-        el.textContent = current.toLocaleString('es-BO');
-      }, 25);
-    });
-  }
-  const statsRow = document.querySelector('.stats-row');
-  if(statsRow){
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{ if(entry.isIntersecting) animateStats(); });
-    }, {threshold:.35});
-    obs.observe(statsRow);
-  }
 
   const backToTop = document.getElementById('backToTop');
   const mainContent = document.querySelector('.main-content');
@@ -1787,11 +1661,13 @@ body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:non
 
   function abrirChat(){
     chatWindow.classList.add('open');
+    document.body.classList.add('chat-open');
     inicializarChat();
     setTimeout(()=> chatInput && chatInput.focus(), 300);
   }
   function cerrarChat(){
     chatWindow.classList.remove('open');
+    document.body.classList.remove('chat-open');
   }
 
   if(faqMoreBtn){
