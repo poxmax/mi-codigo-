@@ -204,17 +204,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 }
 
 .topbar-right{ display:flex; align-items:center; gap:16px; }
-.topbar-social{ display:flex; gap:10px; }
-.topbar-social a{
-  width:38px; height:38px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  background:rgba(255,255,255,0.05); border:1px solid var(--border-glass-strong);
-  color:var(--c-white); transition:.4s var(--ease-bounce);
-}
-.topbar-social a:hover{
-  background:var(--c-red); border-color:var(--c-red);
-  transform:scale(1.15) translateY(-4px); box-shadow:0 10px 20px var(--c-red-glow);
-}
 
 .btn{
   font-family:var(--font-ui); text-transform:uppercase; letter-spacing:2px;
@@ -709,7 +698,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
   .main-content{ margin-left:0; width:100%; }
   .page-section{ padding:44px 22px 70px; }
   .logo-text small{ display:none; }
-  .topbar-social{ display:none; }
   .topbar{ padding:0 16px; }
   .btn{ padding:11px 18px; font-size:.68rem; }
   .hero{ padding:44px 22px; min-height:auto; }
@@ -728,6 +716,108 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
   .data-table{ min-width:580px; }
   .logo-img{ width:44px; height:44px; }
   .logo-text b{ font-size:1.05rem; }
+}
+
+/* ===== Burbujas flotantes de redes sociales ===== */
+.social-bubbles{
+  position:fixed; left:calc(var(--sidebar-w) + 5px); bottom:max(22px, env(safe-area-inset-bottom));
+  z-index:120; display:flex; flex-direction:column; gap:12px;
+}
+.social-bubbles .bubble{
+  position:relative; width:40px; height:40px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:1.05rem; line-height:1;
+  border:1px solid rgba(255,255,255,0.25);
+  transition:transform .35s var(--ease-bounce), box-shadow .35s var(--ease), filter .35s var(--ease);
+}
+.social-bubbles .bubble-fb{
+  background:linear-gradient(145deg,#2f8fff,#1259c3);
+  box-shadow:0 8px 20px rgba(0,0,0,0.5), 0 0 16px rgba(24,119,242,0.35);
+}
+.social-bubbles .bubble-wa{
+  background:linear-gradient(145deg,#33e47c,#0e9a49);
+  box-shadow:0 8px 20px rgba(0,0,0,0.5), 0 0 16px rgba(37,211,102,0.35);
+  animation:bubblePulse 2.8s infinite;
+}
+@keyframes bubblePulse{
+  0%,100%{ box-shadow:0 8px 20px rgba(0,0,0,0.5), 0 0 0 0 rgba(37,211,102,0.45); }
+  60%{ box-shadow:0 8px 20px rgba(0,0,0,0.5), 0 0 0 10px rgba(37,211,102,0); }
+}
+.social-bubbles .bubble:hover{ transform:translateY(-4px) scale(1.1); filter:brightness(1.1); }
+.social-bubbles .bubble:focus-visible{ outline:2px solid var(--c-gold); outline-offset:3px; }
+.social-bubbles .bubble::after{
+  content:attr(data-label); position:absolute; left:calc(100% + 12px); top:50%;
+  transform:translate(-6px,-50%); padding:6px 12px; border-radius:20px;
+  background:rgba(5,6,8,0.92); border:1px solid var(--border-glass-strong);
+  font-family:var(--font-ui); font-size:.64rem; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; white-space:nowrap; opacity:0; pointer-events:none;
+  transition:.25s var(--ease);
+}
+.social-bubbles{ transition:opacity .25s var(--ease), visibility .25s; }
+body.menu-open .social-bubbles{ opacity:0; visibility:hidden; pointer-events:none; }
+@media (hover:hover){
+  .social-bubbles .bubble:hover::after{ opacity:1; transform:translate(0,-50%); }
+}
+@media (prefers-reduced-motion:reduce){
+  .social-bubbles .bubble-wa{ animation:none; }
+}
+
+/* ===== Evento destacado: Torneo Amateur C.S. ===== */
+.evt-feature{ display:grid; grid-template-columns:minmax(260px,380px) 1fr; gap:28px; align-items:start; }
+.evt-poster{ padding:10px; }
+.evt-poster-btn{ display:block; position:relative; width:100%; border-radius:6px; overflow:hidden; cursor:zoom-in; }
+.evt-poster-btn img{ width:100%; height:auto; display:block; border-radius:6px; }
+.evt-zoom{
+  position:absolute; right:10px; bottom:10px; display:inline-flex; align-items:center; gap:8px;
+  padding:7px 14px; border-radius:20px; background:rgba(5,6,8,0.82); border:1px solid var(--c-gold);
+  color:var(--c-gold); font-family:var(--font-ui); font-size:.62rem; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase; transition:.3s var(--ease);
+}
+.evt-poster-btn:hover .evt-zoom{ background:var(--c-gold); color:#050608; }
+.evt-details{ padding:34px; }
+.evt-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:26px; }
+.evt-edition{
+  font-family:var(--font-ui); font-size:.7rem; letter-spacing:4px; text-transform:uppercase;
+  color:var(--c-red); font-weight:700; text-shadow:0 0 10px var(--c-red-glow);
+}
+.evt-title{
+  font-family:var(--font-display); font-weight:900; font-size:clamp(1.7rem,3.2vw,2.4rem);
+  text-transform:uppercase; line-height:1.1; margin-top:6px;
+}
+.evt-title span{ color:var(--c-gold); }
+.evt-info{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:26px; }
+.evt-info-item{
+  display:flex; align-items:center; gap:14px; padding:14px 16px;
+  background:var(--c-black-3); border:1px solid var(--border-glass-strong); border-radius:6px;
+}
+.evt-info-item i{ color:var(--c-red); font-size:1.1rem; width:22px; text-align:center; flex:none; }
+.evt-info-item small{ display:block; font-family:var(--font-ui); font-size:.62rem; text-transform:uppercase; letter-spacing:2px; color:var(--c-gray); }
+.evt-info-item b{ font-family:var(--font-ui); font-size:.98rem; color:var(--c-white); }
+.evt-cat-group{ margin-bottom:20px; }
+.evt-cat-group h4{ font-family:var(--font-display); font-size:.95rem; text-transform:uppercase; color:var(--c-gold); margin-bottom:10px; }
+.evt-cat-group h4 i{ color:var(--c-red); margin-right:8px; }
+.evt-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.evt-chips span{
+  font-family:var(--font-ui); font-weight:700; font-size:.82rem; letter-spacing:1px;
+  padding:7px 16px; border-radius:4px; background:var(--c-black-3);
+  border:1px solid var(--border-glass-strong); color:var(--c-white);
+}
+.evt-chips span.evt-chip-accent{ border-color:var(--c-gold); color:var(--c-gold); }
+.evt-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:26px; }
+.evt-note{ margin-top:18px; font-family:var(--font-ui); font-size:.76rem; color:var(--c-gray); }
+
+@media (max-width:900px){
+  .social-bubbles{ left:12px; bottom:max(16px, env(safe-area-inset-bottom)); gap:10px; }
+  .social-bubbles .bubble{ width:40px; height:40px; font-size:1.05rem; }
+  .evt-feature{ grid-template-columns:1fr; }
+  .evt-poster{ max-width:420px; width:100%; margin:0 auto; }
+}
+@media (max-width:640px){
+  .evt-details{ padding:24px 20px; }
+  .evt-actions .btn{ flex:1 1 100%; justify-content:center; }
+}
+@media (max-width:480px){
+  .evt-info{ grid-template-columns:1fr; }
 }
 
 </style>
@@ -758,12 +848,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
       </a>
     </div>
     <div class="topbar-right">
-      <div class="topbar-social">
-        <a href="https://www.facebook.com/luchadebrazosbolivia/?locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" aria-label="Instagram" title="Próximamente"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="TikTok" title="Próximamente"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="#" aria-label="YouTube" title="Próximamente"><i class="fa-brands fa-youtube"></i></a>
-      </div>
       <a class="btn btn-primary" href="https://www.facebook.com/luchadebrazosbolivia/?locale=es_LA" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-facebook-f"></i> Facebook Oficial
       </a>
@@ -785,9 +869,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
     <div class="side-group">
       <div class="side-group-title">Eventos</div>
       <a class="side-link" data-target="proximos-eventos"><i class="fa-solid fa-calendar-star"></i> Próximos Eventos <span class="badge">NUEVO</span></a>
-      <a class="side-link" data-target="campeonatos"><i class="fa-solid fa-trophy"></i> Campeonatos</a>
       <a class="side-link" data-target="calendario"><i class="fa-solid fa-calendar-days"></i> Calendario</a>
-      <a class="side-link" data-target="resultados"><i class="fa-solid fa-ranking-star"></i> Resultados</a>
     </div>
 
     <div class="side-group">
@@ -808,8 +890,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
     <div class="side-group">
       <div class="side-group-title">Contacto</div>
       <a class="side-link" data-target="ubicacion"><i class="fa-solid fa-location-dot"></i> Ubicación</a>
-      <a class="side-link" data-target="contacto"><i class="fa-solid fa-envelope"></i> Contacto</a>
-      <a class="side-link" data-target="inscripciones"><i class="fa-solid fa-pen-to-square"></i> Inscripciones</a>
     </div>
 
     <div class="sidebar-footer">
@@ -953,23 +1033,53 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
         <div class="section-head">
           <div class="section-eyebrow">Agenda deportiva</div>
           <h2 class="section-title">Próximos <span>Eventos</span></h2>
-          <p class="section-sub">Campeonatos y torneos organizados o coorganizados por la asociación en distintas ciudades de Bolivia.</p>
+          <p class="section-sub">Información del próximo torneo de lucha de brazos en Bolivia.</p>
         </div>
-        <div class="grid-3" id="eventsGrid"></div>
-      </div>
-    </section>
 
-    <!-- ===================== CAMPEONATOS ===================== -->
-    <section class="page-section" id="campeonatos">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-eyebrow">Historial deportivo</div>
-          <h2 class="section-title">Campeonatos <span class="demo-tag">Información de ejemplo</span></h2>
-          <p class="section-sub">Registro referencial de campeonatos. Los datos reales de cada edición se publican de forma oficial en nuestras redes.</p>
-        </div>
-        <div class="table-wrap glass-card">
-          <table class="data-table" id="champTable"></table>
-        </div>
+        <article class="evt-feature">
+          <div class="glass-card evt-poster">
+            <button type="button" class="evt-poster-btn" id="evtPosterBtn" aria-label="Ampliar afiche del Torneo Amateur C.S.">
+              <img id="evtPosterImg" src="https://drive.google.com/thumbnail?id=16IxJM_goLztNTg7pelIAcVGNquZqeEgE&sz=w1000" alt="Afiche del Torneo Amateur C.S. - Primera Edición" width="900" height="1600">
+              <span class="evt-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar afiche</span>
+            </button>
+          </div>
+
+          <div class="glass-card evt-details">
+            <div class="evt-head">
+              <div>
+                <span class="evt-edition">Primera Edición</span>
+                <h3 class="evt-title">Torneo Amateur <span>C.S.</span></h3>
+              </div>
+              <span class="event-status status-proximamente">Próximamente</span>
+            </div>
+
+            <div class="evt-info">
+              <div class="evt-info-item"><i class="fa-solid fa-calendar-days"></i><div><small>Fecha</small><b>31 de octubre</b></div></div>
+              <div class="evt-info-item"><i class="fa-solid fa-pen-to-square"></i><div><small>Inscripción</small><b>70 Bolivianos</b></div></div>
+              <div class="evt-info-item"><i class="fa-solid fa-location-dot"></i><div><small>Lugar</small><b>Por confirmar</b></div></div>
+              <div class="evt-info-item"><i class="fa-solid fa-clock"></i><div><small>Hora</small><b>Por confirmar</b></div></div>
+            </div>
+
+            <div class="evt-cat-group">
+              <h4><i class="fa-solid fa-hand-fist"></i> Categorías Amateur</h4>
+              <div class="evt-chips"><span>-60</span><span>-70</span><span>-80</span><span>-90</span><span>-100</span><span>+100</span></div>
+            </div>
+            <div class="evt-cat-group">
+              <h4><i class="fa-solid fa-venus"></i> Categoría Femenina</h4>
+              <div class="evt-chips"><span>-65</span><span>+65</span></div>
+            </div>
+            <div class="evt-cat-group">
+              <h4><i class="fa-solid fa-trophy"></i> Categoría Profesional</h4>
+              <div class="evt-chips"><span class="evt-chip-accent">Absoluto</span></div>
+            </div>
+
+            <div class="evt-actions">
+              <a class="btn btn-primary" href="https://wa.me/59174963734?text=Hola%2C%20quiero%20inscribirme%20al%20Torneo%20Amateur%20C.S.%20-%20Primera%20Edici%C3%B3n%20%2831%20de%20octubre%29." target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Inscribirme · 74963734</a>
+              <a class="btn" href="https://wa.me/59177347348?text=Hola%2C%20tengo%20una%20consulta%20sobre%20el%20Torneo%20Amateur%20C.S.%20-%20Primera%20Edici%C3%B3n%20%2831%20de%20octubre%29." target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Consultas · 77347348</a>
+            </div>
+            <p class="evt-note">Lugar y hora por confirmar, según el afiche oficial del evento.</p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -982,20 +1092,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
           <p class="section-sub">Fechas y estados de las actividades organizadas por la asociación.</p>
         </div>
         <div class="calendar-list" id="calendarList"></div>
-      </div>
-    </section>
-
-    <!-- ===================== RESULTADOS ===================== -->
-    <section class="page-section" id="resultados">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-eyebrow">Podios</div>
-          <h2 class="section-title">Resultados <span class="demo-tag">Información de ejemplo</span></h2>
-          <p class="section-sub">Resultados demostrativos, presentados con fines de diseño. Los resultados oficiales se comparten por los canales oficiales de la asociación.</p>
-        </div>
-        <div class="table-wrap glass-card">
-          <table class="data-table" id="resultsTable"></table>
-        </div>
       </div>
     </section>
 
@@ -1062,7 +1158,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
           <div class="glass-card athlete-block">
             <i class="fa-solid fa-comments"></i>
             <h4>Consultas</h4>
-            <p>Para dudas sobre inscripción o participación, comunícate a través de la sección de Contacto o nuestras redes oficiales.</p>
+            <p>Para dudas sobre inscripción o participación, comunícate por WhatsApp o a través de nuestras redes oficiales.</p>
           </div>
         </div>
       </div>
@@ -1133,97 +1229,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
       </div>
     </section>
 
-    <!-- ===================== CONTACTO ===================== -->
-    <section class="page-section" id="contacto">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-eyebrow">Hablemos</div>
-          <h2 class="section-title">Contáctanos</h2>
-          <p class="section-sub">¿Tienes preguntas sobre eventos, inscripciones o quieres colaborar con la asociación? Escríbenos.</p>
-        </div>
-        <div class="contact-grid">
-          <form class="glass-card contact-form" id="contactForm" novalidate>
-            <span class="demo-tag" style="margin-left:0;">Formulario demostrativo — sin backend conectado</span>
-            <div class="form-row">
-              <div class="form-field">
-                <label for="cf-name">Nombre completo</label>
-                <input type="text" id="cf-name" name="name" placeholder="Tu nombre">
-                <span class="field-error" data-for="cf-name"></span>
-              </div>
-              <div class="form-field">
-                <label for="cf-phone">Teléfono / WhatsApp</label>
-                <input type="tel" id="cf-phone" name="phone" placeholder="+591 ...">
-                <span class="field-error" data-for="cf-phone"></span>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-field">
-                <label for="cf-city">Ciudad</label>
-                <input type="text" id="cf-city" name="city" placeholder="Santa Cruz de la Sierra">
-                <span class="field-error" data-for="cf-city"></span>
-              </div>
-              <div class="form-field">
-                <label for="cf-reason">Motivo del contacto</label>
-                <select id="cf-reason" name="reason">
-                  <option value="">Selecciona una opción</option>
-                  <option value="inscripcion">Inscripción a un evento</option>
-                  <option value="colaboracion">Colaboración / Auspicio</option>
-                  <option value="prensa">Prensa / Medios</option>
-                  <option value="otro">Otro</option>
-                </select>
-                <span class="field-error" data-for="cf-reason"></span>
-              </div>
-            </div>
-            <div class="form-field">
-              <label for="cf-message">Mensaje</label>
-              <textarea id="cf-message" name="message" rows="5" placeholder="Escribe tu mensaje..."></textarea>
-              <span class="field-error" data-for="cf-message"></span>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-paper-plane"></i> Enviar Consulta</button>
-            <div class="form-success" id="formSuccess">
-              <i class="fa-solid fa-circle-check"></i> ¡Mensaje validado correctamente! (Demostración — conecta este formulario a tu backend para el envío real).
-            </div>
-          </form>
-
-          <div class="contact-side">
-            <div class="glass-card contact-item">
-              <i class="fa-brands fa-facebook-f"></i>
-              <div><b>Facebook Oficial</b><br>
-              <a href="https://www.facebook.com/luchadebrazosbolivia/?locale=es_LA" target="_blank" rel="noopener noreferrer">luchadebrazosbolivia</a></div>
-            </div>
-            <div class="glass-card contact-item">
-              <i class="fa-solid fa-location-dot"></i>
-              <div><b>Ciudad</b><br>Santa Cruz de la Sierra, Bolivia</div>
-            </div>
-            <div class="glass-card contact-item">
-              <i class="fa-solid fa-hand-fist"></i>
-              <div><b>Deporte</b><br>Lucha de Brazos (Armwrestling)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== INSCRIPCIONES ===================== -->
-    <section class="page-section" id="inscripciones">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-eyebrow">Participa</div>
-          <h2 class="section-title">Inscripciones</h2>
-          <p class="section-sub">Para inscribirte a un próximo evento, sigue estos pasos generales. Cada torneo puede tener requisitos específicos adicionales.</p>
-        </div>
-        <div class="steps-grid">
-          <div class="glass-card step-block"><span class="step-num">01</span><h4>Revisa el evento</h4><p>Consulta la sección de Próximos Eventos y verifica fecha, lugar y categorías disponibles.</p></div>
-          <div class="glass-card step-block"><span class="step-num">02</span><h4>Contáctanos</h4><p>Envía tus datos a través del formulario de Contacto o por nuestras redes oficiales.</p></div>
-          <div class="glass-card step-block"><span class="step-num">03</span><h4>Confirma tu cupo</h4><p>Recibirás la confirmación y los requisitos específicos del evento antes del pesaje oficial.</p></div>
-          <div class="glass-card step-block"><span class="step-num">04</span><h4>Compite</h4><p>Preséntate el día del evento con tu documento de identidad y disposición a competir con juego limpio.</p></div>
-        </div>
-        <div style="text-align:center;margin-top:40px;">
-          <a class="btn btn-primary" data-target="contacto"><i class="fa-solid fa-pen-to-square"></i> Iniciar mi inscripción</a>
-        </div>
-      </div>
-    </section>
-
   </main>
 </div>
 
@@ -1231,6 +1236,15 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
   <img id="lightboxImg" src="" alt="Vista ampliada">
+</div>
+
+<!-- ===================== REDES SOCIALES (BURBUJAS FLOTANTES) ===================== -->
+<div class="social-bubbles" aria-label="Redes sociales y contacto">
+  <a class="bubble bubble-fb" href="https://www.facebook.com/luchadebrazosbolivia/?locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="Facebook" data-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+  <!-- Instagram / TikTok / YouTube: se activarán cuando existan los enlaces oficiales
+  <a class="bubble bubble-ig" href="URL" target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+  -->
+  <a class="bubble bubble-wa" href="https://wa.me/59177347348?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Lucha%20de%20Brazos%20Bolivia." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" data-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 </div>
 
 <!-- ===================== BACK TO TOP ===================== -->
@@ -1284,24 +1298,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
     { date:'Ejemplo · 2026', title:'Invitación abierta a nuevos atletas', text:'La asociación invita a interesados de todas las categorías a sumarse a las próximas actividades.', img: IMG.arm3 }
   ];
 
-  const EVENTS = [
-    { name:'Copa Lucha de Brazos Santa Cruz', date:'Fecha por confirmar', place:'Santa Cruz de la Sierra', dept:'Santa Cruz', type:'Individual - Mesa oficial', cats:['Libre','Sub-18','Femenino'], status:'proximamente' },
-    { name:'Torneo Regional de Armwrestling', date:'Fecha por confirmar', place:'Por confirmar', dept:'Santa Cruz', type:'Por equipos', cats:['Libre','Master'], status:'proximamente' },
-    { name:'Encuentro Amistoso de Lucha de Brazos', date:'Fecha por confirmar', place:'Por confirmar', dept:'Santa Cruz', type:'Exhibición', cats:['Libre'], status:'proximamente' }
-  ];
-
-  const CHAMPIONSHIPS = [
-    ['Ejemplo','2025','Libre Masculino','Derecho','Ejemplo A.','Ejemplo B.','Ejemplo C.'],
-    ['Ejemplo','2025','Libre Femenino','Izquierdo','Ejemplo D.','Ejemplo E.','Ejemplo F.'],
-    ['Ejemplo','2024','Sub-18','Derecho','Ejemplo G.','Ejemplo H.','Ejemplo I.']
-  ];
-
-  const RESULTS = [
-    ['Ejemplo','1°','Ejemplo Atleta A.','Santa Cruz'],
-    ['Ejemplo','2°','Ejemplo Atleta B.','Santa Cruz'],
-    ['Ejemplo','3°','Ejemplo Atleta C.','Cochabamba']
-  ];
-
   const CALENDAR = [
     { d:'--', m:'Por definir', title:'Copa Lucha de Brazos Santa Cruz', place:'Santa Cruz de la Sierra · Estado: Próximamente' },
     { d:'--', m:'Por definir', title:'Torneo Regional de Armwrestling', place:'Santa Cruz · Estado: Próximamente' },
@@ -1339,12 +1335,12 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
   ];
 
   const FAQ = [
-    { q:'¿Cómo puedo participar en un evento?', a:'Debes revisar la sección de Próximos Eventos y contactarnos a través del formulario de Contacto o nuestras redes oficiales para completar tu inscripción.' },
+    { q:'¿Cómo puedo participar en un evento?', a:'Debes revisar la sección de Próximos Eventos y contactarnos por WhatsApp o a través de nuestras redes oficiales para completar tu inscripción.' },
     { q:'¿Quién puede competir?', a:'Los eventos suelen estar abiertos a distintas categorías de edad y experiencia. Los requisitos específicos se detallan en cada convocatoria.' },
     { q:'¿Cómo funcionan las categorías?', a:'Las categorías definitivas (por peso, edad o género) se confirman el día del pesaje oficial, según el reglamento del evento correspondiente.' },
     { q:'¿Dónde se realizan los eventos?', a:'La mayoría de nuestras actividades se concentran en Santa Cruz de la Sierra, aunque podemos coorganizar actividades en otros departamentos.' },
     { q:'¿Cómo puedo conocer las próximas fechas?', a:'Las fechas se publican en la sección de Próximos Eventos y Calendario de esta página, así como en nuestra página oficial de Facebook.' },
-    { q:'¿Cómo puedo contactar a la asociación?', a:'Puedes escribirnos usando el formulario en la sección de Contacto o a través de nuestra página oficial de Facebook.' }
+    { q:'¿Cómo puedo contactar a la asociación?', a:'Puedes escribirnos por WhatsApp o a través de nuestra página oficial de Facebook.' }
   ];
 
   const newsGrid = document.getElementById('newsGrid');
@@ -1361,37 +1357,21 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
       </article>`).join('');
   }
 
-  const eventsGrid = document.getElementById('eventsGrid');
-  const statusLabel = { proximamente:'Próximamente', abierto:'Inscripción Abierta', cerrado:'Cerrado' };
-  if(eventsGrid){
-    eventsGrid.innerHTML = EVENTS.map(e => `
-      <article class="glass-card event-card">
-        <div class="event-top">
-          <h4 style="font-size:1.05rem;max-width:70%;">${e.name}</h4>
-          <span class="event-status status-${e.status}">${statusLabel[e.status]}</span>
-        </div>
-        <div class="event-body">
-          <div class="event-meta">
-            <span><i class="fa-solid fa-calendar"></i> ${e.date}</span>
-            <span><i class="fa-solid fa-location-dot"></i> ${e.place}</span>
-            <span><i class="fa-solid fa-map"></i> Depto. ${e.dept}</span>
-            <span><i class="fa-solid fa-hand-fist"></i> ${e.type}</span>
-          </div>
-          <div class="event-cats">${e.cats.map(c=>`<span>${c}</span>`).join('')}</div>
-          <a class="btn btn-sm btn-primary btn-block" data-target="contacto">Ver información <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </article>`).join('');
+  
+  const evtPosterImg = document.getElementById('evtPosterImg');
+  const evtPosterBtn = document.getElementById('evtPosterBtn');
+  if(evtPosterImg){
+    const posterFallback = ()=>{
+      if(!evtPosterImg.dataset.fallback){ evtPosterImg.dataset.fallback = '1'; evtPosterImg.src = EVENT_POSTER_LOCAL; }
+    };
+    evtPosterImg.addEventListener('error', posterFallback);
+    if(evtPosterImg.complete && evtPosterImg.naturalWidth === 0) posterFallback();
   }
-
-  const champTable = document.getElementById('champTable');
-  if(champTable){
-    champTable.innerHTML = `<thead><tr><th>Campeonato</th><th>Año</th><th>Categoría</th><th>Brazo</th><th>1°</th><th>2°</th><th>3°</th></tr></thead>
-    <tbody>${CHAMPIONSHIPS.map(r=>`<tr>${r.map((c,i)=>`<td class="${i===4?'pos-1':''}">${i===0?'<b>'+c+'</b>':c}</td>`).join('')}</tr>`).join('')}</tbody>`;
-  }
-  const resultsTable = document.getElementById('resultsTable');
-  if(resultsTable){
-    resultsTable.innerHTML = `<thead><tr><th>Evento</th><th>Posición</th><th>Atleta</th><th>Departamento</th></tr></thead>
-    <tbody>${RESULTS.map(r=>`<tr>${r.map((c,i)=>`<td class="${i===1?'pos-1':''}">${i===0?'<b>'+c+'</b>':c}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  if(evtPosterBtn){
+    evtPosterBtn.addEventListener('click', ()=>{
+      document.getElementById('lightboxImg').src = evtPosterImg.currentSrc || evtPosterImg.src;
+      document.getElementById('lightbox').classList.add('active');
+    });
   }
 
   const calendarList = document.getElementById('calendarList');
@@ -1400,7 +1380,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
       <div class="glass-card cal-item">
         <div class="cal-date"><span class="d">${c.d}</span><span class="m">${c.m}</span></div>
         <div class="cal-info"><h4>${c.title}</h4><p>${c.place}</p></div>
-        <a class="btn btn-sm btn-outline" data-target="contacto">Detalles</a>
+        <a class="btn btn-sm btn-outline" data-target="proximos-eventos">Detalles</a>
       </div>`).join('');
   }
 
@@ -1506,11 +1486,13 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
     sidebar.classList.add('open');
     sidebarOverlay.classList.add('show');
     hamburgerBtn.classList.add('active');
+    document.body.classList.add('menu-open');
   }
   function closeSidebarMobile(){
     sidebar.classList.remove('open');
     sidebarOverlay.classList.remove('show');
     hamburgerBtn.classList.remove('active');
+    document.body.classList.remove('menu-open');
   }
   hamburgerBtn.addEventListener('click', ()=>{
     sidebar.classList.contains('open') ? closeSidebarMobile() : openSidebarMobile();
@@ -1569,45 +1551,6 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
       entries.forEach(entry=>{ if(entry.isIntersecting) animateStats(); });
     }, {threshold:.35});
     obs.observe(statsRow);
-  }
-
-  const contactForm = document.getElementById('contactForm');
-  if(contactForm){
-    const successBox = document.getElementById('formSuccess');
-    contactForm.addEventListener('submit', function(e){
-      e.preventDefault();
-      let valid = true;
-      const fields = [
-        { id:'cf-name', check: v => v.trim().length >= 3, msg:'Ingresa tu nombre completo (mínimo 3 caracteres).' },
-        { id:'cf-phone', check: v => /^[+0-9\s-]{7,}$/.test(v.trim()), msg:'Ingresa un número de teléfono válido.' },
-        { id:'cf-city', check: v => v.trim().length >= 2, msg:'Ingresa tu ciudad.' },
-        { id:'cf-reason', check: v => v.trim() !== '', msg:'Selecciona un motivo de contacto.' },
-        { id:'cf-message', check: v => v.trim().length >= 10, msg:'Tu mensaje debe tener al menos 10 caracteres.' }
-      ];
-      fields.forEach(f=>{
-        const input = document.getElementById(f.id);
-        const errorSpan = contactForm.querySelector(`.field-error[data-for="${f.id}"]`);
-        const wrap = input.closest('.form-field');
-        if(!f.check(input.value)){
-          valid = false;
-          wrap.classList.add('invalid');
-          errorSpan.textContent = f.msg;
-        } else {
-          wrap.classList.remove('invalid');
-          errorSpan.textContent = '';
-        }
-      });
-
-      if(valid){
-        successBox.classList.add('show');
-        contactForm.reset();
-        setTimeout(()=> successBox.classList.remove('show'), 6000);
-        // NOTA: aquí se debe conectar la llamada real al backend (fetch/AJAX) cuando esté disponible.
-        alert("se envio correctamente tu mensaje gracias por contactarse con nosotros ");
-      } else {
-        successBox.classList.remove('show');
-      }
-    });
   }
 
   const backToTop = document.getElementById('backToTop');
