@@ -407,6 +407,14 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 .pillar-card p{ font-family:var(--font-ui); color:var(--c-gray); font-size:.9rem; }
 
 .about-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:26px; }
+.association-videos{ margin-top:48px; }
+.association-videos .section-head{ margin-bottom:22px; }
+.association-video-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
+.association-video{ padding:16px; }
+.video-frame, .news-video{ overflow:hidden; border-radius:8px; background:var(--c-black-3); aspect-ratio:16/9; }
+.video-frame iframe, .news-video iframe{ display:block; width:100%; height:100%; border:0; }
+.news-video{ height:auto; }
+.news-video iframe{ aspect-ratio:16/9; height:auto; }
 .about-text, .about-values{ padding:36px; }
 .about-text h3, .about-values h3{ font-family:var(--font-display); font-size:1.25rem; margin-bottom:12px; color:var(--c-gold); }
 .about-text p{ color:var(--c-gray); }
@@ -415,6 +423,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 .value-list li:last-child{ border-bottom:none; }
 
 .news-card{ overflow:hidden; display:flex; flex-direction:column; padding:0; }
+#newsGrid{ grid-template-columns:minmax(0,620px); justify-content:center; }
 .news-img{ height:180px; overflow:hidden; }
 .news-img img{ width:100%; height:100%; object-fit:cover; transition:.5s var(--ease); filter:brightness(.75) contrast(1.1); }
 .news-card:hover .news-img img{ transform:scale(1.08); filter:brightness(1) contrast(1.1); }
@@ -688,6 +697,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 @media (max-width:1100px){
   .grid-3{ grid-template-columns:repeat(2,1fr); }
   .about-grid, .location-grid, .contact-grid{ grid-template-columns:1fr; }
+  .association-video-grid{ grid-template-columns:1fr; }
   .rules-grid, .athlete-grid{ grid-template-columns:1fr; }
   .stats-row{ grid-template-columns:repeat(2,1fr); }
   .stat-item{ border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:24px; }
@@ -726,7 +736,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 
 /* ===== Burbujas flotantes de redes sociales ===== */
 .social-bubbles{
-  position:fixed; right:24px; left:auto; top:50%; bottom:auto; transform:translateY(-50%);
+  position:fixed; right:24px; left:auto; top:auto; bottom:max(24px, env(safe-area-inset-bottom));
   z-index:120; display:flex; flex-direction:column; gap:12px;
 }
 .social-bubbles .bubble{
@@ -821,7 +831,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
 .evt-note{ margin-top:18px; font-family:var(--font-ui); font-size:.76rem; color:var(--c-gray); }
 
 @media (max-width:900px){
-  .social-bubbles{ right:12px; left:auto; top:50%; bottom:auto; transform:translateY(-50%); gap:10px; }
+  .social-bubbles{ right:12px; left:auto; top:auto; bottom:max(94px, calc(env(safe-area-inset-bottom) + 94px)); gap:10px; }
   .social-bubbles .bubble{ width:44px; height:44px; font-size:1.1rem; }
   .evt-feature{ grid-template-columns:1fr; }
   .evt-poster{ max-width:420px; width:100%; margin:0 auto; }
@@ -989,6 +999,26 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
             </ul>
           </div>
         </div>
+
+        <div class="association-videos">
+          <div class="section-head">
+            <div class="section-eyebrow">Conócenos</div>
+            <h2 class="section-title">La Asociación <span>en video</span></h2>
+            <p class="section-sub">Videos compartidos por la Asociación Lucha de Brazos Bolivia.</p>
+          </div>
+          <div class="association-video-grid">
+            <article class="glass-card association-video">
+              <div class="video-frame">
+                <iframe src="https://drive.google.com/file/d/1CY2YAahcuarnu0QJi8zx1MN5o24SIoxd/preview" title="Video 1 de la Asociación Lucha de Brazos Bolivia" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+            </article>
+            <article class="glass-card association-video">
+              <div class="video-frame">
+                <iframe src="https://drive.google.com/file/d/1Lf-fF6DruNP9aVpKLN07YCZEH0SB3OGD/preview" title="Video 2 de la Asociación Lucha de Brazos Bolivia" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -998,7 +1028,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
         <div class="section-head">
           <div class="section-eyebrow">Actualidad</div>
           <h2 class="section-title">Actualidad de la <span>Lucha de Brazos</span></h2>
-          <p class="section-sub">Resultados y trayectorias de atletas latinoamericanos, con enlaces a las notas de prensa.</p>
+          <p class="section-sub">Comunicado institucional y mensaje de condolencias por Ethan Loveï.</p>
         </div>
         <div class="grid-3" id="newsGrid"></div>
       </div>
@@ -1219,9 +1249,17 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
   };
 
   const NEWS = [
-    { date:'25 septiembre 2026', title:'Dofran Trujillo gana el Mundial Junior', text:'El mexicano Dofran Daniel Trujillo Angulo obtuvo el primer lugar Junior U-18, brazo izquierdo hasta 70 kg, en el Campeonato Mundial IFA disputado en Japón.', source:'Presencia.MX', url:'https://www.presencia.mx/nota.aspx?id=218912&s=8', img: IMG.arm1 },
-    { date:'2 julio 2026', title:'Ezequiel Barboza, campeón sudamericano', text:'Con 19 años, el uruguayo ganó el título sudamericano 2026 de brazo derecho en la categoría Sub-23 hasta 60 kg.', source:'El Pueblo Digital', url:'https://elpueblodigital.uy/ezequiel-barboza-del-descubrimiento-casual-en-la-rambla-al-titulo-de-campeon-sudamericano-de-lucha-de-brazos-en-tiempo-record/', img: IMG.arm2 },
-    { date:'1 junio 2026', title:'Manuel “Manu Pompa” Maldonado logra el oro nacional', text:'El mexicano de 17 años ganó brazo izquierdo Junior hasta 85 kg y obtuvo plata en brazo derecho en el torneo Los Ángeles Puebla 2026.', source:'Super Channel 12', url:'https://superchannel12.com/697719/joven-de-piedras-negras-manuel-manu-pompa-maldonado-se-corona-campeon-nacional-de-vencidas-en-puebla', img: IMG.arm3 }
+    {
+      date:'3 octubre 2026',
+      title:'Nuestras condolencias por Ethan Loveï',
+      text:'La Asociación Lucha de Brazos Bolivia expresa sus más sinceras condolencias por el fallecimiento del joven atleta francés Ethan Loveï. Acompañamos con respeto a su familia, amistades, equipo y a toda la comunidad de lucha de brazos.',
+      source:'Fédération Française de Force',
+      url:'https://www.ffforce.fr/fr/actualites-ffforce/6278-en-memoire-d-ethan-lovei.html',
+      image:'https://drive.google.com/thumbnail?id=1lZJtQIvdLYhJVJdEBZeqxuThGOFZ-vdJ&sz=w1000',
+      imageLink:'https://drive.google.com/file/d/1lZJtQIvdLYhJVJdEBZeqxuThGOFZ-vdJ/view?usp=drivesdk',
+      imageAlt:'Imagen compartida para la nota de condolencias por Ethan Loveï',
+      imageNote:'Imagen proporcionada para esta nota'
+    }
   ];
 
   const CATEGORIES = [
@@ -1261,13 +1299,14 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
   if(newsGrid){
     newsGrid.innerHTML = NEWS.map(n => `
       <article class="glass-card news-card">
-        <div class="news-img"><img src="${n.img}" alt="Imagen referencial; no necesariamente muestra a los atletas de la nota." loading="lazy"></div>
+        ${n.video ? `<div class="news-video"><iframe src="${n.video}" title="${n.videoTitle}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>` : `<div class="news-img"><img src="${n.image || n.img}" alt="${n.imageAlt || 'Imagen referencial; no necesariamente muestra a los atletas de la nota.'}" loading="lazy"></div>`} 
         <div class="news-body">
           <span class="news-date">${n.date}</span>
-          <small class="news-image-note">Foto referencial; no identifica a los protagonistas.</small>
+          <small class="news-image-note">${n.imageNote || 'Foto referencial; no identifica a los protagonistas.'}</small>
           <h4>${n.title}</h4>
           <p>${n.text}</p>
-          <a class="btn btn-sm btn-outline" href="${n.url}" target="_blank" rel="noopener noreferrer">Leer en ${n.source} <i class="fa-solid fa-arrow-right"></i></a>
+          ${n.videoLink ? `<a class="btn btn-sm btn-outline" href="${n.videoLink}" target="_blank" rel="noopener noreferrer">Abrir video en Google Drive <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : n.imageLink ? `<a class="btn btn-sm btn-outline" href="${n.imageLink}" target="_blank" rel="noopener noreferrer">Ver imagen en Google Drive <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+          <a class="btn btn-sm btn-outline" href="${n.url}" target="_blank" rel="noopener noreferrer">Fuente: ${n.source} <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </article>`).join('');
   }
