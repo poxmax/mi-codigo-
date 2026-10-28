@@ -629,11 +629,14 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
   transition:height .4s var(--ease), opacity .3s var(--ease), visibility .3s;
 }
 .chat-window.open{ height:min(720px, 82vh); opacity:1; visibility:visible; }
+.chat-window.is-positioned{ right:auto; bottom:auto; width:min(480px, calc(100vw - 32px)); }
 .chat-header{
   padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:10px;
   background:linear-gradient(90deg, rgba(230,0,58,0.18), rgba(207,168,96,0.1));
   border-bottom:1px solid var(--border-glass-strong);
+  cursor:grab; touch-action:none; user-select:none;
 }
+.chat-header:active{ cursor:grabbing; }
 .chat-header-title{ display:flex; align-items:center; gap:10px; }
 .chat-header-title i{ color:var(--c-gold); font-size:1.2rem; }
 .chat-header-title b{ font-family:var(--font-display); font-size:.92rem; text-transform:uppercase; letter-spacing:1px; }
@@ -641,6 +644,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 .chat-close-btn{
   width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center;
   background:rgba(255,255,255,0.06); color:var(--c-white); transition:.3s var(--ease); flex:none;
+  cursor:pointer; touch-action:manipulation;
 }
 .chat-close-btn:hover{ background:var(--c-red); transform:rotate(90deg); }
 .chat-messages{
@@ -1275,7 +1279,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
           </div>
           <label class="signup-consent" for="signupConsent">
             <input id="signupConsent" type="checkbox" required>
-            <span>Acepto guardar mi correo para la inscripción y preparar estos datos para enviarlos por WhatsApp a la organización. Si la inscripción es infantil, quien confirma debe ser madre, padre o tutor legal.</span>
+            <span>Acepto que mis datos se utilicen para gestionar mi inscripción y enviarlos a la organización. Si la inscripción es infantil, debe confirmar madre, padre o tutor legal.</span>
           </label>
           <button class="btn btn-primary" type="submit"><i class="fa-brands fa-whatsapp"></i> Enviar cuestionario por WhatsApp</button>
           <p class="signup-form-status" id="signupFormStatus" role="status" aria-live="polite"></p>
@@ -1453,6 +1457,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
       <div>
         <b>Asistente Lucha de Brazos</b>
         <small>Pregúntame sobre armwrestling</small>
+        <small class="chat-drag-hint">Arrastra esta barra para mover el chat</small>
       </div>
     </div>
     <button class="chat-close-btn" id="chatCloseBtn" aria-label="Cerrar chat"><i class="fa-solid fa-xmark"></i></button>
@@ -1871,16 +1876,16 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
         showSignupNotice('success', '¡Inscripción enviada correctamente!', 'Tus datos se han enviado correctamente. Gracias por participar.', whatsappUrl);
       }catch(error){
         status.className = 'signup-form-status error';
-        status.textContent = 'Se preparó WhatsApp, pero no se pudo verificar que el correo se guardara en la base de datos.';
-        showSignupNotice('error', 'No pudimos confirmar el registro', 'Se preparó el mensaje de WhatsApp. No se pudo verificar que el correo se haya guardado; revisa la conexión de la base de datos antes de volver a enviar.', whatsappUrl);
+        status.textContent = 'No se pudo completar el registro. El mensaje de WhatsApp quedó preparado; revisa tu conexión e inténtalo de nuevo.';
+        showSignupNotice('error', 'No se pudo completar el registro', 'El mensaje con tus datos quedó preparado en WhatsApp. Revisa tu conexión e inténtalo de nuevo.', whatsappUrl);
       }finally{
         signupSubmitting = false;
         signupSubmitButton.disabled = false;
       }
     }else{
       status.className = 'signup-form-status';
-      status.textContent = 'El formulario se validó y se preparó el mensaje. La inscripción todavía no se envió: abre WhatsApp y pulsa Enviar. El correo no se guardó porque falta conectar la base de datos.';
-      showSignupNotice('info', 'Formulario validado', 'Se preparó el mensaje con tus datos para WhatsApp. Para completar la inscripción, abre WhatsApp y pulsa Enviar. El correo no se guardó porque la base de datos aún no está conectada.', whatsappUrl);
+      status.textContent = 'Se preparó el mensaje con tus datos. Abre WhatsApp y pulsa Enviar para completar la inscripción.';
+      showSignupNotice('info', 'Mensaje preparado', 'Abre WhatsApp y pulsa Enviar para compartir tus datos con la organización y completar la inscripción.', whatsappUrl);
       signupSubmitting = false;
       signupSubmitButton.disabled = false;
     }
@@ -2244,9 +2249,106 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     setTimeout(()=> agregarMensaje(respuesta, 'bot'), 350);
   }
 
+  const CHAT_POSITION_STORAGE_KEY = 'poxmax-chat-position-v1';
+  const chatHeader = chatWindow ? chatWindow.querySelector('.chat-header') : null;
+  let chatDragState = null;
+
+  function alturaAbiertaChat(){
+    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    return window.innerWidth <= 640
+      ? Math.min(560, Math.max(0, viewportHeight - 124))
+      : Math.min(720, viewportHeight * 0.82);
+  }
+
+  function ponerPosicionChat(left, top, guardar){
+    if(!chatWindow) return;
+    const rect = chatWindow.getBoundingClientRect();
+    const margin = 12;
+    const width = Math.min(rect.width || Math.min(480, window.innerWidth - 32), window.innerWidth - margin * 2);
+    const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const height = alturaAbiertaChat();
+    const maxLeft = Math.max(margin, window.innerWidth - width - margin);
+    const maxTop = Math.max(margin, viewportHeight - height - margin);
+    const position = {
+      left:Math.min(Math.max(margin, left), maxLeft),
+      top:Math.min(Math.max(margin, top), maxTop)
+    };
+    chatWindow.classList.add('is-positioned');
+    chatWindow.style.left = position.left + 'px';
+    chatWindow.style.top = position.top + 'px';
+    if(guardar){
+      try{ localStorage.setItem(CHAT_POSITION_STORAGE_KEY, JSON.stringify(position)); }catch(error){}
+    }
+    return position;
+  }
+
+  function restaurarPosicionChat(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(CHAT_POSITION_STORAGE_KEY) || 'null');
+      if(saved && Number.isFinite(saved.left) && Number.isFinite(saved.top)){
+        ponerPosicionChat(saved.left, saved.top, false);
+      }
+    }catch(error){}
+  }
+
+  if(chatHeader && chatWindow){
+    chatHeader.addEventListener('pointerdown', event=>{
+      if(event.button !== undefined && event.button !== 0) return;
+      if(event.target.closest('button, a, input, textarea, select')) return;
+      const rect = chatWindow.getBoundingClientRect();
+      chatDragState = {
+        pointerId:event.pointerId,
+        startX:event.clientX,
+        startY:event.clientY,
+        left:rect.left,
+        top:rect.top,
+        moved:false
+      };
+      event.preventDefault();
+      if(chatHeader.setPointerCapture) chatHeader.setPointerCapture(event.pointerId);
+    });
+    chatHeader.addEventListener('pointermove', event=>{
+      if(!chatDragState || chatDragState.pointerId !== event.pointerId) return;
+      const deltaX = event.clientX - chatDragState.startX;
+      const deltaY = event.clientY - chatDragState.startY;
+      if(!chatDragState.moved && Math.hypot(deltaX, deltaY) < 4) return;
+      event.preventDefault();
+      chatDragState.moved = true;
+      ponerPosicionChat(chatDragState.left + deltaX, chatDragState.top + deltaY, false);
+    });
+    const terminarMovimientoChat = event=>{
+      if(!chatDragState || chatDragState.pointerId !== event.pointerId) return;
+      if(chatDragState.moved){
+        const rect = chatWindow.getBoundingClientRect();
+        ponerPosicionChat(rect.left, rect.top, true);
+      }
+      chatDragState = null;
+      if(chatHeader.hasPointerCapture && chatHeader.hasPointerCapture(event.pointerId)){
+        chatHeader.releasePointerCapture(event.pointerId);
+      }
+    };
+    chatHeader.addEventListener('pointerup', terminarMovimientoChat);
+    chatHeader.addEventListener('pointercancel', terminarMovimientoChat);
+    chatWindow.addEventListener('transitionend', event=>{
+      if(event.propertyName === 'height' && chatWindow.classList.contains('open') && chatWindow.classList.contains('is-positioned')){
+        const rect = chatWindow.getBoundingClientRect();
+        ponerPosicionChat(rect.left, rect.top, false);
+      }
+    });
+    const mantenerChatEnPantalla = ()=>{
+      if(chatWindow.classList.contains('is-positioned')){
+        const rect = chatWindow.getBoundingClientRect();
+        ponerPosicionChat(rect.left, rect.top, false);
+      }
+    };
+    window.addEventListener('resize', mantenerChatEnPantalla);
+    if(window.visualViewport) window.visualViewport.addEventListener('resize', mantenerChatEnPantalla);
+  }
+
   function abrirChat(){
     chatWindow.classList.add('open');
     document.body.classList.add('chat-open');
+    restaurarPosicionChat();
     inicializarChat();
     setTimeout(()=> chatInput && chatInput.focus(), 300);
   }
