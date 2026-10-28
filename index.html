@@ -874,6 +874,17 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
 .choice-dialog-actions{ display:grid; gap:12px; }
 .choice-dialog-actions .btn{ justify-content:center; width:100%; }
 .choice-dialog-close{ margin-top:16px; border:0; background:none; color:var(--c-gray); font:inherit; cursor:pointer; }
+.signup-notice-icon{ display:grid; place-items:center; width:54px; height:54px; margin-bottom:18px; border:1px solid var(--border-glass-strong); border-radius:50%; color:var(--c-gold); font-size:1.35rem; }
+.signup-notice-icon.success{ color:#8ed8a8; border-color:rgba(142,216,168,.45); }
+.signup-notice-icon.error{ color:#ff7b91; border-color:rgba(255,123,145,.45); }
+.signup-notice-actions{ display:grid; gap:12px; }
+.signup-notice-actions .btn{ justify-content:center; width:100%; }
+#signupNoticeWhatsapp[hidden]{ display:none; }
+.signup-category-select{ margin:0 0 16px; }
+.signup-category-select label{ display:block; margin-bottom:7px; color:var(--c-gray); font-family:var(--font-ui); font-size:.72rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; }
+.signup-category-select select{ width:100%; border:1px solid var(--border-glass-strong); border-radius:4px; padding:12px 14px; color:var(--c-white); background:var(--c-black-3); font:inherit; }
+.signup-category-select select:focus{ border-color:var(--c-gold); outline:none; box-shadow:0 0 0 3px var(--c-gold-glow); }
+.signup-form button[type="submit"]:disabled{ opacity:.65; cursor:wait; }
 .promotion-form textarea{ min-height:120px; resize:vertical; }
 .backend-note{ color:var(--c-gray); font-family:var(--font-ui); font-size:.78rem; line-height:1.6; margin-top:12px; }
 
@@ -972,6 +983,18 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
         <button class="btn" id="choosePromotionBtn" type="button"><i class="fa-solid fa-bullhorn"></i> Promocionar un evento</button>
       </div>
       <button class="choice-dialog-close" id="closeChoiceDialogBtn" type="button">Cerrar</button>
+    </div>
+  </dialog>
+
+  <dialog class="choice-dialog" id="signupNoticeDialog" aria-labelledby="signupNoticeTitle" aria-describedby="signupNoticeMessage">
+    <div class="choice-dialog-inner">
+      <div class="signup-notice-icon" id="signupNoticeIcon" aria-hidden="true"><i class="fa-solid fa-circle-info"></i></div>
+      <h2 id="signupNoticeTitle">Estado de la inscripción</h2>
+      <p id="signupNoticeMessage"></p>
+      <div class="signup-notice-actions">
+        <a class="btn" id="signupNoticeWhatsapp" href="#" target="_blank" rel="noopener noreferrer" hidden><i class="fa-brands fa-whatsapp"></i> Continuar por WhatsApp</a>
+        <button class="btn btn-primary" id="signupNoticeAccept" type="button">Aceptar</button>
+      </div>
     </div>
   </dialog>
 
@@ -1171,6 +1194,10 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
             <i class="fa-solid fa-child-reaching" aria-hidden="true"></i>
             <h3>Categoría Infantil</h3>
             <p>Consulta los eventos para atletas infantiles. Si todavía no hay una convocatoria publicada para esta categoría, podrás consultarlo con la asociación.</p>
+            <div class="signup-weight">
+              <label for="infantilWeight">¿Cuánto pesas? (kg)</label>
+              <input id="infantilWeight" type="number" min="1" max="250" step="0.1" inputmode="decimal" placeholder="Ej.: 35">
+            </div>
             <button class="btn btn-primary" id="searchInfantilBtn" type="button">Buscar algún evento de tu categoría</button>
             <div class="signup-results" id="infantilResults" role="status" aria-live="polite"></div>
           </article>
@@ -1189,8 +1216,15 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
 
           <article class="glass-card signup-card">
             <i class="fa-solid fa-trophy" aria-hidden="true"></i>
-            <h3>Categoría Profesional</h3>
-            <p>Indica tu peso para encontrar divisiones masculinas por peso y la categoría profesional absoluta disponible.</p>
+            <h3>Categoría Masculina / Profesional</h3>
+            <p>Elige la división masculina publicada para el evento. Las categorías amateur se filtran por peso; la profesional es absoluta.</p>
+            <div class="signup-category-select">
+              <label for="maleCategory">División</label>
+              <select id="maleCategory">
+                <option value="Masculina Amateur">Masculina Amateur</option>
+                <option value="Profesional">Profesional Absoluto</option>
+              </select>
+            </div>
             <div class="signup-weight">
               <label for="professionalWeight">¿Cuánto pesas? (kg)</label>
               <input id="professionalWeight" type="number" min="1" max="250" step="0.1" inputmode="decimal" placeholder="Ej.: 82">
@@ -1204,6 +1238,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
           <h3>Cuestionario de inscripción</h3>
           <p class="section-sub" id="signupEventSummary"></p>
           <input type="hidden" id="signupCategory">
+          <input type="hidden" id="signupSex">
           <input type="hidden" id="signupEvent">
           <input type="hidden" id="signupEventDate">
           <label class="signup-honeypot" aria-hidden="true">Deja este campo vacío<input id="signupWebsite" type="text" tabindex="-1" autocomplete="off"></label>
@@ -1430,17 +1465,17 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
       name:'Torneo Amateur C.S. — Primera Edición',
       date:'31 de octubre de 2026',
       registrationCloses:'2026-10-31T23:59:59-04:00',
-      children:[{label:'Infantil · división por confirmar con la organización'}],
-      women:[{label:'Femenina · hasta 65 kg (−65)', max:65},{label:'Femenina · más de 65 kg (+65)', min:65}],
-      men:[
-        {label:'Masculina Amateur · hasta 60 kg (−60)', max:60},
-        {label:'Masculina Amateur · 60–70 kg (−70)', min:60, max:70},
-        {label:'Masculina Amateur · 70–80 kg (−80)', min:70, max:80},
-        {label:'Masculina Amateur · 80–90 kg (−90)', min:80, max:90},
-        {label:'Masculina Amateur · 90–100 kg (−100)', min:90, max:100},
-        {label:'Masculina Amateur · más de 100 kg (+100)', min:100}
-      ],
-      professional:[{label:'Profesional · Absoluto'}]
+      divisions:[
+        {category:'Femenina', sex:'femenino', label:'Femenina · hasta 65 kg (−65)', max:65},
+        {category:'Femenina', sex:'femenino', label:'Femenina · más de 65 kg (+65)', min:65},
+        {category:'Masculina Amateur', sex:'masculino', label:'Masculina Amateur · hasta 60 kg (−60)', max:60},
+        {category:'Masculina Amateur', sex:'masculino', label:'Masculina Amateur · 60–70 kg (−70)', min:60, max:70},
+        {category:'Masculina Amateur', sex:'masculino', label:'Masculina Amateur · 70–80 kg (−80)', min:70, max:80},
+        {category:'Masculina Amateur', sex:'masculino', label:'Masculina Amateur · 80–90 kg (−90)', min:80, max:90},
+        {category:'Masculina Amateur', sex:'masculino', label:'Masculina Amateur · 90–100 kg (−100)', min:90, max:100},
+        {category:'Masculina Amateur', sex:'masculino', label:'Masculina Amateur · más de 100 kg (+100)', min:100},
+        {category:'Profesional', sex:null, label:'Profesional · Absoluto', weightClass:'absolute'}
+      ]
     }
   ];
 
@@ -1655,36 +1690,44 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     container.appendChild(note);
   }
 
-  function addEventResult(container, eventInfo, division, category, weight){
+  function addEventResult(container, eventInfo, division, weight){
     const result = document.createElement('article');
     result.className = 'signup-result';
     const title = document.createElement('h4');
     title.textContent = eventInfo.name;
     const detail = document.createElement('p');
-    detail.textContent = `${division} · ${eventInfo.date}`;
+    detail.textContent = division.label + ' · ' + eventInfo.date;
     const button = document.createElement('button');
     button.className = 'btn btn-primary';
     button.type = 'button';
     button.textContent = 'Completar cuestionario';
-    button.addEventListener('click', ()=>openSignupForm(eventInfo, division, category, weight));
+    button.addEventListener('click', ()=>openSignupForm(eventInfo, division, weight));
     result.append(title, detail, button);
     container.appendChild(result);
   }
 
-  function findDivisions(weight, divisions){
-    return divisions.filter(division=>
-      (division.min === undefined || weight > division.min) &&
-      (division.max === undefined || weight <= division.max)
+  function divisionAcceptsWeight(division, weight){
+    if(division.weightClass === 'absolute') return true;
+    return (division.min === undefined || weight > division.min) &&
+      (division.max === undefined || weight <= division.max);
+  }
+
+  function findMatchingDivisions(eventInfo, category, sex, weight){
+    return eventInfo.divisions.filter(division=>
+      division.category === category &&
+      division.sex === sex &&
+      divisionAcceptsWeight(division, weight)
     );
   }
 
-  function openSignupForm(eventInfo, division, category, weight){
+  function openSignupForm(eventInfo, division, weight){
     const form = document.getElementById('signupForm');
-    document.getElementById('signupEventSummary').textContent = `${eventInfo.name} · ${division} · ${eventInfo.date}`;
-    document.getElementById('signupCategory').value = category;
+    document.getElementById('signupEventSummary').textContent = eventInfo.name + ' · ' + division.label + ' · ' + eventInfo.date;
+    document.getElementById('signupCategory').value = division.category;
+    document.getElementById('signupSex').value = division.sex;
     document.getElementById('signupEvent').value = eventInfo.name;
     document.getElementById('signupEventDate').value = eventInfo.date;
-    document.getElementById('signupWeight').value = weight ? `${weight} kg` : 'No indicado';
+    document.getElementById('signupWeight').value = weight + ' kg';
     document.getElementById('signupFormStatus').textContent = '';
     document.getElementById('signupFormStatus').className = 'signup-form-status';
     document.getElementById('signupWhatsappLink').classList.remove('show');
@@ -1693,29 +1736,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     document.getElementById('signupName').focus({preventScroll:true});
   }
 
-  document.getElementById('searchInfantilBtn').addEventListener('click', ()=>{
-    const results = document.getElementById('infantilResults');
-    results.replaceChildren();
-    let found = 0;
-    REGISTRATION_EVENTS.filter(eventInfo=>Date.now() <= new Date(eventInfo.registrationCloses).getTime()).forEach(eventInfo=>{
-      eventInfo.children.forEach(division=>{
-        addEventResult(results, eventInfo, division, division, '');
-        found++;
-      });
-    });
-    if(!found){
-      showSignupMessage(results, 'Todavía no hay un evento infantil publicado en la agenda. Consulta a la asociación por WhatsApp para conocer las próximas convocatorias.');
-      const contact = document.createElement('a');
-      contact.className = 'btn btn-primary';
-      contact.href = `https://wa.me/${ASSOCIATION_WHATSAPP}?text=${encodeURIComponent('Hola, quisiera consultar por próximos eventos de la categoría infantil.')}`;
-      contact.target = '_blank';
-      contact.rel = 'noopener noreferrer';
-      contact.textContent = 'Consultar por WhatsApp';
-      results.appendChild(contact);
-    }
-  });
-
-  function searchByWeight(inputId, resultsId, divisionsForEvent){
+  function searchByWeight(category, sex, inputId, resultsId){
     const input = document.getElementById(inputId);
     const results = document.getElementById(resultsId);
     const weight = Number(input.value);
@@ -1727,40 +1748,79 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     results.replaceChildren();
     let found = 0;
     REGISTRATION_EVENTS.filter(eventInfo=>Date.now() <= new Date(eventInfo.registrationCloses).getTime()).forEach(eventInfo=>{
-      divisionsForEvent(eventInfo, weight).forEach(division=>{
-        addEventResult(results, eventInfo, division, division, String(weight));
+      findMatchingDivisions(eventInfo, category, sex, weight).forEach(division=>{
+        addEventResult(results, eventInfo, division, String(weight));
         found++;
       });
     });
-    if(!found) showSignupMessage(results, 'No encontramos un evento publicado para ese peso. Consulta a la asociación por WhatsApp.');
+    if(!found) showSignupMessage(results, 'No hay eventos disponibles para la categoría y el peso seleccionados.');
   }
 
+  document.getElementById('searchInfantilBtn').addEventListener('click', ()=>
+    searchByWeight('Infantil', '', 'infantilWeight', 'infantilResults')
+  );
   document.getElementById('searchFemaleBtn').addEventListener('click', ()=>
-    searchByWeight('femaleWeight','femaleResults',(eventInfo,weight)=>findDivisions(weight,eventInfo.women))
+    searchByWeight('Femenina', 'femenino', 'femaleWeight', 'femaleResults')
   );
   document.getElementById('searchProfessionalBtn').addEventListener('click', ()=>
-    searchByWeight('professionalWeight','professionalResults',(eventInfo,weight)=>[
-      ...findDivisions(weight,eventInfo.men),
-      ...eventInfo.professional
-    ])
+    searchByWeight(
+      document.getElementById('maleCategory').value,
+      document.getElementById('maleCategory').value === 'Profesional' ? null : 'masculino',
+      'professionalWeight',
+      'professionalResults'
+    )
   );
 
   const signupBirthDate = document.getElementById('signupBirthDate');
   const localToday = new Date();
   localToday.setMinutes(localToday.getMinutes() - localToday.getTimezoneOffset());
   signupBirthDate.max = localToday.toISOString().slice(0,10);
-  document.getElementById('signupForm').addEventListener('submit', event=>{
+  const signupForm = document.getElementById('signupForm');
+  const signupSubmitButton = signupForm.querySelector('button[type="submit"]');
+  const signupNoticeDialog = document.getElementById('signupNoticeDialog');
+  let signupSubmitting = false;
+
+  function showSignupNotice(type, title, message, whatsappUrl){
+    const icon = document.getElementById('signupNoticeIcon');
+    icon.className = 'signup-notice-icon ' + type;
+    icon.innerHTML = type === 'success'
+      ? '<i class="fa-solid fa-circle-check"></i>'
+      : type === 'error'
+        ? '<i class="fa-solid fa-circle-exclamation"></i>'
+        : '<i class="fa-solid fa-circle-info"></i>';
+    document.getElementById('signupNoticeTitle').textContent = title;
+    document.getElementById('signupNoticeMessage').textContent = message;
+    const noticeWhatsapp = document.getElementById('signupNoticeWhatsapp');
+    noticeWhatsapp.href = whatsappUrl || '#';
+    noticeWhatsapp.hidden = !whatsappUrl;
+    if(signupNoticeDialog && typeof signupNoticeDialog.showModal === 'function'){
+      signupNoticeDialog.showModal();
+    }else{
+      window.alert(title + '\n\n' + message);
+    }
+  }
+
+  document.getElementById('signupNoticeAccept').addEventListener('click', ()=>signupNoticeDialog.close());
+  signupNoticeDialog.addEventListener('click', event=>{
+    if(event.target === signupNoticeDialog) signupNoticeDialog.close();
+  });
+
+  signupForm.addEventListener('submit', async event=>{
     event.preventDefault();
     const status = document.getElementById('signupFormStatus');
     const whatsappLink = document.getElementById('signupWhatsappLink');
+    if(signupSubmitting || !signupForm.reportValidity()) return;
     if(document.getElementById('signupWebsite').value) return;
 
+    signupSubmitting = true;
+    signupSubmitButton.disabled = true;
     const registration = {
       fullName:document.getElementById('signupName').value.trim(),
       birthDate:signupBirthDate.value,
       email:document.getElementById('signupEmail').value.trim(),
       weight:document.getElementById('signupWeight').value,
       category:document.getElementById('signupCategory').value,
+      sex:document.getElementById('signupSex').value,
       event:document.getElementById('signupEvent').value,
       eventDate:document.getElementById('signupEventDate').value
     };
@@ -1771,6 +1831,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
       `Correo: ${registration.email}`,
       `Peso: ${registration.weight}`,
       `Categoría: ${registration.category}`,
+      `Sexo: ${registration.sex || 'No especificado en la convocatoria'}`,
       `Evento: ${registration.event}`,
       `Fecha del evento: ${registration.eventDate}`
     ].join('\n');
@@ -1781,21 +1842,31 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
 
     const databaseConfigured = REGISTRATION_DATABASE_ENDPOINT.startsWith('https://script.google.com/macros/s/') && REGISTRATION_DATABASE_ENDPOINT.endsWith('/exec');
     if(databaseConfigured){
-      status.className = 'signup-form-status success';
-      status.textContent = 'WhatsApp se abrió con todos tus datos. También se envió una solicitud para registrar el correo en la base.';
-      fetch(REGISTRATION_DATABASE_ENDPOINT,{
-        method:'POST',
-        mode:'no-cors',
-        keepalive:true,
-        headers:{'Content-Type':'text/plain;charset=utf-8'},
-        body:JSON.stringify(registration)
-      }).catch(()=>{
+      try{
+        const response = await fetch(REGISTRATION_DATABASE_ENDPOINT,{
+          method:'POST',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body:JSON.stringify(registration)
+        });
+        const result = await response.json();
+        if(!response.ok || !result || result.ok !== true) throw new Error('El servidor no confirmó el guardado.');
+        status.className = 'signup-form-status success';
+        status.textContent = 'El servidor confirmó que la inscripción se guardó. WhatsApp está listo para enviar el mensaje.';
+        showSignupNotice('success', '¡Inscripción enviada correctamente!', 'Tus datos se han enviado correctamente. Gracias por participar.', whatsappUrl);
+      }catch(error){
         status.className = 'signup-form-status error';
-        status.textContent = 'WhatsApp ya se abrió, pero no se pudo contactar la base de datos. El correo no quedó registrado.';
-      });
+        status.textContent = 'Se preparó WhatsApp, pero no se pudo verificar que el correo se guardara en la base de datos.';
+        showSignupNotice('error', 'No pudimos confirmar el registro', 'Se preparó el mensaje de WhatsApp. No se pudo verificar que el correo se haya guardado; revisa la conexión de la base de datos antes de volver a enviar.', whatsappUrl);
+      }finally{
+        signupSubmitting = false;
+        signupSubmitButton.disabled = false;
+      }
     }else{
-      status.className = 'signup-form-status error';
-      status.textContent = 'WhatsApp se abrió con tus datos. El correo todavía no se guardó porque falta conectar la base de datos.';
+      status.className = 'signup-form-status';
+      status.textContent = 'El formulario se validó y se preparó el mensaje. La inscripción todavía no se envió: abre WhatsApp y pulsa Enviar. El correo no se guardó porque falta conectar la base de datos.';
+      showSignupNotice('info', 'Formulario validado', 'Se preparó el mensaje con tus datos para WhatsApp. Para completar la inscripción, abre WhatsApp y pulsa Enviar. El correo no se guardó porque la base de datos aún no está conectada.', whatsappUrl);
+      signupSubmitting = false;
+      signupSubmitButton.disabled = false;
     }
   });
 
