@@ -620,7 +620,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
   0%{ box-shadow:0 8px 26px var(--c-red-glow); } 50%{ box-shadow:0 8px 34px rgba(230,0,58,.75), 0 0 0 8px rgba(230,0,58,.06); } 100%{ box-shadow:0 8px 26px var(--c-red-glow); }
 }
 .chat-window{
-  position:fixed; bottom:100px; right:28px; width:360px; max-width:calc(100vw - 32px);
+  position:fixed; bottom:100px; right:28px; width:min(480px, calc(100vw - 56px)); max-width:calc(100vw - 32px);
   height:0; opacity:0; visibility:hidden; overflow:hidden;
   background:linear-gradient(180deg, var(--c-black-2), var(--c-black));
   border:1px solid var(--c-gold); border-radius:14px;
@@ -628,7 +628,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
   z-index:400; display:flex; flex-direction:column;
   transition:height .4s var(--ease), opacity .3s var(--ease), visibility .3s;
 }
-.chat-window.open{ height:min(520px, 70vh); opacity:1; visibility:visible; }
+.chat-window.open{ height:min(720px, 82vh); opacity:1; visibility:visible; }
 .chat-header{
   padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:10px;
   background:linear-gradient(90deg, rgba(230,0,58,0.18), rgba(207,168,96,0.1));
@@ -644,11 +644,11 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 }
 .chat-close-btn:hover{ background:var(--c-red); transform:rotate(90deg); }
 .chat-messages{
-  flex:1; overflow-y:auto; padding:16px 18px; display:flex; flex-direction:column; gap:12px;
+  flex:1; min-height:0; overflow-y:auto; padding:18px 20px; display:flex; flex-direction:column; gap:12px;
 }
 .chat-messages::-webkit-scrollbar{ width:5px; }
 .chat-msg{
-  max-width:86%; padding:11px 14px; border-radius:12px; font-family:var(--font-ui); font-size:.83rem; line-height:1.55;
+  max-width:96%; padding:13px 16px; border-radius:12px; font-family:var(--font-ui); font-size:.94rem; line-height:1.65;
 }
 .chat-msg.bot{
   align-self:flex-start; background:rgba(255,255,255,0.05); border:1px solid var(--border-glass-strong);
@@ -658,6 +658,19 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
   align-self:flex-end; background:linear-gradient(120deg,var(--c-red),#8a0027);
   border-bottom-right-radius:2px; color:#fff;
 }
+.chat-msg p{ margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.chat-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.chat-action{
+  display:inline-flex; align-items:center; gap:7px; padding:8px 11px; border-radius:18px;
+  color:var(--c-gold); background:rgba(207,168,96,.1); border:1px solid rgba(207,168,96,.6);
+  font-family:var(--font-ui); font-size:.72rem; line-height:1.3; text-align:left; cursor:pointer;
+}
+.chat-action:hover,.chat-action:focus-visible{ color:#050608; background:var(--c-gold); outline:none; }
+.chat-status{ display:flex; align-items:center; gap:9px; padding:0 18px 10px; color:var(--c-gray); font: .76rem var(--font-ui); }
+.chat-status[hidden]{ display:none; }
+.chat-status::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--c-gold); animation:chatThinking 1s ease-in-out infinite alternate; }
+@keyframes chatThinking{ to{ opacity:.25; transform:scale(.7); } }
+.chat-send-btn:disabled{ opacity:.55; cursor:wait; transform:none; }
 .chat-suggestions{ display:flex; flex-wrap:wrap; gap:8px; padding:0 18px 14px; }
 .chat-chip{
   font-family:var(--font-ui); font-size:.68rem; padding:7px 12px; border-radius:20px;
@@ -681,7 +694,7 @@ h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:700; letter-spacing:1p
 .chat-send-btn:hover{ transform:scale(1.08); box-shadow:0 0 18px var(--c-gold-glow); }
 
 @media (max-width:640px){
-  .chat-window{ right:16px; left:16px; width:auto; bottom:92px; }
+  .chat-window{ right:16px; left:16px; width:auto; bottom:92px; height:min(560px, calc(100vh - 124px)); height:min(560px, calc(100dvh - 124px)); }
   .chat-float-btn{ right:18px; bottom:18px; }
 }
 
@@ -1433,7 +1446,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
 <button class="chat-float-btn" id="chatFloatBtn" aria-label="Abrir chat de lucha de brazos" style="display:none;">
   <i class="fa-solid fa-robot"></i>
 </button>
-<div class="chat-window" id="chatWindow">
+  <div class="chat-window" id="chatWindow" role="dialog" aria-label="Asistente conversacional de PoxMax">
   <div class="chat-header">
     <div class="chat-header-title">
       <i class="fa-solid fa-hand-fist"></i>
@@ -1444,11 +1457,12 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     </div>
     <button class="chat-close-btn" id="chatCloseBtn" aria-label="Cerrar chat"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions text"></div>
   <div class="chat-suggestions" id="chatSuggestions"></div>
+  <div class="chat-status" id="chatStatus" role="status" aria-live="polite" hidden></div>
   <div class="chat-input-row">
-    <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." autocomplete="off">
-    <button class="chat-send-btn" id="chatSendBtn" aria-label="Enviar"><i class="fa-solid fa-paper-plane"></i></button>
+    <input type="text" id="chatInput" placeholder="Escribe cualquier pregunta..." aria-label="Escribe tu pregunta" autocomplete="off" maxlength="1000">
+    <button class="chat-send-btn" id="chatSendBtn" aria-label="Enviar pregunta"><i class="fa-solid fa-paper-plane"></i></button>
   </div>
 </div>
 
@@ -1465,6 +1479,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
       name:'Torneo Amateur C.S. — Primera Edición',
       date:'31 de octubre de 2026',
       registrationCloses:'2026-10-31T23:59:59-04:00',
+      minWeight:60,
       divisions:[
         {category:'Femenina', sex:'femenino', label:'Femenina · hasta 65 kg (−65)', max:65},
         {category:'Femenina', sex:'femenino', label:'Femenina · más de 65 kg (+65)', min:65},
@@ -1706,7 +1721,8 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     container.appendChild(result);
   }
 
-  function divisionAcceptsWeight(division, weight){
+  function divisionAcceptsWeight(division, weight, eventMinimumWeight){
+    if(Number.isFinite(eventMinimumWeight) && weight < eventMinimumWeight) return false;
     if(division.weightClass === 'absolute') return true;
     return (division.min === undefined || weight > division.min) &&
       (division.max === undefined || weight <= division.max);
@@ -1716,7 +1732,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     return eventInfo.divisions.filter(division=>
       division.category === category &&
       division.sex === sex &&
-      divisionAcceptsWeight(division, weight)
+      divisionAcceptsWeight(division, weight, eventInfo.minWeight)
     );
   }
 
@@ -2006,10 +2022,10 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
   }
 
   function normalizarTexto(txt){
-    return txt
+    return (txt || '')
       .toString()
       .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // quita tildes
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
       .replace(/[¿?¡!.,;:"'()]/g,' ')
       .replace(/\s+/g,' ')
       .trim();
@@ -2099,17 +2115,79 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
     { id:'bandas', keywords:['banda elastica','bandas elasticas'],
       answer:'Las bandas elásticas son útiles para el calentamiento, la movilidad y el trabajo de pronación/supinación de forma progresiva y de bajo impacto en las articulaciones.' },
     { id:'velocidad', keywords:['velocidad'],
-      answer:'La velocidad de reacción y de ejecución del "arranque" inicial es un factor táctico importante en la lucha de brazos, ya que un buen inicio puede definir gran parte del combate antes de que se establezca la fuerza sostenida.' }
+      answer:'La velocidad de reacción y de ejecución del "arranque" inicial es un factor táctico importante en la lucha de brazos, ya que un buen inicio puede definir gran parte del combate antes de que se establezca la fuerza sostenida.' },
+
+    { id:'lbb-identidad', question:'¿Cómo se llama la institución de la página?', keywords:['nombre de la institucion','nombre de la asociacion','quienes son ustedes'],
+      answer:'La página identifica a la entidad como Asociación de Lucha de Brazos Bolivia. Sus actividades tienen como eje Santa Cruz de la Sierra.' },
+    { id:'lbb-iron-club', question:'¿La asociación de la página es Iron Club?', keywords:['iron club','son iron club','asociacion iron club'],
+      answer:'En esta copia del sitio no aparece el nombre Iron Club ni se indica que sea la misma entidad. La organización que sí figura es la Asociación de Lucha de Brazos Bolivia. Para confirmar una relación, consulta al 77347348.' },
+    { id:'lbb-que-es', question:'¿Qué es la Asociación de Lucha de Brazos Bolivia?', keywords:['que es la asociacion','que tipo de institucion son','sobre la asociacion'],
+      answer:'La página la presenta como una asociación boliviana que organiza, promueve y desarrolla la lucha de brazos o armwrestling.' },
+    { id:'lbb-deporte', question:'¿Qué deporte promueve la asociación?', keywords:['deporte de la asociacion','que disciplina promueven','armwrestling en bolivia'],
+      answer:'La asociación promueve la lucha de brazos, también llamada armwrestling, en Bolivia.' },
+    { id:'lbb-mision', question:'¿Cuál es la misión de la asociación?', keywords:['mision institucional','proposito de la asociacion','objetivo de la institucion'],
+      answer:'Su propósito publicado es organizar campeonatos y actividades de lucha de brazos y ofrecer espacios de competencia ordenados, seguros y accesibles para atletas de distintas categorías y departamentos.' },
+    { id:'lbb-vision', question:'¿Cuál es la visión de la asociación?', keywords:['vision institucional','que quieren lograr','futuro de la asociacion'],
+      answer:'La visión descrita en la página es que la lucha de brazos sea reconocida y practicada en todo Bolivia, con Santa Cruz de la Sierra como un polo importante para organizar eventos.' },
+    { id:'lbb-valores', question:'¿Qué valores representa la asociación?', keywords:['valores de la asociacion','principios de la institucion','juego limpio y respeto'],
+      answer:'La página destaca la superación deportiva, el juego limpio, el respeto, el profesionalismo, la identidad boliviana y el crecimiento de la comunidad.' },
+    { id:'lbb-actividades', question:'¿Qué actividades realiza la institución?', keywords:['actividades de la asociacion','que organiza la institucion','campeonatos y torneos'],
+      answer:'La asociación organiza y promueve campeonatos, torneos y actividades relacionadas con la lucha de brazos. La página publica convocatorias y contenido sobre el deporte.' },
+    { id:'lbb-comunidad', question:'¿A quiénes busca reunir la asociación?', keywords:['comunidad de atletas','a quienes apoya la asociacion','atletas de distintos departamentos'],
+      answer:'La página dice que busca conectar atletas de distintos departamentos y crear espacios accesibles para deportistas de diferentes categorías.' },
+    { id:'lbb-bolivia', question:'¿La asociación trabaja solo en Santa Cruz?', keywords:['trabajan en todo bolivia','asociacion nacional','atletas de otros departamentos'],
+      answer:'La asociación tiene su eje de actividades en Santa Cruz de la Sierra y expresa la visión de impulsar la lucha de brazos en todo Bolivia. La página no detalla sedes en otros departamentos.' },
+    { id:'lbb-ciudad', question:'¿En qué ciudad está la asociación?', keywords:['donde esta la asociacion','ciudad de la institucion','santa cruz de la sierra'],
+      answer:'La página ubica las actividades de la asociación en Santa Cruz de la Sierra, Bolivia.' },
+    { id:'lbb-direccion', question:'¿Cuál es la dirección de la asociación?', keywords:['direccion de la oficina','ubicacion exacta de la asociacion','donde queda la sede'],
+      answer:'La página no publica una dirección física. Indica Santa Cruz de la Sierra como sede de actividades; puedes pedir información al WhatsApp 77347348.' },
+    { id:'lbb-entrenamiento', question:'¿Dónde y cuándo puedo entrenar con la asociación?', keywords:['lugar de entrenamiento','horarios de entrenamiento','donde entrenar con ustedes'],
+      answer:'La página no publica un gimnasio, lugar ni horario regular de entrenamiento. Consulta disponibilidad directamente al WhatsApp 77347348.' },
+    { id:'lbb-unirse', question:'¿Cómo me uno a la asociación?', keywords:['unirme a la asociacion','ser miembro del club','hacerme socio','afiliarme'],
+      answer:'La página no explica un proceso de afiliación. Escribe al WhatsApp 77347348 para preguntar cómo participar o integrarte a las actividades.' },
+    { id:'lbb-cuota', question:'¿Cuánto cuesta ser miembro de la asociación?', keywords:['cuota de socio','costo de membresia','precio para unirse a la asociacion'],
+      answer:'La página no publica cuotas de membresía. Consulta el costo directamente con la asociación al 77347348.' },
+    { id:'lbb-contacto', question:'¿Cómo puedo contactar a la institución?', keywords:['contacto institucional','como hablar con la asociacion','telefono de contacto'],
+      answer:'La página ofrece WhatsApp para consultas al 77347348 y enlaza las redes sociales oficiales.' },
+    { id:'lbb-whatsapp', question:'¿Cuál es el WhatsApp de la asociación?', keywords:['whatsapp de la asociacion','numero de whatsapp','77347348'],
+      answer:'El WhatsApp de consultas que aparece en la página es 77347348.' },
+    { id:'lbb-facebook', question:'¿Cuál es el Facebook de la asociación?', keywords:['facebook institucional','pagina de facebook','facebook de la asociacion'],
+      answer:'La página enlaza Facebook como Lucha de Brazos Bolivia. Puedes abrir el perfil desde el botón de Facebook del sitio.' },
+    { id:'lbb-instagram', question:'¿Cuál es el Instagram de la asociación?', keywords:['instagram de la asociacion','perfil de instagram','santacruz luchadebrazos'],
+      answer:'La página enlaza el Instagram @santacruz_luchadebrazos.' },
+    { id:'lbb-tiktok', question:'¿Cuál es el TikTok de la asociación?', keywords:['tiktok de la asociacion','perfil de tiktok','luchadebrazos santacruz'],
+      answer:'La página enlaza el TikTok @luchadebrazos_santacruz.' },
+    { id:'lbb-redes', question:'¿En qué redes puedo seguir a la asociación?', keywords:['redes sociales oficiales','redes de la institucion','seguir a la asociacion'],
+      answer:'La página enlaza Facebook, Instagram y TikTok. Los botones de redes sociales del sitio abren esos perfiles.' },
+    { id:'lbb-novedades', question:'¿Dónde anuncian noticias y actividades?', keywords:['noticias de la asociacion','anuncios institucionales','donde publican actividades'],
+      answer:'Las novedades aparecen en la sección Noticias, Próximos Eventos y en las redes sociales enlazadas por la asociación.' },
+    { id:'lbb-videos', question:'¿La página tiene videos de la asociación?', keywords:['videos de la asociacion','ver videos institucionales','contenido audiovisual'],
+      answer:'Sí. La página incluye una sección de videos compartidos por la Asociación Lucha de Brazos Bolivia.' },
+    { id:'lbb-historia', question:'¿Cuándo se fundó la asociación?', keywords:['fecha de fundacion','historia institucional','año de creacion de la asociacion'],
+      answer:'La página no indica el año de fundación ni publica una historia institucional detallada. Puedes preguntar directamente al 77347348.' },
+    { id:'lbb-directiva', question:'¿Quiénes dirigen la asociación?', keywords:['presidente de la asociacion','directiva institucional','dirigentes de la institucion'],
+      answer:'La copia de la página no publica nombres de la directiva. Consulta a la asociación por sus canales oficiales.' },
+    { id:'lbb-reconocimiento', question:'¿La asociación tiene reconocimiento oficial?', keywords:['reconocimiento legal','registro oficial de la asociacion','es una entidad reconocida'],
+      answer:'La página no incluye información sobre registro legal o reconocimiento oficial. No puedo confirmarlo con los datos publicados; consulta directamente con la institución.' },
+    { id:'lbb-colaborar', question:'¿Cómo puedo apoyar o colaborar con la asociación?', keywords:['colaborar con la asociacion','apoyar a la institucion','ser voluntario'],
+      answer:'La página no publica un programa de voluntariado o colaboración. Puedes consultar si reciben apoyo o propuestas mediante el WhatsApp 77347348.' },
+    { id:'lbb-evento-fecha', question:'¿Cuál es la fecha del evento publicado?', keywords:['fecha del torneo','cuando es el evento','dia de la competencia'],
+      answer:'La publicación del Torneo Amateur C.S. — Primera Edición indica el 31 de octubre de 2026. Confirma con la organización si hubo algún cambio.' },
+    { id:'lbb-evento-inscripcion', question:'¿Cómo me inscribo a un evento?', keywords:['inscribirme al torneo','inscripcion al torneo','como inscribirme al torneo','como me inscribo al torneo','como registrarme al evento','anotarme al torneo','anotarme para competir'],
+      answer:'La publicación del Torneo Amateur C.S. incluye un botón de WhatsApp para inscribirse y muestra el número 74963734. Escribe allí para confirmar pasos y requisitos actualizados.' },
+    { id:'lbb-evento-costo', question:'¿Cuánto cuesta la inscripción al evento?', keywords:['precio de inscripcion del torneo','costo del evento','cuanto cuesta anotarse'],
+      answer:'La publicación del Torneo Amateur C.S. muestra un costo de inscripción de 70 bolivianos. Confirma el monto y la forma de pago con la organización antes de pagar.' }
   ];
 
-  const ARM_TOPICS_EJEMPLO = ['Top Roll', 'Hook', 'Press', 'Agarre', 'Entrenamiento', 'Reglas y faltas', 'Categorías y peso', 'Calentamiento y seguridad'];
+  const ARM_TOPICS_EJEMPLO = ['la asociación y su misión', 'actividades y comunidad', 'contacto y redes oficiales', 'fecha e inscripción del torneo', 'técnicas', 'reglamento'];
 
   function buscarRespuesta(pregunta){
     const norm = normalizarTexto(pregunta);
     let mejor = null;
     let mejorPuntaje = 0;
     ARM_KB.forEach(entry=>{
-      entry.keywords.forEach(k=>{
+      const frases = entry.question ? entry.keywords.concat(entry.question) : entry.keywords;
+      frases.forEach(k=>{
         const kNorm = normalizarTexto(k);
         if(norm.includes(kNorm)){
           const puntaje = kNorm.length;
@@ -2133,7 +2211,7 @@ body.menu-open .social-bubbles, body.chat-open .social-bubbles{ opacity:0; visib
   let chatActivado = false;
   let chatInicializado = false;
 
-  const CHAT_SUGERENCIAS = ['¿Qué es el Top Roll?', '¿Qué es una falta?', '¿Cómo mejorar mi agarre?', '¿Cómo debo calentar?'];
+  const CHAT_SUGERENCIAS = ['¿Qué hace la asociación?', '¿Cuál es su misión?', '¿Cómo puedo contactarlos?', '¿Cómo me inscribo al torneo?'];
 
   function agregarMensaje(texto, tipo){
     if(!chatMessages) return;
